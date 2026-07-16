@@ -14,8 +14,6 @@ The whole theme is a few variables at the top of `app/globals.css`. The values
 are Geist's, borrowed for our own stylesheet — not ours to republish as a system
 of our own.
 
-## Roadmap
-
-1. Not deployed from this repo yet. The live site is `nishilfaldu.site`, which
-   this replaces. `layout.tsx` sets canonical to `nishilfaldu.com` — confirm
-   which domain wins, and redirect the other.
+Live at **nishilfaldu.site**, deployed from `main` by Vercel. `www` redirects to
+the apex. The repo is named `.com`, but **that domain isn't registered** — the
+name is aspirational, and nothing should point at it until someone buys it.
