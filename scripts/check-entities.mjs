@@ -8,10 +8,11 @@
  *
  * Literal characters (— ’ “ ⌘) compile correctly and read better in source.
  */
-import { readdirSync, readFileSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 
-const ROOTS = ["app", "lib"];
+/** Every place JSX lives. Missing ones are skipped, not fatal. */
+const ROOTS = ["app", "components"];
 const ENTITY = /&(?:[a-zA-Z][a-zA-Z0-9]*|#\d+|#[xX][0-9a-fA-F]+);/g;
 
 /** What to write instead. Anything else: use the literal character. */
@@ -40,6 +41,7 @@ function* walk(dir) {
 
 let failures = 0;
 for (const root of ROOTS) {
+  if (!existsSync(root)) continue;
   for (const file of walk(root)) {
     const src = readFileSync(file, "utf8");
     src.split("\n").forEach((line, i) => {

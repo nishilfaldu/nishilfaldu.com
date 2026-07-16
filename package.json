@@ -3,20 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "theme": "pnpm --filter @nishilfaldu/sunny theme",
-    "contrast": "pnpm --filter @nishilfaldu/sunny contrast",
     "glue": "node scripts/check-entities.mjs",
-    "predev": "pnpm theme",
     "dev": "next dev",
-    "prebuild": "pnpm theme && pnpm glue",
+    "prebuild": "pnpm glue",
     "build": "next build",
     "start": "next start",
     "lint": "biome check",
     "format": "biome format --write"
   },
   "dependencies": {
-    "@nishilfaldu/sunny": "workspace:*",
-    "marked": "^18.0.6",
     "next": "16.2.10",
     "react": "19.2.4",
     "react-dom": "19.2.4"

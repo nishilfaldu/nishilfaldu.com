@@ -1,152 +1,131 @@
 @import "tailwindcss";
-@import "@nishilfaldu/sunny/theme.generated.css";
 
 /*
- * These are base styles and must live in @layer base. Unlayered CSS beats every
- * layered rule no matter how specific, so leaving them out here meant a utility
- * like `focus-visible:shadow-none` could never override the focus ring.
+ * The whole theme. There is no design system here on purpose — this site is one
+ * page, and a page does not need a token pipeline to tell it what black is.
+ *
+ * Values are Geist's, read from vercel.com/design.md rather than eyeballed.
+ * They stay private to this app's CSS: using a handful of neutral hexes in your
+ * own stylesheet is not the same as republishing someone's documentation, which
+ * is what got the old public/design.md deleted.
+ *
+ * `static` matters. A plain @theme only emits the variables some utility happens
+ * to reference, so anything named only by the dark-mode block below would be
+ * tree-shaken out of light mode and compute to nothing.
+ */
+@theme static {
+  /* Geist background-100 / background-200. Actually white, actually black. */
+  --color-paper: #ffffff;
+  --color-paper-raised: #fafafa;
+
+  /* Geist gray-1000 / gray-900 / gray-400: body text, secondary text, borders. */
+  --color-ink: #171717;
+  --color-ink-muted: #4d4d4d;
+  --color-rule: #eaeaea;
+
+  /*
+   * Geist amber-900 — the *text* step, not the brand step. amber-700 (#ffae00)
+   * is the amber everyone pictures, and it is 1.86:1 on white: it cannot carry a
+   * link, an underline, or anything else that has to be seen against paper.
+   * The step that can is #aa4d00, which is rust. The old hand-built site picked
+   * #9c463a by eye for exactly this job, which is the same colour from the
+   * other direction.
+   */
+  --color-accent: #aa4d00;
+
+  /*
+   * Geist amber-700, and the only place the real amber appears. Identical in
+   * both themes, which is why the dot never needs a dark-mode value: it sits on
+   * paper in light and on ink in dark and clears both.
+   */
+  --color-dot: #ffae00;
+
+  --font-serif:
+    var(--font-newsreader), "Iowan Old Style", Charter, Georgia,
+    "Times New Roman", serif;
+
+  /*
+   * The measure: ~65 characters of Newsreader, and the essay is the whole site.
+   * Not `--container-prose`. That key collides with Tailwind's built-in
+   * .max-w-prose (65ch), which wins silently — the token reads 38rem and the
+   * page renders at something else. Renaming is the only fix; @utility doesn't
+   * rescue it. "Measure" is the right typographic word anyway.
+   */
+  --container-measure: 38rem;
+}
+
+/*
+ * Dark is the same six roles pointing at Geist's dark values. The scale flips,
+ * the roles don't — which is the one idea worth keeping from the design system
+ * that used to live here.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper: #000000;
+    --color-paper-raised: #0a0a0a;
+    --color-ink: #ededed;
+    --color-ink-muted: #a0a0a0;
+    --color-rule: #2e2e2e;
+    /* Geist amber-900 dark. Brighter, because it's carrying text on black. */
+    --color-accent: #ff9300;
+  }
+}
+
+/*
+ * Base styles belong in @layer base. Unlayered CSS outranks every layered rule
+ * regardless of specificity, so an unlayered :focus-visible here could never be
+ * overridden by a utility.
  */
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    background: var(--color-background-100);
-    color: var(--color-gray-1000);
-    font-family: var(--font-sans);
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    font-size: 1.18rem;
+    line-height: 1.72;
+    text-rendering: optimizeLegibility;
+  }
+
+  @media (min-width: 40rem) {
+    body {
+      font-size: 1.3rem;
+    }
   }
 
   ::selection {
-    background: var(--color-amber-400);
-    color: var(--color-gray-1000);
+    background: var(--color-dot);
+    /* Ink, not var(--color-ink): the selection band is amber in both themes, so
+       the text on it must be the ink that amber can carry, which never flips. */
+    color: #171717;
   }
 
   :focus-visible {
-    outline: none;
-    box-shadow:
-      0 0 0 2px var(--color-background-100),
-      0 0 0 4px var(--color-blue-700);
-    border-radius: var(--radius-sm);
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 1px;
+  }
+
+  /* Deep-linked projects land below the top edge, in the reading area. */
+  [id] {
+    scroll-margin-top: 30vh;
   }
 }
 
-/*
- * Rendered markdown. Every value is a Sunny token, so vendored docs inherit the
- * system rather than bringing their own look.
- */
-.markdown {
-  color: var(--color-gray-900);
-  font-size: var(--text-copy-16);
-  line-height: var(--text-copy-16--line-height);
-}
-
-.markdown > * + * {
-  margin-top: var(--spacing-4);
-}
-
-.markdown h1,
-.markdown h2,
-.markdown h3 {
-  color: var(--color-gray-1000);
-  scroll-margin-top: var(--spacing-16);
-}
-
-.markdown h1 {
-  font-size: var(--text-heading-32);
-  line-height: var(--text-heading-32--line-height);
-  font-weight: var(--text-heading-32--font-weight);
-  letter-spacing: var(--text-heading-32--letter-spacing);
-}
-
-.markdown h2 {
-  margin-top: var(--spacing-12);
-  padding-top: var(--spacing-4);
-  border-top: 1px solid var(--color-gray-alpha-400);
-  font-size: var(--text-heading-24);
-  line-height: var(--text-heading-24--line-height);
-  font-weight: var(--text-heading-24--font-weight);
-  letter-spacing: var(--text-heading-24--letter-spacing);
-}
-
-.markdown h3 {
-  margin-top: var(--spacing-8);
-  font-size: var(--text-heading-16);
-  line-height: var(--text-heading-16--line-height);
-  font-weight: var(--text-heading-16--font-weight);
-}
-
-.markdown ul {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-3);
-  padding-left: var(--spacing-5);
-  list-style: disc;
-}
-
-.markdown li::marker {
-  color: var(--color-gray-600);
-}
-
-.markdown li > ul {
-  margin-top: var(--spacing-3);
-}
-
-.markdown strong {
-  color: var(--color-gray-1000);
-  font-weight: 600;
-}
-
-/*
- * `--color-link`, not `--color-blue-700`: the link role points at a different
- * step per theme (blue-700 light, blue-900 dark, because 900 is the text step).
- * Naming the step here rendered dark links at the wrong colour and quietly
- * contradicted design.md.
- */
-.markdown a {
-  color: var(--color-link);
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.markdown a:hover {
-  color: var(--color-link-hover);
-}
-
-.markdown code {
-  padding: 1px 5px;
-  border-radius: var(--radius-sm);
-  background: var(--color-gray-alpha-100);
-  color: var(--color-gray-1000);
-  font-family: var(--font-mono);
-  font-size: var(--text-label-13-mono);
-}
-
-.markdown pre {
-  overflow-x: auto;
-  padding: var(--spacing-4);
-  border-radius: var(--radius-md);
-  background: var(--color-gray-100);
-}
-
-.markdown pre code {
-  padding: 0;
-  background: none;
-}
-
-.markdown hr {
-  margin-top: var(--spacing-10);
-  border: 0;
-  border-top: 1px solid var(--color-gray-alpha-400);
-}
-
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
     /* biome-ignore lint/complexity/noImportantStyles: a reduced-motion reset must outrank the component styles it overrides */
-    animation-duration: 0.01ms !important;
-    /* biome-ignore lint/complexity/noImportantStyles: see above */
-    animation-iteration-count: 1 !important;
-    /* biome-ignore lint/complexity/noImportantStyles: see above */
     transition-duration: 0.01ms !important;
     /* biome-ignore lint/complexity/noImportantStyles: see above */
-    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
   }
 }
