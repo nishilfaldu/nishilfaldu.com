@@ -16,7 +16,6 @@ of our own.
 
 ## Roadmap
 
-1. `README.md` is still create-next-app text.
-2. Not deployed from this repo yet. The live site is `nishilfaldu.site`, which
+1. Not deployed from this repo yet. The live site is `nishilfaldu.site`, which
    this replaces. `layout.tsx` sets canonical to `nishilfaldu.com` — confirm
    which domain wins, and redirect the other.
