@@ -1,3 +1,6 @@
+import { ProjectPreview } from "@/components/project-preview";
+import { PROJECTS } from "@/components/projects";
+
 /**
  * Every link on the site.
  *
@@ -25,7 +28,7 @@ export function ProseLink({
   nowrap?: boolean;
   children: React.ReactNode;
 }) {
-  return (
+  const anchor = (
     <a
       id={id}
       href={href}
@@ -35,5 +38,13 @@ export function ProseLink({
     >
       {children}
     </a>
+  );
+
+  // Project links (their id is in the index) grow a hover card; socials don't.
+  const project = id && PROJECTS.find((p) => p.id === id);
+  return project ? (
+    <ProjectPreview project={project}>{anchor}</ProjectPreview>
+  ) : (
+    anchor
   );
 }

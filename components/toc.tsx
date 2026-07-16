@@ -1,39 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { PROJECTS } from "@/components/projects";
 
 /**
  * A quiet stack of dashes, one per project, pinned to the right edge.
  *
  * The essay hides twenty-one projects inside its sentences, which is the point
  * — but it means there's no list to scan. This is the list, without breaking
- * the prose into cards.
- *
- * Order matches reading order, not importance. It's the same story, indexed.
+ * the prose into cards. The list itself lives in projects.ts, shared with the
+ * hover cards; order matches reading order, not importance.
  */
-const PROJECTS: [id: string, label: string][] = [
-  ["p-save-the-roadster", "C++ game"],
-  ["p-ml-deep-learning-courses", "Andrew Ng courses"],
-  ["p-bert-sentiment-pytorch", "First model"],
-  ["p-insite-factcheck", "Fact checker"],
-  ["p-hackathon-stats-dashboard", "Stats dashboard"],
-  ["p-campaign-websites", "Campaign sites"],
-  ["p-eventure", "Event app"],
-  ["p-alterna-canvas", "Canvas"],
-  ["p-coursework", "Coursework"],
-  ["p-cedar-lang", "Compiler"],
-  ["p-lda-models", "Topic model"],
-  ["p-easy-rag", "RAG"],
-  ["p-vector-search-ecommerce", "Vector search"],
-  ["p-smart-reviewer", "News reviewer"],
-  ["p-neon-nerdsnipe", "Login agent"],
-  ["p-atlas", "Atlas"],
-  ["p-sediment", "Sediment"],
-  ["p-mcp-servers", "MCP servers"],
-  ["p-reachcast", "Raycast extension"],
-  ["p-pulse", "Pulse"],
-  ["p-belle", "Belle"],
-];
 
 /** Where a click or a deep link comes to rest. Matches [id] scroll-margin-top. */
 const READING_LINE = 0.3;
@@ -74,7 +51,7 @@ export function Toc() {
       let nearest: string | null = null;
       let best = Infinity;
 
-      for (const [id] of PROJECTS) {
+      for (const { id } of PROJECTS) {
         const el = document.getElementById(id);
         if (!el) continue;
         const dist = Math.abs(el.getBoundingClientRect().top - line);
@@ -165,7 +142,7 @@ export function Toc() {
             : "invisible translate-y-2 opacity-0 lg:visible"
         }`}
       >
-        {PROJECTS.map(([id, label]) => (
+        {PROJECTS.map(({ id, label }) => (
           <a
             key={id}
             href={`#${id}`}
