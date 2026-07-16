@@ -1,0 +1,34 @@
+{
+  "name": "nishilfaldu.com",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "theme": "pnpm --filter @nishilfaldu/sunny theme",
+    "contrast": "pnpm --filter @nishilfaldu/sunny contrast",
+    "glue": "node scripts/check-entities.mjs",
+    "predev": "pnpm theme",
+    "dev": "next dev",
+    "prebuild": "pnpm theme && pnpm glue",
+    "build": "next build",
+    "start": "next start",
+    "lint": "biome check",
+    "format": "biome format --write"
+  },
+  "dependencies": {
+    "@nishilfaldu/sunny": "workspace:*",
+    "marked": "^18.0.6",
+    "next": "16.2.10",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.2.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "babel-plugin-react-compiler": "1.0.0",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

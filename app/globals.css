@@ -1,0 +1,152 @@
+@import "tailwindcss";
+@import "@nishilfaldu/sunny/theme.generated.css";
+
+/*
+ * These are base styles and must live in @layer base. Unlayered CSS beats every
+ * layered rule no matter how specific, so leaving them out here meant a utility
+ * like `focus-visible:shadow-none` could never override the focus ring.
+ */
+@layer base {
+  body {
+    background: var(--color-background-100);
+    color: var(--color-gray-1000);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-amber-400);
+    color: var(--color-gray-1000);
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 2px var(--color-background-100),
+      0 0 0 4px var(--color-blue-700);
+    border-radius: var(--radius-sm);
+  }
+}
+
+/*
+ * Rendered markdown. Every value is a Sunny token, so vendored docs inherit the
+ * system rather than bringing their own look.
+ */
+.markdown {
+  color: var(--color-gray-900);
+  font-size: var(--text-copy-16);
+  line-height: var(--text-copy-16--line-height);
+}
+
+.markdown > * + * {
+  margin-top: var(--spacing-4);
+}
+
+.markdown h1,
+.markdown h2,
+.markdown h3 {
+  color: var(--color-gray-1000);
+  scroll-margin-top: var(--spacing-16);
+}
+
+.markdown h1 {
+  font-size: var(--text-heading-32);
+  line-height: var(--text-heading-32--line-height);
+  font-weight: var(--text-heading-32--font-weight);
+  letter-spacing: var(--text-heading-32--letter-spacing);
+}
+
+.markdown h2 {
+  margin-top: var(--spacing-12);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--color-gray-alpha-400);
+  font-size: var(--text-heading-24);
+  line-height: var(--text-heading-24--line-height);
+  font-weight: var(--text-heading-24--font-weight);
+  letter-spacing: var(--text-heading-24--letter-spacing);
+}
+
+.markdown h3 {
+  margin-top: var(--spacing-8);
+  font-size: var(--text-heading-16);
+  line-height: var(--text-heading-16--line-height);
+  font-weight: var(--text-heading-16--font-weight);
+}
+
+.markdown ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  padding-left: var(--spacing-5);
+  list-style: disc;
+}
+
+.markdown li::marker {
+  color: var(--color-gray-600);
+}
+
+.markdown li > ul {
+  margin-top: var(--spacing-3);
+}
+
+.markdown strong {
+  color: var(--color-gray-1000);
+  font-weight: 600;
+}
+
+/*
+ * `--color-link`, not `--color-blue-700`: the link role points at a different
+ * step per theme (blue-700 light, blue-900 dark, because 900 is the text step).
+ * Naming the step here rendered dark links at the wrong colour and quietly
+ * contradicted design.md.
+ */
+.markdown a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.markdown a:hover {
+  color: var(--color-link-hover);
+}
+
+.markdown code {
+  padding: 1px 5px;
+  border-radius: var(--radius-sm);
+  background: var(--color-gray-alpha-100);
+  color: var(--color-gray-1000);
+  font-family: var(--font-mono);
+  font-size: var(--text-label-13-mono);
+}
+
+.markdown pre {
+  overflow-x: auto;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-md);
+  background: var(--color-gray-100);
+}
+
+.markdown pre code {
+  padding: 0;
+  background: none;
+}
+
+.markdown hr {
+  margin-top: var(--spacing-10);
+  border: 0;
+  border-top: 1px solid var(--color-gray-alpha-400);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* biome-ignore lint/complexity/noImportantStyles: a reduced-motion reset must outrank the component styles it overrides */
+    animation-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: see above */
+    animation-iteration-count: 1 !important;
+    /* biome-ignore lint/complexity/noImportantStyles: see above */
+    transition-duration: 0.01ms !important;
+    /* biome-ignore lint/complexity/noImportantStyles: see above */
+    scroll-behavior: auto !important;
+  }
+}

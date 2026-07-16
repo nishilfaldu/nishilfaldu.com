@@ -1,0 +1,23 @@
+{
+  "name": "@nishilfaldu/sunny",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "theme": "node --experimental-strip-types scripts/build-theme.mts",
+    "contrast": "node --experimental-strip-types scripts/audit-contrast.mts"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./theme.generated.css": "./src/theme.generated.css",
+    "./tokens": "./src/tokens/index.ts",
+    "./spec": "./src/spec/generate.ts",
+    "./theme.css": "./src/theme.css"
+  },
+  "dependencies": {
+    "culori": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/culori": "^2.1.1"
+  }
+}
