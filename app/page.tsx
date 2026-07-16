@@ -257,6 +257,10 @@ export default function Home() {
         <p>If any of that resonates, say hi.</p>
 
         <p className="mt-14">
+          <ProseLink nowrap href="/projects">
+            Projects
+          </ProseLink>{" "}
+          ·{" "}
           <ProseLink nowrap href="https://x.com/FalduNishil">
             <span className="line-through decoration-1">Twitter</span> X
           </ProseLink>{" "}
