@@ -21,24 +21,28 @@ const DESCRIPTION =
   "The story of how I got here, and the small things I build to take a mess and make it sit still.";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://nishilfaldu.com"),
+  // The repo is named .com; the site ships to .site. Only one of those is a
+  // registered domain — pointing canonical at the other tells crawlers the real
+  // page lives at an address that doesn't resolve.
+  metadataBase: new URL("https://nishilfaldu.site"),
   title: "Nishil Faldu",
   description: DESCRIPTION,
   authors: [{ name: "Nishil Faldu" }],
   alternates: { canonical: "/" },
+  // No `images` here on purpose: app/opengraph-image.tsx is a file convention,
+  // and Next injects og:image and twitter:image from it. Naming a path as well
+  // means two cards to keep in step, and the hand-written one wins.
   openGraph: {
     type: "website",
     url: "/",
     title: "Nishil Faldu",
     description: DESCRIPTION,
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     creator: "@FalduNishil",
     title: "Nishil Faldu",
     description: DESCRIPTION,
-    images: ["/og-image.png"],
   },
 };
 
