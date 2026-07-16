@@ -6,9 +6,9 @@ import "./globals.css";
  * One reading face. The site is an essay, so the face that sets the essay is
  * the entire type system — there is no second role to name.
  *
- * Italic ships because the prose actually uses it. Geist Sans is gone with the
- * design system: it was the strongest signal the site was Vercel-adjacent, and
- * we're already borrowing their neutrals.
+ * Italic ships because the prose actually uses it. A serif and not Geist Sans:
+ * we're already borrowing Vercel's neutrals, and their typeface on top of that
+ * is the point where a personal site starts reading as a Vercel property.
  */
 const newsreader = Newsreader({
   variable: "--font-newsreader",

@@ -1,10 +1,9 @@
 /**
  * The mark: the monogram, and an amber dot.
  *
- * Survived the design system it was designed inside. It was Nishil's call and
- * it's settled — the dot is the only amber on the page, which is the whole
- * point. Warmth as one deliberate spot against a neutral, rather than a yellow
- * interface.
+ * Nishil's call, and settled. The dot is the only amber on the page, which is
+ * the whole point: warmth as one deliberate spot against a neutral, rather than
+ * a yellow interface.
  *
  * The dot sits on the baseline, tight to the `f`, close enough to read as part
  * of the word — like a full stop.

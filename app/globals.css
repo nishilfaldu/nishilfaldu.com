@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
 /*
- * The whole theme. There is no design system here on purpose — this site is one
- * page, and a page does not need a token pipeline to tell it what black is.
+ * The whole theme. Seven roles, one page — enough.
  *
  * Values are Geist's, read from vercel.com/design.md rather than eyeballed.
- * They stay private to this app's CSS: using a handful of neutral hexes in your
- * own stylesheet is not the same as republishing someone's documentation, which
- * is what got the old public/design.md deleted.
+ * They're borrowed for this stylesheet and stay here: a handful of neutral
+ * hexes in your own CSS is fair, republishing someone's system as your own
+ * isn't.
  *
  * `static` matters. A plain @theme only emits the variables some utility happens
  * to reference, so anything named only by the dark-mode block below would be
@@ -55,9 +54,9 @@
 }
 
 /*
- * Dark is the same six roles pointing at Geist's dark values. The scale flips,
- * the roles don't — which is the one idea worth keeping from the design system
- * that used to live here.
+ * Dark is the same roles pointing at Geist's dark values. Name the role, never
+ * the colour: `accent` flips #aa4d00 → #ff9300 across these two blocks, so
+ * anything that hardcoded the hex would render the wrong one in one theme.
  */
 @media (prefers-color-scheme: dark) {
   :root {
