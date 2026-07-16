@@ -1,10 +1,9 @@
 /**
- * Screenshots the deployed showcase projects into public/showcase/.
+ * Screenshots deployed showcase projects into public/showcase/.
  *
- * The carousel on /projects shows a real picture of each live site; this is
- * where those pictures come from. Rerun it whenever a deployment changes —
- * it reads the list from components/showcase-projects.ts, so a new `url`
- * there is all it takes to get a new capture.
+ * Dormant for the current /projects list (text-first, no carousel). Keep for
+ * future detail pages that want a capture. Reads `url` entries from
+ * components/showcase-projects.ts.
  *
  * Uses the system Chrome (playwright-core's `channel: "chrome"`), so nothing
  * downloads a browser.

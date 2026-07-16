@@ -1,22 +1,13 @@
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { Newsreader } from "next/font/google";
+import { ReportIssue } from "@/components/report-issue";
 import "./globals.css";
 
 /*
- * One reading face. The site is an essay, so the face that sets the essay is
- * the entire type system — there is no second role to name.
- *
- * Italic ships because the prose actually uses it. A serif and not Geist Sans:
- * we're already borrowing Vercel's neutrals, and their typeface on top of that
- * is the point where a personal site starts reading as a Vercel property.
+ * One reading face: Geist Sans (Vercel’s), with Geist Mono for code and
+ * labels. The neutrals were already Geist’s; the typeface matches.
  */
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 const DESCRIPTION =
   "The story of how I got here, and the small things I build to take a mess and make it sit still.";
 
@@ -58,8 +49,14 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${newsreader.variable} antialiased`}>
-      <body>{children}</body>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable} ${GeistSans.className} antialiased`}
+    >
+      <body>
+        {children}
+        <ReportIssue />
+      </body>
     </html>
   );
 }

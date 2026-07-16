@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
 /**
@@ -19,25 +21,22 @@ const ACCENT = "#aa4d00";
 const DOT = "#ffae00";
 
 /**
- * Satori needs real font bytes; it can't use next/font. Google's CSS endpoint
- * hands back a versioned .ttf URL, so ask it each build rather than pinning a
- * path that expires.
+ * Satori needs real font bytes; it can't use next/font. Load Geist from the
+ * installed package so the card matches the site face.
  */
-async function newsreader(weight: 400 | 500) {
-  const css = await fetch(
-    `https://fonts.googleapis.com/css2?family=Newsreader:wght@${weight}`,
-    { headers: { "User-Agent": "Mozilla/5.0 (Macintosh)" } },
-  ).then((r) => r.text());
-
-  const url = css.match(/https:\/\/[^)]+\.ttf/)?.[0];
-  if (!url) throw new Error(`No Newsreader ${weight} in Google's CSS response`);
-  return fetch(url).then((r) => r.arrayBuffer());
+async function geist(weight: "Regular" | "Medium") {
+  return readFile(
+    join(
+      process.cwd(),
+      `node_modules/geist/dist/fonts/geist-sans/Geist-${weight}.ttf`,
+    ),
+  );
 }
 
 export default async function Image() {
   const [regular, medium] = await Promise.all([
-    newsreader(400),
-    newsreader(500),
+    geist("Regular"),
+    geist("Medium"),
   ]);
 
   return new ImageResponse(
@@ -47,7 +46,7 @@ export default async function Image() {
         height: "100%",
         background: PAPER,
         color: INK,
-        fontFamily: "Newsreader",
+        fontFamily: "Geist",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -77,7 +76,7 @@ export default async function Image() {
         style={{
           fontSize: 66,
           lineHeight: 1.26,
-          letterSpacing: "-0.01em",
+          letterSpacing: "-0.02em",
           marginTop: 34,
           maxWidth: 900,
         }}
@@ -93,8 +92,8 @@ export default async function Image() {
     {
       ...size,
       fonts: [
-        { name: "Newsreader", data: regular, weight: 400, style: "normal" },
-        { name: "Newsreader", data: medium, weight: 500, style: "normal" },
+        { name: "Geist", data: regular, weight: 400, style: "normal" },
+        { name: "Geist", data: medium, weight: 500, style: "normal" },
       ],
     },
   );

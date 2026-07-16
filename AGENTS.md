@@ -10,19 +10,32 @@ the narrative and into a tile is working against that page. Hovering a project
 link previews it; the dash stack on the right indexes it; neither breaks the
 prose.
 
-`/projects` is the one deliberate exception, decided 2026-07-16: a curated
-showcase — only the work he's proud of — as a carousel of live-site previews
-with a Mac-style dock of lettermark tiles below. The curated list is
-`components/showcase-projects.ts`; editing that file is the whole workflow.
-`scripts/capture-showcase.mjs` screenshots the deployed entries into
-`public/showcase/`. The dock pattern stays on this page only.
+`/projects` is the one deliberate exception: a curated list of work he's proud
+of — name, one sentence, a link. No carousel, no dock, no GitHub OG cards.
+The list lives in `components/showcase-projects.ts`; editing that file is the
+whole workflow. Featured projects can grow a short story page under
+`/projects/<slug>` (Sediment is the first: `/projects/sediment`, same voice as
+its welcome email, with the Mac download form talking to Convex).
+
+`/tinkerletter` is the interactive-letter section: issues you can touch, not
+just read. The index lists issues from `components/tinkerletter/issues.ts`;
+each issue lives under `/tinkerletter/<slug>`. First issue is the Shoe Buyer’s
+Field Guide. Issues use a blog-style prose column; interactives open in modals
+from links in the prose so the scroll stays simple — diagrams you can play with
+don’t sit inline like labs.
+
+`/scaffolds` is a catalog of agent prompts that scaffold projects the way he
+always wants them — run the current official CLI with fixed flags, don’t clone
+a stale template. Recipes live in `components/scaffolds/recipes.ts`. Each ready
+recipe can open in Cursor via a prompt deeplink, or be copied. First recipe is
+Next.js app-only; Next+Convex and TanStack variants are listed as coming next.
 
 **A page file holds the page component and nothing else.** Everything else goes
 in `components/`, however small or single-use.
 
-The whole theme is a few variables at the top of `app/globals.css`. The values
-are Geist's, borrowed for our own stylesheet — not ours to republish as a system
-of our own.
+The whole theme is a few variables at the top of `app/globals.css`. Neutrals
+and type are Geist’s (Sans + Mono), borrowed for our own stylesheet — not ours
+to republish as a system of our own.
 
 Live at **nishilfaldu.site**, deployed from `main` by Vercel. `www` redirects to
 the apex. The repo is named `.com`, but **that domain isn't registered** — the

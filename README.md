@@ -8,9 +8,9 @@ pnpm install
 pnpm dev
 ```
 
-Next 16, React 19, Tailwind v4, set in [Newsreader][]. The essay is
-`app/page.tsx`. The theme is a handful of variables at the top of
-`app/globals.css` — the neutrals are [Geist][]'s.
+Next 16, React 19, Tailwind v4, set in [Geist][] Sans (with Mono for code).
+The essay is `app/page.tsx`. The theme is a handful of variables at the top of
+`app/globals.css` — neutrals and type are both Geist’s.
 
-[newsreader]: https://fonts.google.com/specimen/Newsreader
-[geist]: https://vercel.com/geist/colors
+[geist]: https://vercel.com/font
+[geist-colors]: https://vercel.com/geist/colors

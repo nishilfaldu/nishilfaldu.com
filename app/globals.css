@@ -39,16 +39,17 @@
    */
   --color-dot: #ffae00;
 
-  --font-serif:
-    var(--font-newsreader), "Iowan Old Style", Charter, Georgia,
-    "Times New Roman", serif;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, monospace;
 
   /*
-   * The measure: ~65 characters of Newsreader, and the essay is the whole site.
-   * Not `--container-prose`. That key collides with Tailwind's built-in
-   * .max-w-prose (65ch), which wins silently — the token reads 38rem and the
-   * page renders at something else. Renaming is the only fix; @utility doesn't
-   * rescue it. "Measure" is the right typographic word anyway.
+   * The measure: a comfortable line for Geist Sans. Not `--container-prose`.
+   * That key collides with Tailwind's built-in .max-w-prose (65ch), which wins
+   * silently — the token reads 38rem and the page renders at something else.
+   * Renaming is the only fix; @utility doesn't rescue it. "Measure" is the
+   * right typographic word anyway.
    */
   --container-measure: 38rem;
 }
@@ -83,15 +84,16 @@
   body {
     background: var(--color-paper);
     color: var(--color-ink);
-    font-family: var(--font-serif);
-    font-size: 1.18rem;
-    line-height: 1.72;
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    letter-spacing: -0.011em;
     text-rendering: optimizeLegibility;
   }
 
   @media (min-width: 40rem) {
     body {
-      font-size: 1.3rem;
+      font-size: 1.125rem;
     }
   }
 

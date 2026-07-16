@@ -11,9 +11,14 @@
       "**",
       "!node_modules",
       "!.next",
+      "!.claude",
       "!dist",
       "!build",
-      "!**/theme.generated.css"
+      "!**/theme.generated.css",
+      "!components/tinkerletter/shoe-guide/init-shoe-guide.js",
+      "!components/tinkerletter/shoe-guide/shoe-guide-body.ts",
+      "!components/tinkerletter/shoe-guide/shoe-guide.css",
+      "!components/tinkerletter/shoe-guide/labs"
     ]
   },
   "formatter": {

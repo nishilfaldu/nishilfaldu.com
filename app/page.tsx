@@ -261,6 +261,14 @@ export default function Home() {
             Projects
           </ProseLink>{" "}
           ·{" "}
+          <ProseLink nowrap href="/tinkerletter">
+            Tinkerletter
+          </ProseLink>{" "}
+          ·{" "}
+          <ProseLink nowrap href="/scaffolds">
+            Scaffolds
+          </ProseLink>{" "}
+          ·{" "}
           <ProseLink nowrap href="https://x.com/FalduNishil">
             <span className="line-through decoration-1">Twitter</span> X
           </ProseLink>{" "}

@@ -1,0 +1,379 @@
+/**
+ * Tinkerletter reading surface — Vercel blog rhythm.
+ * Interactives open in modals; this file styles the prose column.
+ * Type inherits site Geist from the root layout.
+ */
+
+.tinker-article {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  color: var(--color-ink);
+  letter-spacing: -0.011em;
+}
+
+.tinker-article-header {
+  padding-bottom: 2.5rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.tinker-meta {
+  margin: 0 0 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+  letter-spacing: -0.01em;
+}
+
+.tinker-article h1 {
+  margin: 0 0 1.25rem;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.045em;
+  color: var(--color-ink);
+}
+
+.tinker-lead {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+  color: var(--color-ink-muted);
+  max-width: 36rem;
+}
+
+.tinker-article section {
+  padding-top: 2.75rem;
+}
+
+.tinker-article h2 {
+  margin: 0 0 1rem;
+  font-size: 1.375rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  color: var(--color-ink);
+}
+
+.tinker-article p {
+  margin: 0 0 1.15em;
+  max-width: 40rem;
+}
+
+.tinker-article p:last-child {
+  margin-bottom: 0;
+}
+
+.tinker-article strong {
+  font-weight: 600;
+}
+
+.tinker-lab-link {
+  appearance: none;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tinker-lab-link:hover {
+  color: var(--color-ink);
+}
+
+.tinker-figure {
+  margin: 1.75rem 0;
+}
+
+.tinker-figure .fascia,
+.tinker-figure .fascia-facts,
+.tinker-figure .ffact {
+  /* inherit shoe-guide figure styles when mounted */
+}
+
+.tinker-footer {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule);
+  font-size: 0.875rem;
+  color: var(--color-ink-muted);
+  letter-spacing: -0.01em;
+}
+
+/* Modal shell — wide enough for side-by-side labs; no visible scrollbar. */
+.lab-modal {
+  position: fixed;
+  inset: 0;
+  width: min(54rem, calc(100vw - 1.5rem));
+  max-height: min(94vh, 46rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.28);
+}
+
+.lab-modal::backdrop {
+  background: rgb(0 0 0 / 0.55);
+}
+
+.lab-modal-panel {
+  display: flex;
+  flex-direction: column;
+  max-height: min(94vh, 46rem);
+}
+
+.lab-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--color-rule);
+  flex-shrink: 0;
+}
+
+.lab-modal-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.lab-modal-close {
+  appearance: none;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  padding: 0.25rem 0.15rem;
+}
+
+.lab-modal-close:hover {
+  color: var(--color-ink);
+}
+
+.lab-modal-body {
+  overflow: auto;
+  padding: 1.5rem 1.5rem 1.75rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lab-modal-body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.lab-mount.shoe-guide {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  color: var(--color-ink);
+}
+
+/* Dark: muted labels need more punch on black than the site body uses. */
+@media (prefers-color-scheme: dark) {
+  .lab-mount.shoe-guide,
+  .tinker-figure.shoe-guide {
+    --color-ink-muted: #c4c4c4;
+  }
+}
+
+.lab-mount .wrap {
+  max-width: none;
+  padding: 0;
+}
+
+/* Lab layouts: diagram + controls side by side so you see the change. */
+.lab-mount .archlab,
+.lab-mount .wearlab {
+  display: grid;
+  grid-template-columns: minmax(9rem, 12.5rem) minmax(0, 1fr);
+  gap: 1.5rem 1.75rem;
+  margin: 0;
+  align-items: start;
+}
+
+.lab-mount .archlab-print,
+.lab-mount .wearlab-map,
+.lab-mount .stepstrip,
+.lab-mount .case-panel,
+.lab-mount .plate {
+  margin: 0;
+}
+
+.lab-mount .archlab-print svg,
+.lab-mount .wearlab-map svg {
+  max-height: min(42vh, 18rem);
+  width: 100%;
+  height: auto;
+}
+
+.lab-mount .case-panel {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.lab-mount .case-panel svg {
+  max-height: 9.5rem;
+  width: auto;
+  max-width: 100%;
+}
+
+.lab-mount .case-panel figcaption {
+  padding: 0.5rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.lab-mount .wearlab {
+  grid-template-columns: minmax(8rem, 11rem) minmax(0, 1fr);
+}
+
+.lab-mount .wearlab-map svg {
+  max-height: min(36vh, 15rem);
+}
+
+.lab-mount .pron-cell.txt,
+.lab-mount #pron-text {
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.lab-mount #pron-text p {
+  margin: 0 0 0.65em;
+}
+
+.lab-mount .pron-cell svg {
+  max-height: 12rem;
+}
+
+.lab-mount .plate-label,
+.lab-mount .arch-sub,
+.lab-mount .slider-block label,
+.lab-mount .slider-scale,
+.lab-mount .slider-marks .mark,
+.lab-mount .wear-detail .verdict,
+.lab-mount .pron-cell h5 {
+  color: var(--color-ink-muted);
+  font-weight: 500;
+}
+
+.lab-mount .arch-reading {
+  color: var(--color-ink);
+  border-left-color: var(--color-ink);
+  font-weight: 600;
+}
+
+.lab-mount .wear-detail {
+  padding: 0.15rem 0 0;
+  min-height: 0;
+}
+
+.lab-mount .zone-name {
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.lab-mount .wear-detail p,
+.lab-mount #pron-text,
+.lab-mount #pron-text p {
+  color: var(--color-ink);
+  font-weight: 500;
+}
+
+.lab-mount .case-panel {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.lab-mount .case-panel figcaption {
+  padding: 0.85rem 0 0;
+  color: var(--color-ink);
+}
+
+.lab-mount .case-panel figcaption b {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.lab-mount .pronlab {
+  margin: 0;
+}
+
+.lab-mount .pron-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 1.25rem 1.5rem;
+  align-items: start;
+}
+
+.lab-mount .pron-cell.txt {
+  grid-column: auto;
+}
+
+.lab-mount .pron-cell {
+  padding: 0;
+}
+
+.lab-mount .pron-cell svg {
+  max-width: 100%;
+}
+
+.lab-mount .stepstrip {
+  margin: 0;
+}
+
+.lab-mount .stepstrip svg .step-panel {
+  outline: none;
+}
+
+.lab-mount .stepstrip svg .step-panel .hit {
+  fill: transparent;
+  stroke: transparent;
+  stroke-width: 2;
+}
+
+.lab-mount .stepstrip svg .step-panel:focus-visible .hit,
+.lab-mount .stepstrip svg .step-panel.active .hit {
+  stroke: var(--color-accent);
+}
+
+.lab-mount .stepstrip svg .step-panel.active .foot-body {
+  stroke: var(--color-ink);
+  stroke-width: 3;
+}
+
+@media (max-width: 40rem) {
+  .lab-mount .archlab,
+  .lab-mount .wearlab,
+  .lab-mount .pron-body {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-mount .archlab-print svg,
+  .lab-mount .wearlab-map svg {
+    max-height: 16rem;
+    max-width: 12rem;
+    margin-inline: auto;
+  }
+}

@@ -1,18 +1,17 @@
 import type { Metadata } from "next";
-import { Showcase } from "@/components/showcase";
+import { ProjectList } from "@/components/project-list";
 
 /**
- * The showcase page. Everything it does lives in <Showcase />; a page file
+ * Curated projects. Everything it does lives in <ProjectList />; a page file
  * holds the page component and nothing else.
  */
 
 export const metadata: Metadata = {
   title: "Projects — Nishil Faldu",
-  description:
-    "The projects I'm proud of: a dock, a gallery, and the places they ship to.",
+  description: "The projects I'm proud of — short notes and where they live.",
   alternates: { canonical: "/projects" },
 };
 
 export default function Projects() {
-  return <Showcase />;
+  return <ProjectList />;
 }
