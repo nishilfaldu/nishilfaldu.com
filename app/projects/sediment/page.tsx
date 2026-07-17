@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Mark } from "@/components/mark";
+import { pageMetadata } from "@/components/page-metadata";
 import { ProseLink } from "@/components/prose-link";
 import { SedimentDownload } from "@/components/sediment-download";
 
@@ -8,12 +9,13 @@ import { SedimentDownload } from "@/components/sediment-download";
  * Download lives here so getsediment doesn't need a separate marketing site.
  */
 
-export const metadata: Metadata = {
-  title: "Sediment — Nishil Faldu",
+export const metadata: Metadata = pageMetadata({
+  title: "Sediment",
   description:
     "An inspiration dashboard for the pieces you already know matter. Copy something, find it later, share it with family and friends.",
-  alternates: { canonical: "/projects/sediment" },
-};
+  path: "/projects/sediment",
+  ogType: "article",
+});
 
 export default function SedimentPage() {
   return (

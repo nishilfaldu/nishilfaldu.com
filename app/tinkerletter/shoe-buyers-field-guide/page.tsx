@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import { Mark } from "@/components/mark";
+import { pageMetadata } from "@/components/page-metadata";
 import { ShoeBuyersFieldGuide } from "@/components/tinkerletter/shoe-buyers-field-guide";
 
-export const metadata: Metadata = {
-  title: "The Shoe Buyer’s Field Guide — Tinkerletter",
+export const metadata: Metadata = pageMetadata({
+  title: "The Shoe Buyer’s Field Guide",
   description:
     "Your shoes already know something about your body that you probably don’t. An interactive field guide to arches, wear, and the right pair.",
-  alternates: {
-    canonical: "/tinkerletter/shoe-buyers-field-guide",
-  },
-};
+  path: "/tinkerletter/shoe-buyers-field-guide",
+  ogType: "article",
+});
 
 export default function ShoeBuyersFieldGuidePage() {
   return (

@@ -107,6 +107,13 @@ export const SCAFFOLDS: Scaffold[] = [
       "Pick add-ons (Query, Convex, auth, deploy…), get a prompt — Intent on by default.",
     status: "builder",
   },
+  {
+    slug: "electron",
+    name: "Electron",
+    tagline:
+      "Electron Forge TypeScript — Vite (default) or Webpack. Official CLI, not a stale boilerplate.",
+    status: "builder",
+  },
 ];
 
 /** Web Cursor prompt deeplink — opens chat with the text prefilled. */

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/components/page-metadata";
 import { ProjectList } from "@/components/project-list";
 
 /**
@@ -6,11 +7,11 @@ import { ProjectList } from "@/components/project-list";
  * holds the page component and nothing else.
  */
 
-export const metadata: Metadata = {
-  title: "Projects — Nishil Faldu",
+export const metadata: Metadata = pageMetadata({
+  title: "Projects",
   description: "The projects I'm proud of — short notes and where they live.",
-  alternates: { canonical: "/projects" },
-};
+  path: "/projects",
+});
 
 export default function Projects() {
   return <ProjectList />;

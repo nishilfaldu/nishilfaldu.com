@@ -1,5 +1,6 @@
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
+import { ElectronBuilder } from "@/components/scaffolds/electron-builder";
 import { SCAFFOLDS } from "@/components/scaffolds/recipes";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 import { TanstackBuilder } from "@/components/scaffolds/tanstack-builder";
@@ -38,7 +39,12 @@ export function ScaffoldList() {
               ) : null}
             </div>
             <p className="mt-2 mb-0 text-ink-muted">{s.tagline}</p>
-            {s.status === "builder" ? <TanstackBuilder /> : null}
+            {s.status === "builder" && s.slug === "tanstack-start" ? (
+              <TanstackBuilder />
+            ) : null}
+            {s.status === "builder" && s.slug === "electron" ? (
+              <ElectronBuilder />
+            ) : null}
             {s.status === "ready" && s.prompt ? (
               <>
                 <ScaffoldActions prompt={s.prompt} />
