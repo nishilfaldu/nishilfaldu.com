@@ -27,8 +27,11 @@ don’t sit inline like labs.
 `/scaffolds` is a catalog of agent prompts that scaffold projects the way he
 always wants them — run the current official CLI with fixed flags, don’t clone
 a stale template. Recipes live in `components/scaffolds/recipes.ts`. Each ready
-recipe can open in Cursor via a prompt deeplink, or be copied. First recipe is
-Next.js app-only; Next+Convex and TanStack variants are listed as coming next.
+recipe can open in Cursor via a prompt deeplink, or be copied. Ready recipes are
+Next.js app-only and Next.js + Convex (CLI + remind to install the Convex
+Cursor plugin). TanStack Start is an interactive builder: pick add-ons, get a
+customized prompt; TanStack Intent is on by default so agents can load
+versioned skills from installed packages.
 
 **A page file holds the page component and nothing else.** Everything else goes
 in `components/`, however small or single-use.

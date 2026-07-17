@@ -2,6 +2,7 @@ import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import { SCAFFOLDS } from "@/components/scaffolds/recipes";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
+import { TanstackBuilder } from "@/components/scaffolds/tanstack-builder";
 
 /**
  * /scaffolds — recipes that open in Cursor with the prompt prefilled.
@@ -37,6 +38,7 @@ export function ScaffoldList() {
               ) : null}
             </div>
             <p className="mt-2 mb-0 text-ink-muted">{s.tagline}</p>
+            {s.status === "builder" ? <TanstackBuilder /> : null}
             {s.status === "ready" && s.prompt ? (
               <>
                 <ScaffoldActions prompt={s.prompt} />
@@ -53,6 +55,17 @@ export function ScaffoldList() {
           </li>
         ))}
       </ul>
+
+      <p className="mt-14 text-ink-muted">
+        The Next.js recipes intentionally leave out Next.js, React, and Vercel
+        agent skills. I don’t usually start from optimization playbooks. If you
+        want those, start at{" "}
+        <ProseLink href="https://vercel.com/docs/agent-resources/skills">
+          Vercel’s agent skills
+        </ProseLink>
+        . TanStack Start is different: pick add-ons in the builder, and Intent
+        loads library skills from the packages you install.
+      </p>
     </main>
   );
 }
