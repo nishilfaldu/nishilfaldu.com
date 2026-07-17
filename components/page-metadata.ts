@@ -22,7 +22,8 @@ type PageMetaInput = {
 
 /**
  * Per-page SEO: title, description, canonical, Open Graph, Twitter.
- * OG image comes from app/opengraph-image.tsx via the file convention.
+ * Each route has its own opengraph-image (light paper — scrapers don’t
+ * follow dark mode).
  */
 export function pageMetadata({
   title,
