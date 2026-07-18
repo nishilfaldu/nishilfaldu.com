@@ -214,4 +214,30 @@ export const IDEAS: Idea[] = [
     ],
     status: "simmering",
   },
+  {
+    slug: "expo-ship-native",
+    title: "A native app that ships Expo for you",
+    body: [
+      "Building an Expo app isn’t the hard part — getting it onto the stores is. App Store Connect account, certificates, Android keystore, listing screenshots and icons for both portals… a pile of steps you have to remember in the right order.",
+      "I want a native app that walks you through that path and automates most of it. Simulator on the right so you see the thing while you set it up. A proper UI for the thumbnails and store images. Click through, credentials get handled, build goes up — as little hassle as the stores will allow.",
+    ],
+    status: "simmering",
+    refs: [
+      {
+        href: "https://docs.expo.dev/app-signing/app-credentials/",
+        label: "Expo — app credentials",
+        note: "iOS certs / profiles, Android keystore — the pain this would hide",
+      },
+      {
+        href: "https://docs.expo.dev/deploy/build-project/",
+        label: "Expo — production builds",
+        note: "EAS Build before submit",
+      },
+      {
+        href: "https://docs.expo.dev/submit/introduction/",
+        label: "Expo — EAS Submit",
+        note: "the last mile to App Store / Play",
+      },
+    ],
+  },
 ];
