@@ -28,6 +28,13 @@ export const IDEA_STATUS_LABEL: Record<IdeaStatus, string> = {
   cooling: "cooling",
 };
 
+/** Index into IDEAS for `?idea=<slug>`; falls back to 0. */
+export function ideaIndexBySlug(slug: string | null | undefined): number {
+  if (!slug) return 0;
+  const i = IDEAS.findIndex((idea) => idea.slug === slug);
+  return i >= 0 ? i : 0;
+}
+
 export const IDEAS: Idea[] = [
   {
     slug: "idea-manager",

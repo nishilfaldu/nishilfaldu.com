@@ -11,8 +11,8 @@ Writings, Tinkerletter, Scaffolds, socials.
 pages under `/projects/<slug>` (Sediment, Atlas, Cedar, Cooking).
 
 **`/ideas`** — open loops in `components/ideas.ts`; interactive tray at
-`/ideas` (one in focus, draw another). Not a notes dump. Not linked from
-home for now.
+`/ideas` (one in focus, draw another). Deep link a specific idea with
+`?idea=<slug>`. Not a notes dump. Not linked from home for now.
 
 **`/writings`** — book UI in `components/writings-book.tsx`; pages in
 `components/writings.ts`. Turnable leaves (verse / prose / title). Linked

@@ -64,8 +64,9 @@ export default function CookingPage() {
       </p>
 
       <p>
-        The idea started on the <ProseLink href="/ideas">ideas</ProseLink> page.
-        The code lives in this same portfolio repo —{" "}
+        The idea started on the{" "}
+        <ProseLink href="/ideas?idea=cooking-status">ideas</ProseLink> page. The
+        code lives in this same portfolio repo —{" "}
         <ProseLink href="https://github.com/nishilfaldu/nishilfaldu.com">
           nishilfaldu.com
         </ProseLink>
