@@ -8,7 +8,7 @@ Hover preview + dash stack are fine; tiles aren’t. Closing line: Projects,
 Writings, Tinkerletter, Scaffolds, socials.
 
 **`/projects`** — curated list in `components/showcase-projects.ts`. Story
-pages under `/projects/<slug>` (Sediment, Atlas, Cedar).
+pages under `/projects/<slug>` (Sediment, Atlas, Cedar, Cooking).
 
 **`/ideas`** — open loops in `components/ideas.ts`; interactive tray at
 `/ideas` (one in focus, draw another). Not a notes dump. Not linked from

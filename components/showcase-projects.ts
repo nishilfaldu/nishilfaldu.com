@@ -40,6 +40,13 @@ export const SHOWCASE: ShowcaseProject[] = [
       "A statically-typed language with a compiler written from scratch in Go, down to native executables.",
     path: "/projects/cedar",
   },
+  {
+    slug: "cooking",
+    name: "Cooking",
+    tagline:
+      "A quiet corner of this site that shows open PRs, previews, and releases across the repos I’m watching.",
+    path: "/projects/cooking",
+  },
 ];
 
 export function projectHref(p: ShowcaseProject): string {

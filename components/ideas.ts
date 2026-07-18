@@ -117,6 +117,23 @@ export const IDEAS: Idea[] = [
     ],
   },
   {
+    slug: "cooking-status",
+    title: "What’s cooking across my repos",
+    body: [
+      "I work on a few things at once — this site, Sediment, whatever’s next — and the interesting bits live on branches. Visitors only ever see main. I’d like a tiny window on the site that shows what’s actually in flight: open PRs, a preview when there’s a web deploy, a release when it’s a native app, the repos I’m watching.",
+      "Not a status page with charts. Something quiet in the corner. Click through to the PR, the preview, the GitHub release. Close the PR and it disappears. Add a repo to the list and it starts showing up.",
+      "The point is letting people peek at work while it’s still warm — without me hand-editing a list every time I open a branch.",
+    ],
+    status: "shipped",
+    refs: [
+      {
+        href: "/projects/cooking",
+        label: "Cooking",
+        note: "the write-up on /projects",
+      },
+    ],
+  },
+  {
     slug: "fridge-to-kroger",
     title: "Order from the fridge, not from a list",
     body: [
