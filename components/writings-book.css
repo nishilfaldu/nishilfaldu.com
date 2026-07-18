@@ -1,0 +1,16 @@
+/* Motion for WritingsBook only — not a global primitive. */
+@keyframes book-spread-in {
+  from {
+    opacity: 0;
+    transform: rotateY(-7deg) translateX(0.35rem);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0) translateX(0);
+  }
+}
+
+.book-spread-enter {
+  transform-origin: left center;
+  animation: book-spread-in 0.42s ease-out both;
+}

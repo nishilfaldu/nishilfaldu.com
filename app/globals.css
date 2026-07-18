@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * The whole theme. Seven roles, one page — enough.
+ * Theme + base only. Feature motion lives next to the component that uses it.
  *
  * Values are Geist's, read from vercel.com/design.md rather than eyeballed.
  * They're borrowed for this stylesheet and stay here: a handful of neutral
@@ -52,11 +52,6 @@
    * right typographic word anyway.
    */
   --container-measure: 38rem;
-
-  --animate-ideas-focus: ideas-focus-in 0.38s ease-out both;
-  --animate-book-spread: book-spread-in 0.42s ease-out both;
-  --animate-breathe-room: breathe-room-in 0.4s ease-out both;
-  --animate-toolbar-pulse: toolbar-pulse 4.2s ease-in-out infinite;
 }
 
 /*
@@ -133,51 +128,5 @@
     transition-duration: 0.01ms !important;
     /* biome-ignore lint/complexity/noImportantStyles: see above */
     animation-duration: 0.01ms !important;
-  }
-}
-
-/* Named motions — used via animate-* utilities from @theme above. */
-@keyframes ideas-focus-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.55rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes book-spread-in {
-  from {
-    opacity: 0;
-    transform: rotateY(-7deg) translateX(0.35rem);
-  }
-  to {
-    opacity: 1;
-    transform: rotateY(0) translateX(0);
-  }
-}
-
-@keyframes breathe-room-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.55rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes toolbar-pulse {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.75;
-  }
-  50% {
-    transform: scale(1.28);
-    opacity: 1;
   }
 }

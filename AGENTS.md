@@ -32,4 +32,5 @@ installs official Expo Skills into the project (no Cursor Marketplace plugin).
 **Page files** hold the page component only; everything else in `components/`.
 
 **Theme** — CSS variables at the top of `app/globals.css` (Geist values;
-borrowed, not ours to republish).
+borrowed, not ours to republish). Feature motion stays next to the component
+that uses it — don’t grow globals for one-off styles.

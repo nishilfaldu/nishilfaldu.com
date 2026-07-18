@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 import { BreatheSession } from "@/components/breathe/breathe-session";
+import "./site-toolbar.css";
 
 /**
  * Site tools — one quiet bar, bottom-left. Report, breathe, and room for more.
@@ -186,7 +187,7 @@ export function SiteToolbar() {
         >
           <div
             className={`w-full max-w-sm${
-              reducedMotion ? "" : " animate-breathe-room"
+              reducedMotion ? "" : " breathe-room-enter"
             }`}
           >
             <BreatheSession onClose={closeTool} />
@@ -246,7 +247,7 @@ function ToolbarButton({
     >
       {pulse ? (
         <span
-          className="absolute top-[0.45rem] right-[0.35rem] h-[0.35rem] w-[0.35rem] animate-toolbar-pulse rounded-full bg-dot"
+          className="toolbar-pulse absolute top-[0.45rem] right-[0.35rem] h-[0.35rem] w-[0.35rem] rounded-full bg-dot"
           aria-hidden
         />
       ) : null}

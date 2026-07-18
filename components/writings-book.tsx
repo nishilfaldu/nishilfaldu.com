@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import { BOOK, type WritingLeaf } from "@/components/writings";
+import "./writings-book.css";
 
 /**
  * One book: open spread on wider screens, a single leaf on small ones.
@@ -105,7 +106,7 @@ export function WritingsBook() {
         <div
           key={`${leftIndex}-${tick}`}
           className={`grid min-h-[28rem] grid-cols-1 overflow-hidden rounded-sm border border-rule bg-paper-raised sm:min-h-[32rem] sm:grid-cols-[1fr_1px_1fr]${
-            reducedMotion ? "" : " origin-left animate-book-spread"
+            reducedMotion ? "" : " book-spread-enter"
           }`}
           aria-live="polite"
         >
