@@ -171,4 +171,21 @@ export const IDEAS: Idea[] = [
     ],
     status: "simmering",
   },
+  {
+    slug: "tap-to-share-credentials",
+    title: "Tap phones, get the job packet",
+    body: [
+      "Apple already has the gesture: two iPhones meet, contacts hop over. It would be cool if the same kind of tap handed someone my job packet — resume, LinkedIn, whatever I need to put forward — not passwords, the professional stuff.",
+      "Same for the other side. A recruiter I meet should get that packet into a place that stores it on purpose — an app or vault — not another pile in Notes crowding their phone. Meet, tap, both sides keep a clean record of the exchange.",
+      "NameDrop covers the contact-card gesture. Digital business cards cover richer profiles and NFC/QR. What’s still interesting is the job packet plus a dedicated home for the receiver — resume and links in, not just name and number.",
+    ],
+    status: "simmering",
+    refs: [
+      {
+        href: "https://support.apple.com/guide/iphone/share-your-contact-information-iph1b6c664b7/ios",
+        label: "Apple NameDrop",
+        note: "the head-to-head contact share gesture",
+      },
+    ],
+  },
 ];
