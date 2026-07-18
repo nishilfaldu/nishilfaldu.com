@@ -8,9 +8,11 @@ import {
   useState,
 } from "react";
 import { CookingPanel } from "@/components/cooking-panel";
+import { COOKING_REPOS } from "@/lib/cooking/repos";
 import type { CookingItem, CookingResponse } from "@/lib/cooking/types";
 
 const PANEL_ID = "site-toolbar-cooking";
+const WATCHING = COOKING_REPOS.length > 0;
 
 type CookingFeed = {
   items: CookingItem[];
@@ -23,6 +25,7 @@ function useCookingFeed(): CookingFeed {
   const [items, setItems] = useState<CookingItem[]>([]);
 
   useEffect(() => {
+    if (!WATCHING) return;
     let cancelled = false;
 
     async function load() {
@@ -67,14 +70,8 @@ function Provider({ children }: { children: ReactNode }) {
 }
 
 function Panel({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { items, hasItems } = useCookingContext();
-
-  useEffect(() => {
-    if (open && !hasItems) onClose();
-  }, [open, hasItems, onClose]);
-
-  if (!open || !hasItems) return null;
-
+  const { items } = useCookingContext();
+  if (!open || !WATCHING) return null;
   return <CookingPanel id={PANEL_ID} onClose={onClose} items={items} />;
 }
 
@@ -89,9 +86,8 @@ function NavButton({
 }) {
   const { items, hasItems } = useCookingContext();
 
-  if (!hasItems) return null;
+  if (!WATCHING) return null;
 
-  const count = items.length;
   return (
     <>
       <span className="px-0.5 text-rule select-none" aria-hidden>
@@ -101,13 +97,17 @@ function NavButton({
         type="button"
         aria-expanded={active}
         aria-controls={PANEL_ID}
-        aria-label={`What’s cooking: ${count} preview${count === 1 ? "" : "s"}`}
+        aria-label={
+          hasItems
+            ? `What’s cooking: ${items.length} open`
+            : "Cooking — watched repos"
+        }
         onClick={onClick}
         className={`relative cursor-pointer rounded-[9px] border-0 bg-transparent px-3 py-1.5 font-sans text-[0.82rem] tracking-[0.01em] transition-colors ${
           active ? "text-accent" : "text-ink-muted hover:text-accent"
         }`}
       >
-        {pulse ? (
+        {pulse && hasItems ? (
           <span
             className="toolbar-pulse absolute top-[0.45rem] right-[0.35rem] h-[0.35rem] w-[0.35rem] rounded-full bg-dot"
             aria-hidden
@@ -121,7 +121,7 @@ function NavButton({
 
 /**
  * Cooking feature for the site toolbar: fetch/poll, panel, and nav button.
- * SiteToolbar only wires open/close — no cooking data in the shell.
+ * Always available while COOKING_REPOS is non-empty; pulse only when PRs are open.
  */
 export const CookingTool = {
   Provider,

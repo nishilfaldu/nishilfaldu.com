@@ -1,10 +1,11 @@
 "use client";
 
+import { COOKING_REPOS } from "@/lib/cooking/repos";
 import type { CookingItem } from "@/lib/cooking/types";
 
 /**
- * WIP previews — panel for the site toolbar’s “cooking” tool.
- * Each row: title + note, then discrete links (try / repo / PR via branch).
+ * WIP panel for the site toolbar’s cooking tool.
+ * Open PRs up top; watched repos always listed below (click → GitHub).
  */
 
 const linkClass =
@@ -36,21 +37,60 @@ export function CookingPanel({
           Close
         </button>
       </div>
-      <p className="mb-4 text-[0.92rem] leading-snug text-ink-muted">
-        Open PRs that haven’t landed yet.
-      </p>
-      <ul className="m-0 list-none p-0">
-        {items.map((item) => (
-          <CookingRow key={item.id} item={item} />
-        ))}
-      </ul>
+
+      {items.length > 0 ? (
+        <>
+          <p className="mb-4 text-[0.92rem] leading-snug text-ink-muted">
+            Open PRs that haven’t landed yet.
+          </p>
+          <ul className="m-0 list-none p-0">
+            {items.map((item) => (
+              <CookingRow key={item.id} item={item} />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <p className="mb-0 text-[0.92rem] leading-snug text-ink-muted">
+          Nothing open right now.
+        </p>
+      )}
+
+      <WatchedRepos />
     </div>
   );
 }
 
-function repoName(repo: string): string {
-  const slash = repo.lastIndexOf("/");
-  return slash === -1 ? repo : repo.slice(slash + 1);
+function WatchedRepos() {
+  return (
+    <div className="mt-5 border-t border-rule pt-4">
+      <p className="m-0 mb-2 text-[0.72rem] tracking-[0.06em] text-ink-muted uppercase">
+        Watching
+      </p>
+      <ul className="m-0 flex list-none flex-wrap items-baseline gap-x-0 gap-y-1 p-0">
+        {COOKING_REPOS.map((watched, i) => {
+          const full = `${watched.owner}/${watched.repo}`;
+          return (
+            <li key={full} className="flex items-baseline">
+              {i > 0 ? (
+                <span aria-hidden className="px-2 text-rule">
+                  ·
+                </span>
+              ) : null}
+              <a
+                href={`https://github.com/${full}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`font-mono text-[0.78rem] ${linkClass}`}
+                title={full}
+              >
+                {watched.repo}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
 
 function tryLabel(kind: "preview" | "release"): string {
@@ -58,7 +98,8 @@ function tryLabel(kind: "preview" | "release"): string {
 }
 
 function CookingRow({ item }: { item: CookingItem }) {
-  const name = repoName(item.repo);
+  const slash = item.repo.lastIndexOf("/");
+  const name = slash === -1 ? item.repo : item.repo.slice(slash + 1);
   const showTry = item.tryLink != null || item.status === "building";
 
   return (
