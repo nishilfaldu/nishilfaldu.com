@@ -261,6 +261,10 @@ export default function Home() {
             Projects
           </ProseLink>{" "}
           ·{" "}
+          <ProseLink nowrap href="/ideas">
+            Ideas
+          </ProseLink>{" "}
+          ·{" "}
           <ProseLink nowrap href="/tinkerletter">
             Tinkerletter
           </ProseLink>{" "}

@@ -9,6 +9,9 @@ Hover preview + dash stack are fine; tiles aren’t.
 **`/projects`** — curated list in `components/showcase-projects.ts`. Story
 pages under `/projects/<slug>` (Sediment, Atlas, Cedar).
 
+**`/ideas`** — open loops in `components/ideas.ts`; interactive tray at
+`/ideas` (one in focus, draw another). Not a notes dump.
+
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.
 
