@@ -30,52 +30,15 @@ export const SHOWCASE: ShowcaseProject[] = [
     slug: "atlas",
     name: "Atlas",
     tagline:
-      "A local-first verification layer for AI-assisted development — it tells you what broke and why.",
+      "A verification engine for AI-written code — and the honest write-up of why catching breaks wasn’t enough.",
+    path: "/projects/atlas",
   },
   {
     slug: "cedar-lang",
     name: "Cedar",
     tagline:
       "A statically-typed language with a compiler written from scratch in Go, down to native executables.",
-  },
-  {
-    slug: "easy-rag",
-    name: "Easy RAG",
-    tagline:
-      "Train a chatbot on your own documents and embed it on any site with one snippet.",
-  },
-  {
-    slug: "vector-search-ecommerce",
-    name: "Vector Search",
-    tagline:
-      "Semantic product search in a single SQL call — the vectors live entirely inside Postgres.",
-  },
-  {
-    slug: "eventure",
-    name: "Eventure",
-    tagline:
-      "Event planning with checklists, vendor discovery, real-time chat, and peer-to-peer video.",
-    url: "https://eventure-two.vercel.app",
-  },
-  {
-    slug: "smart-reviewer",
-    name: "Smart Reviewer",
-    tagline:
-      "An AI news reviewer — summaries and sentiment over polled background jobs.",
-    url: "https://smart-reviewer-aries.vercel.app",
-  },
-  {
-    slug: "reachcast",
-    name: "Reachcast",
-    tagline:
-      "Cold-email outreach in one keystroke: fill a template, get a prefilled Gmail draft, from Raycast.",
-  },
-  {
-    slug: "belle",
-    name: "Belle",
-    tagline:
-      "Storefront and baking-academy concept for a patisserie. Early and unfinished, on purpose.",
-    url: "https://belle-ten.vercel.app",
+    path: "/projects/cedar",
   },
 ];
 

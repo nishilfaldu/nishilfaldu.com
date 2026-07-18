@@ -6,8 +6,8 @@ Personal site. Live at **nishilfaldu.site** (Vercel, `main`). Repo is named
 **Home** — essay; projects only in narrative order. No grid, cards, or filters.
 Hover preview + dash stack are fine; tiles aren’t.
 
-**`/projects`** — curated list in `components/showcase-projects.ts`. Optional
-story pages under `/projects/<slug>`.
+**`/projects`** — curated list in `components/showcase-projects.ts`. Story
+pages under `/projects/<slug>` (Sediment, Atlas, Cedar).
 
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.
