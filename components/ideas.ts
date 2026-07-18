@@ -117,4 +117,20 @@ export const IDEAS: Idea[] = [
       },
     ],
   },
+  {
+    slug: "show-your-work",
+    title: "A nudge to show the work",
+    body: [
+      "I ship cool project changes and then forget to tell anyone. A nice push lands, I move on, and the share never happens — tweet, short note, whatever. I should do that more.",
+      "Inspired by Austin Kleon’s Show Your Work: the point isn’t a marketing machine, it’s the habit of making the work visible as you go. Something that notices a push worth sharing and gently reminds me would help — not another content calendar, just a nudge when the work was actually good.",
+    ],
+    status: "simmering",
+    refs: [
+      {
+        href: "https://austinkleon.com/show-your-work/",
+        label: "Austin Kleon — Show Your Work",
+        note: "the book behind the habit",
+      },
+    ],
+  },
 ];
