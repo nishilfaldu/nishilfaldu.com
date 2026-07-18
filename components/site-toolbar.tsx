@@ -2,22 +2,33 @@
 
 import { useEffect, useId, useState } from "react";
 import { BreatheRoom } from "@/components/breathe/breathe-room";
+import { CookingTool } from "@/components/cooking-tool";
 import { ReportPanel } from "@/components/report-panel";
 import "./site-toolbar.css";
 
 /**
- * Site tools — one quiet bar, bottom-left. Report, breathe, and room for more.
- * Shell only: tool state + dismiss. Panels own their own UI.
+ * Site tools — one quiet bar, bottom-left. Report, breathe, cooking (when
+ * something’s in flight), and room for more. Shell only: tool state + dismiss.
+ * Panels own their own UI.
  */
 
-type Tool = "report" | "breathe";
+type Tool = "report" | "breathe" | "cooking";
 
 const TOOL: Record<Tool, { dismissOnOutside: boolean; trapScroll: boolean }> = {
   report: { dismissOnOutside: true, trapScroll: false },
   breathe: { dismissOnOutside: false, trapScroll: true },
+  cooking: { dismissOnOutside: true, trapScroll: false },
 };
 
 export function SiteToolbar() {
+  return (
+    <CookingTool.Provider>
+      <SiteToolbarShell />
+    </CookingTool.Provider>
+  );
+}
+
+function SiteToolbarShell() {
   const reportId = useId();
   const breatheId = useId();
   const [tool, setTool] = useState<Tool | null>(null);
@@ -84,6 +95,8 @@ export function SiteToolbar() {
         />
       ) : null}
 
+      <CookingTool.Panel open={tool === "cooking"} onClose={closeTool} />
+
       <nav
         aria-label="Site tools"
         className="inline-flex items-center gap-0 rounded-[12px] border border-rule bg-paper px-1 py-1 shadow-[0_2px_12px_rgb(0_0_0/0.10)]"
@@ -106,6 +119,11 @@ export function SiteToolbar() {
         >
           breathe
         </ToolbarButton>
+        <CookingTool.NavButton
+          active={tool === "cooking"}
+          onClick={() => openTool("cooking")}
+          pulse={!reducedMotion && tool !== "cooking"}
+        />
       </nav>
     </div>
   );
@@ -116,12 +134,14 @@ function ToolbarButton({
   active,
   onClick,
   ariaControls,
+  ariaLabel,
   pulse,
 }: {
   children: React.ReactNode;
   active: boolean;
   onClick: () => void;
   ariaControls: string;
+  ariaLabel?: string;
   pulse?: boolean;
 }) {
   return (
@@ -129,6 +149,7 @@ function ToolbarButton({
       type="button"
       aria-expanded={active}
       aria-controls={ariaControls}
+      aria-label={ariaLabel}
       onClick={onClick}
       className={`relative cursor-pointer rounded-[9px] border-0 bg-transparent px-3 py-1.5 font-sans text-[0.82rem] tracking-[0.01em] transition-colors ${
         active ? "text-accent" : "text-ink-muted hover:text-accent"
