@@ -2,15 +2,14 @@
 
 import { useEffect, useId, useState } from "react";
 import { BreatheRoom } from "@/components/breathe/breathe-room";
-import { CookingPanel } from "@/components/cooking-panel";
+import { CookingTool } from "@/components/cooking-tool";
 import { ReportPanel } from "@/components/report-panel";
-import { useCooking } from "@/components/use-cooking";
 import "./site-toolbar.css";
 
 /**
  * Site tools — one quiet bar, bottom-left. Report, breathe, cooking (when
  * something’s in flight), and room for more. Shell only: tool state + dismiss.
- * Panels own their own UI; cooking data comes from useCooking().
+ * Panels own their own UI.
  */
 
 type Tool = "report" | "breathe" | "cooking";
@@ -22,12 +21,18 @@ const TOOL: Record<Tool, { dismissOnOutside: boolean; trapScroll: boolean }> = {
 };
 
 export function SiteToolbar() {
+  return (
+    <CookingTool.Provider>
+      <SiteToolbarShell />
+    </CookingTool.Provider>
+  );
+}
+
+function SiteToolbarShell() {
   const reportId = useId();
   const breatheId = useId();
-  const cookingId = useId();
   const [tool, setTool] = useState<Tool | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const { items: cookingItems, hasItems: hasCooking } = useCooking();
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -65,10 +70,6 @@ export function SiteToolbar() {
     };
   }, [tool]);
 
-  useEffect(() => {
-    if (!hasCooking && tool === "cooking") setTool(null);
-  }, [hasCooking, tool]);
-
   function closeTool() {
     setTool(null);
   }
@@ -94,9 +95,7 @@ export function SiteToolbar() {
         />
       ) : null}
 
-      {tool === "cooking" && hasCooking ? (
-        <CookingPanel id={cookingId} onClose={closeTool} items={cookingItems} />
-      ) : null}
+      <CookingTool.Panel open={tool === "cooking"} onClose={closeTool} />
 
       <nav
         aria-label="Site tools"
@@ -120,22 +119,11 @@ export function SiteToolbar() {
         >
           breathe
         </ToolbarButton>
-        {hasCooking ? (
-          <>
-            <span className="px-0.5 text-rule select-none" aria-hidden>
-              ·
-            </span>
-            <ToolbarButton
-              active={tool === "cooking"}
-              ariaControls={cookingId}
-              onClick={() => openTool("cooking")}
-              pulse={!reducedMotion && tool !== "cooking"}
-              ariaLabel={`What’s cooking: ${cookingItems.length} preview${cookingItems.length === 1 ? "" : "s"}`}
-            >
-              cooking
-            </ToolbarButton>
-          </>
-        ) : null}
+        <CookingTool.NavButton
+          active={tool === "cooking"}
+          onClick={() => openTool("cooking")}
+          pulse={!reducedMotion && tool !== "cooking"}
+        />
       </nav>
     </div>
   );

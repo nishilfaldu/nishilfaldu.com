@@ -28,5 +28,4 @@ export type CookingItem = {
 
 export type CookingResponse = {
   items: CookingItem[];
-  error?: string;
 };

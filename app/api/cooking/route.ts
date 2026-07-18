@@ -18,10 +18,8 @@ export async function GET() {
       },
     });
   } catch {
-    const body: CookingResponse = {
-      items: [],
-      error: "Failed to load cooking status",
-    };
+    // Empty list hides the cooking tool; no client error UI.
+    const body: CookingResponse = { items: [] };
     return NextResponse.json(body, {
       status: 503,
       headers: {
