@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { COOKING_REPOS } from "@/lib/cooking/repos";
 import type { CookingItem } from "@/lib/cooking/types";
 
@@ -9,7 +10,10 @@ import type { CookingItem } from "@/lib/cooking/types";
  */
 
 const linkClass =
-  "text-ink-muted no-underline transition-colors hover:text-accent";
+  "inline-flex items-center gap-1 text-ink-muted no-underline transition-colors hover:text-accent";
+
+const iconClass =
+  "size-[0.9em] shrink-0 opacity-80 [stroke-width:1.5] stroke-current fill-none";
 
 export function CookingPanel({
   id,
@@ -66,11 +70,11 @@ function WatchedRepos() {
       <p className="m-0 mb-2 text-[0.72rem] tracking-[0.06em] text-ink-muted uppercase">
         Watching
       </p>
-      <ul className="m-0 flex list-none flex-wrap items-baseline gap-x-0 gap-y-1 p-0">
+      <ul className="m-0 flex list-none flex-wrap items-center gap-x-0 gap-y-1.5 p-0">
         {COOKING_REPOS.map((watched, i) => {
           const full = `${watched.owner}/${watched.repo}`;
           return (
-            <li key={full} className="flex items-baseline">
+            <li key={full} className="flex items-center">
               {i > 0 ? (
                 <span aria-hidden className="px-2 text-rule">
                   ·
@@ -83,7 +87,8 @@ function WatchedRepos() {
                 className={`font-mono text-[0.78rem] ${linkClass}`}
                 title={full}
               >
-                {watched.repo}
+                <IconRepo />
+                <span>{watched.repo}</span>
               </a>
             </li>
           );
@@ -91,10 +96,6 @@ function WatchedRepos() {
       </ul>
     </div>
   );
-}
-
-function tryLabel(kind: "preview" | "release"): string {
-  return kind === "release" ? "Release ↗" : "Preview ↗";
 }
 
 function CookingRow({ item }: { item: CookingItem }) {
@@ -111,15 +112,22 @@ function CookingRow({ item }: { item: CookingItem }) {
         </p>
       ) : null}
 
-      <div className="mt-3 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[0.82rem]">
+      <div className="mt-3 flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[0.82rem]">
         {item.tryLink ? (
           <a
             href={item.tryLink.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent no-underline transition-colors hover:opacity-80"
+            className="inline-flex items-center gap-1 text-accent no-underline transition-colors hover:opacity-80"
           >
-            {tryLabel(item.tryLink.kind)}
+            {item.tryLink.kind === "release" ? (
+              <IconRelease />
+            ) : (
+              <IconPreview />
+            )}
+            <span>
+              {item.tryLink.kind === "release" ? "Release" : "Preview"}
+            </span>
           </a>
         ) : item.status === "building" ? (
           <span className="text-ink-muted">Building…</span>
@@ -138,7 +146,8 @@ function CookingRow({ item }: { item: CookingItem }) {
           className={linkClass}
           title={item.repo}
         >
-          {name}
+          <IconRepo />
+          <span>{name}</span>
         </a>
 
         <span aria-hidden className="text-rule">
@@ -152,9 +161,71 @@ function CookingRow({ item }: { item: CookingItem }) {
           className={`font-mono text-[0.72rem] ${linkClass}`}
           title="Open pull request"
         >
-          {item.branch}
+          <IconBranch />
+          <span>{item.branch}</span>
         </a>
       </div>
     </li>
+  );
+}
+
+function IconSvg({ children }: { children: ReactNode }) {
+  return (
+    <svg
+      viewBox="0 0 16 16"
+      width="1em"
+      height="1em"
+      className={iconClass}
+      aria-hidden="true"
+      focusable="false"
+      role="presentation"
+    >
+      {children}
+    </svg>
+  );
+}
+
+/** External / live preview. */
+function IconPreview() {
+  return (
+    <IconSvg>
+      <path d="M6 3H3.5A1.5 1.5 0 0 0 2 4.5v7A1.5 1.5 0 0 0 3.5 13h7A1.5 1.5 0 0 0 12 11.5V9" />
+      <path d="M10 2h4v4" />
+      <path d="M8.5 7.5 14 2" />
+    </IconSvg>
+  );
+}
+
+/** GitHub release / package tag. */
+function IconRelease() {
+  return (
+    <IconSvg>
+      <path d="M2.5 7.5 7.5 2.5h4.2L13.5 4.3v4.2L8.5 13.5z" />
+      <circle cx="10.2" cy="5.8" r="1.1" />
+    </IconSvg>
+  );
+}
+
+/** Repository. */
+function IconRepo() {
+  return (
+    <IconSvg>
+      <path d="M4 2.5h7.5A1.5 1.5 0 0 1 13 4v9.5H5.5A1.5 1.5 0 0 1 4 12V2.5Z" />
+      <path d="M4 12a1.5 1.5 0 0 0 1.5 1.5H13" />
+      <path d="M6.5 5h4M6.5 7.5h4" />
+    </IconSvg>
+  );
+}
+
+/** Git branch → PR. */
+function IconBranch() {
+  return (
+    <IconSvg>
+      <circle cx="4.5" cy="3.5" r="1.6" />
+      <circle cx="4.5" cy="12.5" r="1.6" />
+      <circle cx="11.5" cy="8.5" r="1.6" />
+      <path d="M4.5 5.2v5.6" />
+      <path d="M4.5 8.5h5.4" />
+    </IconSvg>
   );
 }
