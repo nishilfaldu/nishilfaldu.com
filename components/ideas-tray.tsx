@@ -147,7 +147,34 @@ function IdeaFocus({ idea, animate }: { idea: Idea; animate: boolean }) {
       <h2 className="m-0 mb-4 text-[1.35rem] font-medium tracking-[0.01em] text-ink">
         {idea.title}
       </h2>
-      <p className="m-0 text-[1.05rem] leading-relaxed text-ink">{idea.body}</p>
+      {idea.body.map((paragraph) => (
+        <p
+          key={paragraph.slice(0, 48)}
+          className="mb-[1.15em] text-[1.05rem] leading-relaxed text-ink last:mb-0"
+        >
+          {paragraph}
+        </p>
+      ))}
+      {idea.refs && idea.refs.length > 0 ? (
+        <div className="mt-8 border-t border-rule pt-5">
+          <p className="mb-3 text-[0.88rem] tracking-[0.02em] text-ink-muted">
+            In the neighborhood
+          </p>
+          <ul className="m-0 list-none p-0">
+            {idea.refs.map((ref) => (
+              <li key={ref.href} className="mb-2.5 last:mb-0">
+                <ProseLink href={ref.href}>{ref.label}</ProseLink>
+                {ref.note ? (
+                  <span className="text-[0.95rem] text-ink-muted">
+                    {" "}
+                    — {ref.note}
+                  </span>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
     </article>
   );
 }
