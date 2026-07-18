@@ -143,4 +143,13 @@ export const IDEAS: Idea[] = [
     ],
     status: "simmering",
   },
+  {
+    slug: "train-like-tennis",
+    title: "Train like a tennis athlete",
+    body: [
+      "I really like tennis. Training for it asks a lot — legs, lungs, focus, recovery — and I think that kind of training can pull your whole lifestyle and health up with it, even if you’re not chasing a ranking.",
+      "Something that actually guides people through those workouts would be nice. Not generic fitness with a tennis skin: a clear path to train like a tennis athlete, for people who want the sport’s discipline without guessing what to do next.",
+    ],
+    status: "simmering",
+  },
 ];
