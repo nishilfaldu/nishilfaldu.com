@@ -4,8 +4,12 @@ import type { CookingItem } from "@/lib/cooking/types";
 
 /**
  * WIP previews — panel for the site toolbar’s “cooking” tool.
- * Items come from `/api/cooking` (open PRs + GitHub Preview deployments).
+ * Each row: title + note, then discrete links (preview / repo / PR via branch).
  */
+
+const linkClass =
+  "text-ink-muted no-underline transition-colors hover:text-accent";
+
 export function CookingPanel({
   id,
   onClose,
@@ -33,7 +37,7 @@ export function CookingPanel({
         </button>
       </div>
       <p className="mb-4 text-[0.92rem] leading-snug text-ink-muted">
-        Live previews of open PRs that haven’t landed yet.
+        Open PRs that haven’t landed yet.
       </p>
       <ul className="m-0 list-none p-0">
         {items.map((item) => (
@@ -49,69 +53,62 @@ function repoName(repo: string): string {
   return slash === -1 ? repo : repo.slice(slash + 1);
 }
 
-function branchUrl(repo: string, branch: string): string {
-  return `https://github.com/${repo}/tree/${branch
-    .split("/")
-    .map(encodeURIComponent)
-    .join("/")}`;
-}
-
 function CookingRow({ item }: { item: CookingItem }) {
-  const href = item.url ?? item.prUrl;
-  const linkLabel =
-    item.status === "ready" && item.url
-      ? "Preview ↗"
-      : item.status === "building"
-        ? "Building…"
-        : "PR ↗";
+  const name = repoName(item.repo);
 
   return (
     <li className="border-t border-rule py-4 first:border-t-0 first:pt-0 last:pb-0">
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group block no-underline text-ink"
-      >
-        <span className="flex items-baseline justify-between gap-3">
-          <span className="font-medium tracking-[0.01em] transition-colors group-hover:text-accent">
-            {item.title}
-          </span>
-          <span className="shrink-0 text-[0.82rem] text-accent">
-            {linkLabel}
-          </span>
-        </span>
-        {item.note ? (
-          <span className="mt-1.5 block text-[0.92rem] leading-snug text-ink-muted">
-            {item.note}
-          </span>
+      <p className="m-0 font-medium tracking-[0.01em] text-ink">{item.title}</p>
+      {item.note ? (
+        <p className="mt-1.5 mb-0 text-[0.92rem] leading-snug text-ink-muted">
+          {item.note}
+        </p>
+      ) : null}
+
+      <div className="mt-3 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[0.82rem]">
+        {item.url ? (
+          <a
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent no-underline transition-colors hover:opacity-80"
+          >
+            Preview ↗
+          </a>
+        ) : item.status === "building" ? (
+          <span className="text-ink-muted">Building…</span>
         ) : null}
-      </a>
-      <span className="mt-2 flex flex-wrap items-baseline gap-x-2 text-[0.78rem] text-ink-muted">
-        <span className="uppercase tracking-[0.04em]">{item.status}</span>
-        <span aria-hidden className="text-rule">
-          ·
-        </span>
+
+        {(item.url || item.status === "building") && (
+          <span aria-hidden className="text-rule">
+            ·
+          </span>
+        )}
+
         <a
           href={`https://github.com/${item.repo}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-ink-muted no-underline transition-colors hover:text-accent"
+          className={linkClass}
+          title={item.repo}
         >
-          {repoName(item.repo)}
+          {name}
         </a>
+
         <span aria-hidden className="text-rule">
           ·
         </span>
+
         <a
-          href={branchUrl(item.repo, item.branch)}
+          href={item.prUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-mono text-[0.72rem] text-ink-muted no-underline transition-colors hover:text-accent"
+          className={`font-mono text-[0.72rem] ${linkClass}`}
+          title="Open pull request"
         >
           {item.branch}
         </a>
-      </span>
+      </div>
     </li>
   );
 }

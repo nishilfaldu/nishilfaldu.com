@@ -170,7 +170,12 @@ export function noteFromPrBody(body: string | null | undefined): string {
           .replace(/\s+/g, " ")
           .trim(),
       )
-      .find((p) => p.length > 0) ?? "";
+      .find((p) => {
+        if (!p.length) return false;
+        // Skip lone section headings from PR templates.
+        if (/^(summary|test plan|overview)$/i.test(p)) return false;
+        return true;
+      }) ?? "";
 
   if (para.length <= 280) return para;
   return `${para.slice(0, 277).trimEnd()}…`;
