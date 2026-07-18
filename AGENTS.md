@@ -5,8 +5,8 @@ Personal site. Live at **nishilfaldu.site** (Vercel, `main`). Repo is named
 
 **Home** — essay; projects only in narrative order. No grid, cards, or filters.
 Hover preview + dash stack are fine; tiles aren’t. Closing line: Projects,
-Writings, Tinkerletter, Scaffolds, socials. When WIP previews exist, a quiet
-**cooking** status joins that same line (not a third section) — see
+Writings, Tinkerletter, Scaffolds, socials. WIP previews are a site-wide
+**cooking** status button (above “report”) that opens a modal — see
 `components/cooking-status.tsx` + `components/previews.ts`.
 
 **`/projects`** — curated list in `components/showcase-projects.ts`. Story
@@ -33,7 +33,7 @@ installs official Expo Skills into the project (no Cursor Marketplace plugin).
 posts a Preview URL, add or update an entry with `title`, `note`, `branch`,
 `status`, and `url` (the stable `…-git-…vercel.app` alias from the Vercel bot /
 PR comment — not a per-deploy hash). Remove the entry when the work merges.
-The home **cooking** status reads this file; empty list = status hidden.
+The **cooking** modal reads this file; empty list = button hidden.
 
 If preview links ask for a Vercel login, turn off **Deployment Protection** for
 Preview in the Vercel project settings so visitors can open them.

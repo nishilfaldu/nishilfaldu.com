@@ -1,6 +1,7 @@
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
+import { CookingStatus } from "@/components/cooking-status";
 import {
   personJsonLd,
   SITE_DESCRIPTION,
@@ -83,6 +84,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: personJsonLd() }}
         />
         {children}
+        <CookingStatus />
         <ReportIssue />
       </body>
     </html>

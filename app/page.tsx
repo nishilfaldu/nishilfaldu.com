@@ -1,4 +1,3 @@
-import { CookingStatus } from "@/components/cooking-status";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import { Toc } from "@/components/toc";
@@ -257,7 +256,7 @@ export default function Home() {
 
         <p>If any of that resonates, say hi.</p>
 
-        <div className="mt-14 mb-[1.6rem]">
+        <p className="mt-14">
           <ProseLink nowrap href="/projects">
             Projects
           </ProseLink>{" "}
@@ -285,8 +284,7 @@ export default function Home() {
           <ProseLink nowrap href="https://www.linkedin.com/in/nishilfaldu">
             LinkedIn
           </ProseLink>
-          <CookingStatus />
-        </div>
+        </p>
       </main>
     </>
   );

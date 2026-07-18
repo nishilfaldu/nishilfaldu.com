@@ -3,9 +3,9 @@
  *
  * Editing this file on **main** is the whole workflow. After a WIP branch is
  * pushed and Vercel posts a Preview URL, add or update an entry here. When the
- * work lands, delete the entry. The home page reads this list into a quiet
- * “cooking” status on the links line (`<CookingStatus />`) — not a separate
- * page or section. Empty list = nothing shown.
+ * work lands, delete the entry. A site-wide “cooking” button opens a modal
+ * listing every entry (`<CookingStatus />` in the root layout). Empty list =
+ * button hidden.
  *
  * Preview URLs: paste the stable git-branch alias from the Vercel bot comment
  * on the PR (or the Preview link in the deployment). Don’t paste per-deploy
@@ -54,7 +54,7 @@ export const PREVIEWS: Preview[] = [
   {
     branch: "cursor/previews-status-5bf0",
     title: "Homepage cooking status",
-    note: "WIP previews as a quiet status in the home links line — open it for what’s in flight, without another page or section.",
+    note: "WIP previews in a site-wide modal — room for several branches in flight, without touching the home links.",
     status: "cooking",
     url: "https://nishilfalducom-git-cursor-preview-71520e-nishil-faldus-projects.vercel.app",
   },
