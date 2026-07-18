@@ -161,4 +161,14 @@ export const IDEAS: Idea[] = [
     ],
     status: "simmering",
   },
+  {
+    slug: "whatsapp-bot-for-anyone",
+    title: "A WhatsApp bot you describe in plain language",
+    body: [
+      "A lot of people live in iMessage and WhatsApp — in India, WhatsApp especially. The app already has a ton of surface area, and there’s more you could do on top of it for businesses that aren’t tech-savvy.",
+      "Wishful version: a doctor writes in a WhatsApp chat to a business account what they need, and that account spins up a decent customer-service bot — patients only ever talk in WhatsApp. API limits might block that exact path today.",
+      "Same idea on the web works either way: open an app, describe the bot in plain text, it gets provisioned for WhatsApp, and customers still only interact there. That’s the cool part — no new app for the end user.",
+    ],
+    status: "simmering",
+  },
 ];
