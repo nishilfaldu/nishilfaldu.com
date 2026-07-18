@@ -188,4 +188,21 @@ export const IDEAS: Idea[] = [
       },
     ],
   },
+  {
+    slug: "coordination-costs",
+    title: "Something that cuts coordination cost",
+    body: [
+      "As a company gets big, the hard part usually isn’t idea generation or even shipping products. It’s coordination — the tax of getting people aligned, unblocking each other, and not stepping on the same work.",
+      "I don’t know what the product is yet. I just like the bet: if something actually reduced that cost, companies would pay for it easily. The itch is the problem, not a shape.",
+    ],
+    status: "simmering",
+  },
+  {
+    slug: "sell-a-physical-product",
+    title: "Sell a physical product someday",
+    body: [
+      "In the future I really want to sell something you can hold — a physical product. I don’t know what it is yet. The desire is the thing, not the SKU.",
+    ],
+    status: "simmering",
+  },
 ];
