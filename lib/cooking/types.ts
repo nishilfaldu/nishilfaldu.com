@@ -5,6 +5,11 @@
 
 export type CookingStatus = "cooking" | "ready" | "building";
 
+export type CookingTryLink = {
+  kind: "preview" | "release";
+  url: string;
+};
+
 export type CookingItem = {
   /** Stable id: `${repo}#${prNumber}` */
   id: string;
@@ -16,8 +21,8 @@ export type CookingItem = {
   /** Short blurb from the PR body (may be empty). */
   note: string;
   status: CookingStatus;
-  /** Preview URL when Ready; null while building / missing. */
-  url: string | null;
+  /** Preview deploy or latest release — null if neither applies yet. */
+  tryLink: CookingTryLink | null;
   /** GitHub PR link — always set. */
   prUrl: string;
   /** ISO timestamp from PR or deployment. */

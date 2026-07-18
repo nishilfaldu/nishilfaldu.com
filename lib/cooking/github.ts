@@ -149,6 +149,36 @@ export async function previewsForShas(
   return out;
 }
 
+type GhRelease = {
+  html_url: string;
+  tag_name: string;
+  published_at: string | null;
+};
+
+/**
+ * Latest published release for a native app. Falls back to the releases index
+ * when the API has no "latest" (empty repo).
+ */
+export async function latestRelease(
+  owner: string,
+  repo: string,
+): Promise<{ url: string; updatedAt: string | null } | null> {
+  try {
+    const release = await githubJson<GhRelease>(
+      `/repos/${owner}/${repo}/releases/latest`,
+    );
+    return {
+      url: release.html_url,
+      updatedAt: release.published_at,
+    };
+  } catch {
+    return {
+      url: `https://github.com/${owner}/${repo}/releases`,
+      updatedAt: null,
+    };
+  }
+}
+
 /** First readable paragraph from a PR body for the cooking note. */
 export function noteFromPrBody(body: string | null | undefined): string {
   if (!body) return "";

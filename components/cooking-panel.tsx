@@ -4,7 +4,7 @@ import type { CookingItem } from "@/lib/cooking/types";
 
 /**
  * WIP previews — panel for the site toolbar’s “cooking” tool.
- * Each row: title + note, then discrete links (preview / repo / PR via branch).
+ * Each row: title + note, then discrete links (try / repo / PR via branch).
  */
 
 const linkClass =
@@ -53,8 +53,13 @@ function repoName(repo: string): string {
   return slash === -1 ? repo : repo.slice(slash + 1);
 }
 
+function tryLabel(kind: "preview" | "release"): string {
+  return kind === "release" ? "Release ↗" : "Preview ↗";
+}
+
 function CookingRow({ item }: { item: CookingItem }) {
   const name = repoName(item.repo);
+  const showTry = item.tryLink != null || item.status === "building";
 
   return (
     <li className="border-t border-rule py-4 first:border-t-0 first:pt-0 last:pb-0">
@@ -66,24 +71,24 @@ function CookingRow({ item }: { item: CookingItem }) {
       ) : null}
 
       <div className="mt-3 flex flex-wrap items-baseline gap-x-2.5 gap-y-1 text-[0.82rem]">
-        {item.url ? (
+        {item.tryLink ? (
           <a
-            href={item.url}
+            href={item.tryLink.url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-accent no-underline transition-colors hover:opacity-80"
           >
-            Preview ↗
+            {tryLabel(item.tryLink.kind)}
           </a>
         ) : item.status === "building" ? (
           <span className="text-ink-muted">Building…</span>
         ) : null}
 
-        {(item.url || item.status === "building") && (
+        {showTry ? (
           <span aria-hidden className="text-rule">
             ·
           </span>
-        )}
+        ) : null}
 
         <a
           href={`https://github.com/${item.repo}`}

@@ -31,18 +31,19 @@ overlay (Stanford / Balban et al.) — not a route.
 Official CLIs, not stale templates. Expo keeps create-expo-app’s AGENTS.md and
 installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
-**Cooking (WIP previews)** — automatic. `/api/cooking` lists open PRs on repos
-in `lib/cooking/repos.ts`, then attaches Preview URLs from GitHub Deployments
-(Vercel posts these when the project is linked to GitHub). No Vercel API.
-Title/note come from the PR. To show work: open a PR with a clear title. To
-hide it: merge or close the PR. To watch another product: add one entry to
-`COOKING_REPOS`. Do not hand-edit a status file on `main`.
+**Cooking (WIP)** — automatic. `/api/cooking` lists open PRs on repos in
+`lib/cooking/repos.ts`. Web apps (`try: "preview"`) get Preview URLs from
+GitHub Deployments. Native apps (`try: "release"`, e.g. Sediment) get a link
+to the latest GitHub Release instead. Title/note from the PR. Repo name →
+repo; branch → PR. To watch another product: add one entry to `COOKING_REPOS`
+(and grant that repo on `GITHUB_TOKEN`). Do not hand-edit a status file on
+`main`.
 
 Env — empty keys live in `.env.example` (copy to `.env.local` locally).
 Same names on the Vercel project → Environment Variables (never expose to the
 client):
 
-- `GITHUB_TOKEN` — read PRs/deployments; scope to the repos in `COOKING_REPOS`
+- `GITHUB_TOKEN` — read PRs/deployments/releases; scope to `COOKING_REPOS`
 - `NEXT_PUBLIC_SEDIMENT_DOWNLOAD_URL` — optional override for Sediment’s download gate
 
 If preview links ask for a Vercel login, turn off **Deployment Protection** for
