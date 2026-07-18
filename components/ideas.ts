@@ -44,6 +44,7 @@ export const IDEAS: Idea[] = [
       "If it’s a family of four, I want a dashboard for all of us: compare where we are, see progress, see what’s still open. When someone is far away, they upload; I can see it, make sense of it, keep tabs without nagging them for updates.",
       "BioAge (bioa.ge) is a simple personal version of “body as OS” — food, sleep, exercise, bloodwork — and it feels unfinished / quiet now. The fuller shape I’m imagining is closer to a family health home: multi-device, documents, shared visibility.",
       "From what I’ve seen, no one app really does all of that. OVURA is the closest on the family + wearables + records front; others cover personal stacks or family documents alone. Apple Health Sharing helps inside Apple’s wall. The whole picture — any watch stack, workouts, PDFs, a family of four you can compare, someone far away uploading so you can see it — still looks open.",
+      "Would be cool if the interface itself were very dynamic — some screens generated on the fly by AI for the moment you’re in, not a fixed dashboard forever. And maximum customizability in how you organize the software: almost a dynamic GUI, laid out the way your household actually thinks about health.",
     ],
     status: "simmering",
     refs: [
