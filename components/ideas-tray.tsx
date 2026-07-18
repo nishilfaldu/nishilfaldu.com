@@ -56,49 +56,53 @@ export function IdeasTray() {
     select(next);
   }
 
+  // Wider than measure so the tray sits beside a full reading column —
+  // not both squeezed into 38rem.
   return (
-    <main className="mx-auto max-w-measure px-6 pt-22 pb-28 sm:px-8 sm:pt-32 sm:pb-36">
-      <a href="/" aria-label="Home" className="inline-block no-underline">
-        <Mark className="mb-10" />
-      </a>
+    <main className="mx-auto max-w-[55rem] px-6 pt-22 pb-28 sm:px-8 sm:pt-32 sm:pb-36">
+      <div className="max-w-measure">
+        <a href="/" aria-label="Home" className="inline-block no-underline">
+          <Mark className="mb-10" />
+        </a>
 
-      <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Ideas</h1>
-      <p className="mb-10 text-ink-muted">
-        Open loops I’m willing to put on the site — not a notes dump. Draw one,
-        sit with it, or jump the list.{" "}
-        <ProseLink href="/">Back to the story</ProseLink>.
-      </p>
+        <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Ideas</h1>
+        <p className="mb-10 text-ink-muted">
+          Open loops I’m willing to put on the site — not a notes dump. Draw
+          one, sit with it, or jump the list.{" "}
+          <ProseLink href="/">Back to the story</ProseLink>.
+        </p>
+      </div>
 
-      <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:gap-12">
+      <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:gap-14">
         <nav
           aria-label="Ideas in the tray"
-          className="sm:w-[9.5rem] sm:shrink-0"
+          className="sm:w-[13.5rem] sm:shrink-0"
         >
-          <p className="mb-3 text-[0.8rem] tracking-[0.04em] text-ink-muted uppercase">
+          <p className="mb-4 text-[0.8rem] tracking-[0.04em] text-ink-muted uppercase">
             In the tray
           </p>
           <ol className="m-0 list-none p-0">
             {IDEAS.map((item, i) => (
-              <li key={item.slug} className="mb-2 last:mb-0">
+              <li key={item.slug} className="mb-3 last:mb-0">
                 <button
                   type="button"
                   onClick={() => select(i)}
                   aria-current={i === index ? "true" : undefined}
-                  className={`group flex w-full cursor-pointer items-baseline gap-2 border-0 bg-transparent p-0 text-left font-sans text-[0.95rem] transition-colors ${
+                  className={`group flex w-full cursor-pointer items-baseline gap-2.5 border-0 bg-transparent p-0 text-left font-sans text-[0.95rem] transition-colors ${
                     i === index
                       ? "text-ink"
                       : "text-ink-muted hover:text-accent"
                   }`}
                 >
                   <span
-                    className={`mt-[0.35em] inline-block h-1.5 w-1.5 shrink-0 rounded-full transition-transform ${
+                    className={`mt-[0.4em] inline-block h-1.5 w-1.5 shrink-0 rounded-full transition-transform ${
                       i === index
                         ? "bg-dot scale-110"
                         : "bg-rule group-hover:bg-accent"
                     }`}
                     aria-hidden
                   />
-                  <span className="leading-snug tracking-[0.01em]">
+                  <span className="leading-[1.35] tracking-[0.01em]">
                     {item.title}
                   </span>
                 </button>
@@ -107,7 +111,7 @@ export function IdeasTray() {
           </ol>
         </nav>
 
-        <section className="min-w-0 flex-1" aria-live="polite">
+        <section className="min-w-0 flex-1 sm:max-w-measure" aria-live="polite">
           <IdeaFocus
             key={`${idea.slug}-${tick}`}
             idea={idea}
