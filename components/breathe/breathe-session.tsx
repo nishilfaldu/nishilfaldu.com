@@ -2,29 +2,22 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import {
+  isActivePhase,
+  PHASE,
   phaseLabel,
   SIGH,
   type SighPhase,
-} from "@/components/breathe/breathe-shared";
+} from "@/components/breathe/sigh";
 
 /**
  * Just the sighs — orb, phase, a thin provenance line. No notes, no essay.
  */
-export function BreatheSession({
-  onFinished,
-  onClose,
-}: {
-  onFinished?: () => void;
-  onClose?: () => void;
-}) {
+export function BreatheSession({ onClose }: { onClose: () => void }) {
   const [phase, setPhase] = useState<SighPhase>("ready");
   const [cycle, setCycle] = useState(0);
-  const [running, setRunning] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const timerRef = useRef<number | null>(null);
   const labelId = useId();
-  const onFinishedRef = useRef(onFinished);
-  onFinishedRef.current = onFinished;
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -37,84 +30,46 @@ export function BreatheSession({
   }, []);
 
   useEffect(() => {
-    return () => {
-      if (timerRef.current !== null) window.clearTimeout(timerRef.current);
-    };
+    return () => clearTimer(timerRef);
   }, []);
 
-  function clearTimer() {
-    if (timerRef.current !== null) {
-      window.clearTimeout(timerRef.current);
-      timerRef.current = null;
-    }
+  function reset() {
+    clearTimer(timerRef);
+    setPhase("ready");
+    setCycle(0);
   }
 
   function start() {
-    clearTimer();
-    setRunning(true);
+    clearTimer(timerRef);
     setCycle(1);
     setPhase("inhale1");
   }
 
   useEffect(() => {
-    if (!running) return;
+    if (!isActivePhase(phase)) return;
 
-    function schedule(ms: number, fn: () => void) {
-      if (timerRef.current !== null) {
-        window.clearTimeout(timerRef.current);
-        timerRef.current = null;
-      }
-      timerRef.current = window.setTimeout(fn, ms);
-    }
-
-    if (phase === "inhale1") {
-      schedule(SIGH.inhale1Ms, () => setPhase("inhale2"));
-    } else if (phase === "inhale2") {
-      schedule(SIGH.inhale2Ms, () => setPhase("exhale"));
-    } else if (phase === "exhale") {
-      schedule(SIGH.exhaleMs, () => setPhase("rest"));
-    } else if (phase === "rest") {
-      schedule(SIGH.restMs, () => {
+    const step = PHASE[phase];
+    timerRef.current = window.setTimeout(() => {
+      if (step.next === "cycle-or-done") {
         if (cycle >= SIGH.defaultCycles) {
           setPhase("done");
-          setRunning(false);
-          onFinishedRef.current?.();
         } else {
           setCycle((c) => c + 1);
           setPhase("inhale1");
         }
-      });
-    }
-
-    return () => {
-      if (timerRef.current !== null) {
-        window.clearTimeout(timerRef.current);
-        timerRef.current = null;
+        return;
       }
-    };
-  }, [phase, running, cycle]);
+      setPhase(step.next);
+    }, step.ms);
 
-  const scale =
-    phase === "inhale1"
-      ? 1.18
-      : phase === "inhale2"
-        ? 1.28
-        : phase === "exhale"
-          ? 0.72
-          : phase === "rest"
-            ? 0.68
-            : 1;
+    return () => clearTimer(timerRef);
+  }, [phase, cycle]);
 
-  const durationMs =
-    phase === "inhale1"
-      ? SIGH.inhale1Ms
-      : phase === "inhale2"
-        ? SIGH.inhale2Ms
-        : phase === "exhale"
-          ? SIGH.exhaleMs
-          : phase === "rest"
-            ? 500
-            : 600;
+  const active = isActivePhase(phase);
+  const step = active ? PHASE[phase] : null;
+  const scale = step?.scale ?? 1;
+  const durationMs = step?.transitionMs ?? 600;
+  const ease = step?.ease ?? "ease-in-out";
 
   return (
     <div className="flex flex-col items-center text-center">
@@ -128,9 +83,7 @@ export function BreatheSession({
             transform: `scale(${scale})`,
             transition: reducedMotion
               ? undefined
-              : `transform ${durationMs}ms ${
-                  phase === "exhale" ? "ease-in" : "ease-in-out"
-                }`,
+              : `transform ${durationMs}ms ${ease}`,
           }}
         />
         <p
@@ -139,7 +92,7 @@ export function BreatheSession({
         >
           {phaseLabel(phase)}
         </p>
-        {phase !== "ready" && phase !== "done" ? (
+        {active ? (
           <p className="m-0 mt-2 text-[0.88rem] text-ink-muted tabular-nums">
             {cycle} / {SIGH.defaultCycles}
           </p>
@@ -160,41 +113,30 @@ export function BreatheSession({
           <>
             <button
               type="button"
-              onClick={() => {
-                setPhase("ready");
-                setCycle(0);
-                setRunning(false);
-              }}
+              onClick={reset}
               className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] font-medium text-accent hover:text-ink"
             >
               Again →
             </button>
-            {onClose ? (
-              <button
-                type="button"
-                onClick={onClose}
-                className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] text-ink-muted hover:text-ink"
-              >
-                Done
-              </button>
-            ) : null}
+            <button
+              type="button"
+              onClick={onClose}
+              className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] text-ink-muted hover:text-ink"
+            >
+              Done
+            </button>
           </>
         ) : null}
-        {running ? (
+        {active ? (
           <button
             type="button"
-            onClick={() => {
-              clearTimer();
-              setRunning(false);
-              setPhase("ready");
-              setCycle(0);
-            }}
+            onClick={reset}
             className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] text-ink-muted hover:text-ink"
           >
             Stop
           </button>
         ) : null}
-        {phase === "ready" && onClose ? (
+        {phase === "ready" ? (
           <button
             type="button"
             onClick={onClose}
@@ -211,4 +153,11 @@ export function BreatheSession({
       </p>
     </div>
   );
+}
+
+function clearTimer(ref: { current: number | null }) {
+  if (ref.current !== null) {
+    window.clearTimeout(ref.current);
+    ref.current = null;
+  }
 }

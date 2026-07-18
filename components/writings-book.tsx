@@ -177,18 +177,18 @@ function LeafFace({
   side: "left" | "right" | "single";
   blank: boolean;
 }) {
-  const sideShadow =
+  const leafSide =
     side === "left"
-      ? " sm:shadow-[inset_-12px_0_18px_-18px_rgb(0_0_0/0.18)] dark:sm:shadow-[inset_-12px_0_18px_-18px_rgb(0_0_0/0.55)]"
+      ? " book-leaf-left"
       : side === "right"
-        ? " sm:shadow-[inset_12px_0_18px_-18px_rgb(0_0_0/0.18)] dark:sm:shadow-[inset_12px_0_18px_-18px_rgb(0_0_0/0.55)]"
+        ? " book-leaf-right"
         : "";
 
   return (
     <article
       className={`relative min-h-[28rem] px-6 pt-7 pb-8 sm:min-h-[32rem] sm:px-8 sm:pt-9 sm:pb-10${
         blank ? " bg-paper-raised" : " bg-paper"
-      }${sideShadow}`}
+      }${leafSide}`}
     >
       {leaf && !blank ? <LeafBody leaf={leaf} /> : null}
     </article>

@@ -1,4 +1,4 @@
-/* Motion for WritingsBook only — not a global primitive. */
+/* Motion + leaf shadows for WritingsBook — not a global primitive. */
 @keyframes book-spread-in {
   from {
     opacity: 0;
@@ -13,4 +13,26 @@
 .book-spread-enter {
   transform-origin: left center;
   animation: book-spread-in 0.42s ease-out both;
+}
+
+@media (min-width: 40rem) {
+  .book-leaf-left {
+    box-shadow: inset -12px 0 18px -18px rgb(0 0 0 / 0.18);
+  }
+
+  .book-leaf-right {
+    box-shadow: inset 12px 0 18px -18px rgb(0 0 0 / 0.18);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  @media (min-width: 40rem) {
+    .book-leaf-left {
+      box-shadow: inset -12px 0 18px -18px rgb(0 0 0 / 0.55);
+    }
+
+    .book-leaf-right {
+      box-shadow: inset 12px 0 18px -18px rgb(0 0 0 / 0.55);
+    }
+  }
 }

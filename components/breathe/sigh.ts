@@ -20,6 +20,53 @@ export type SighPhase =
   | "rest"
   | "done";
 
+export type ActivePhase = Exclude<SighPhase, "ready" | "done">;
+
+/** Drive the timer and orb from one table — no phase if-ladders in the UI. */
+export const PHASE: Record<
+  ActivePhase,
+  {
+    ms: number;
+    transitionMs: number;
+    scale: number;
+    ease: string;
+    next: ActivePhase | "cycle-or-done";
+  }
+> = {
+  inhale1: {
+    ms: SIGH.inhale1Ms,
+    transitionMs: SIGH.inhale1Ms,
+    scale: 1.18,
+    ease: "ease-in-out",
+    next: "inhale2",
+  },
+  inhale2: {
+    ms: SIGH.inhale2Ms,
+    transitionMs: SIGH.inhale2Ms,
+    scale: 1.28,
+    ease: "ease-in-out",
+    next: "exhale",
+  },
+  exhale: {
+    ms: SIGH.exhaleMs,
+    transitionMs: SIGH.exhaleMs,
+    scale: 0.72,
+    ease: "ease-in",
+    next: "rest",
+  },
+  rest: {
+    ms: SIGH.restMs,
+    transitionMs: 500,
+    scale: 0.68,
+    ease: "ease-in-out",
+    next: "cycle-or-done",
+  },
+};
+
+export function isActivePhase(phase: SighPhase): phase is ActivePhase {
+  return phase !== "ready" && phase !== "done";
+}
+
 export function phaseLabel(phase: SighPhase): string {
   switch (phase) {
     case "ready":
