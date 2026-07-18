@@ -27,10 +27,13 @@ installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
 **`/previews`** — “In the works”: live Vercel preview links for WIP branches.
 Source of truth is `components/previews.ts` on **main** (same edit-the-file
-pattern as ideas). After you push a WIP branch, add or update an entry there
-with `title`, `note`, `branch`, and `status`. Preview URL is derived from the
-branch name via `vercelPreviewUrl()` — don’t paste deployment hashes. Remove
-the entry when the work merges. Linked from home.
+pattern as ideas). After you push a WIP branch and Vercel posts a Preview URL,
+add or update an entry with `title`, `note`, `branch`, `status`, and `url`
+(the stable `…-git-…vercel.app` alias from the Vercel bot / PR comment — not a
+per-deploy hash). Remove the entry when the work merges. Linked from home.
+
+If preview links ask for a Vercel login, turn off **Deployment Protection** for
+Preview in the Vercel project settings so visitors can open them.
 
 **Page files** hold the page component only; everything else in `components/`.
 

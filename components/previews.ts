@@ -2,11 +2,18 @@
  * Branches in flight — Vercel preview links and a line about what’s cooking.
  *
  * Editing this file on **main** is the whole workflow. After a WIP branch is
- * pushed and Vercel has a preview, add or update an entry here (title, note,
- * branch). The preview URL is derived from the branch name; don’t paste
- * deployment hashes. When the work lands, delete the entry.
+ * pushed and Vercel posts a Preview URL, add or update an entry here. When the
+ * work lands, delete the entry.
  *
  * Same spirit as ideas.ts: the list is the source of truth, no extra store.
+ *
+ * Preview URLs: paste the stable git-branch alias from the Vercel bot comment
+ * on the PR (or the Preview link in the deployment). Don’t paste per-deploy
+ * hashes (`…-5irtpn6ju-…`) — those rotate. Long branch names get truncated by
+ * Vercel, so deriving the alias from the branch alone is unreliable.
+ *
+ * If a preview asks visitors to log in to Vercel, turn off Deployment
+ * Protection for Preview in the project settings so the links are public.
  */
 
 export type PreviewStatus = "cooking" | "ready" | "cooling";
@@ -20,10 +27,10 @@ export type Preview = {
   note: string;
   status: PreviewStatus;
   /**
-   * Override the derived Vercel URL when the default alias is wrong.
-   * Almost never needed — prefer fixing the branch slug instead.
+   * Stable Vercel git-branch preview URL, e.g.
+   * https://nishilfalducom-git-<slug>-nishil-faldus-projects.vercel.app
    */
-  url?: string;
+  url: string;
 };
 
 export const PREVIEW_STATUS_LABEL: Record<PreviewStatus, string> = {
@@ -31,26 +38,6 @@ export const PREVIEW_STATUS_LABEL: Record<PreviewStatus, string> = {
   ready: "ready",
   cooling: "cooling",
 };
-
-/**
- * Vercel project + team that own this site’s preview deploys.
- * Confirmed against live git-branch aliases (nishilfalducom-git-…-vercel.app).
- */
-const VERCEL_PROJECT = "nishilfalducom";
-const VERCEL_TEAM = "nishil-faldus-projects";
-
-/** Branch → predictable preview hostname (Vercel’s git-branch alias). */
-export function vercelPreviewUrl(branch: string): string {
-  const slug = branch
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-  return `https://${VERCEL_PROJECT}-git-${slug}-${VERCEL_TEAM}.vercel.app`;
-}
-
-export function previewHref(p: Preview): string {
-  return p.url ?? vercelPreviewUrl(p.branch);
-}
 
 export const GITHUB_REPO = "https://github.com/nishilfaldu/nishilfaldu.com";
 
@@ -69,5 +56,6 @@ export const PREVIEWS: Preview[] = [
     title: "A board for what’s in flight",
     note: "A quiet list of branches being worked on, each with its Vercel preview and a line about what’s cooking — so I can open them fast and visitors can peek at what’s coming.",
     status: "cooking",
+    url: "https://nishilfalducom-git-cursor-preview-71520e-nishil-faldus-projects.vercel.app",
   },
 ];

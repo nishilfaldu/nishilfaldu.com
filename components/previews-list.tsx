@@ -3,7 +3,6 @@ import {
   githubBranchUrl,
   PREVIEW_STATUS_LABEL,
   PREVIEWS,
-  previewHref,
 } from "@/components/previews";
 import { ProseLink } from "@/components/prose-link";
 
@@ -31,48 +30,45 @@ export function PreviewsList() {
         <p className="text-ink-muted">Nothing cooking right now.</p>
       ) : (
         <ul className="list-none p-0">
-          {PREVIEWS.map((p) => {
-            const href = previewHref(p);
-            return (
-              <li
-                key={p.branch}
-                className="border-t border-rule py-7 first:border-t-0 first:pt-0"
+          {PREVIEWS.map((p) => (
+            <li
+              key={p.branch}
+              className="border-t border-rule py-7 first:border-t-0 first:pt-0"
+            >
+              <a
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block no-underline text-ink"
               >
+                <span className="flex items-baseline justify-between gap-4">
+                  <span className="font-medium tracking-[0.01em] transition-colors group-hover:text-accent">
+                    {p.title}
+                  </span>
+                  <span className="shrink-0 text-[0.92rem] text-accent">
+                    Preview ↗
+                  </span>
+                </span>
+                <span className="mt-2 block text-ink-muted">{p.note}</span>
+              </a>
+              <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[0.82rem] tracking-[0.01em] text-ink-muted">
+                <span className="uppercase tracking-[0.04em]">
+                  {PREVIEW_STATUS_LABEL[p.status]}
+                </span>
+                <span aria-hidden className="text-rule">
+                  ·
+                </span>
                 <a
-                  href={href}
+                  href={githubBranchUrl(p.branch)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block no-underline text-ink"
+                  className="font-mono text-[0.78rem] text-ink-muted no-underline transition-colors hover:text-accent"
                 >
-                  <span className="flex items-baseline justify-between gap-4">
-                    <span className="font-medium tracking-[0.01em] transition-colors group-hover:text-accent">
-                      {p.title}
-                    </span>
-                    <span className="shrink-0 text-[0.92rem] text-accent">
-                      Preview ↗
-                    </span>
-                  </span>
-                  <span className="mt-2 block text-ink-muted">{p.note}</span>
+                  {p.branch}
                 </a>
-                <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[0.82rem] tracking-[0.01em] text-ink-muted">
-                  <span className="uppercase tracking-[0.04em]">
-                    {PREVIEW_STATUS_LABEL[p.status]}
-                  </span>
-                  <span aria-hidden className="text-rule">
-                    ·
-                  </span>
-                  <a
-                    href={githubBranchUrl(p.branch)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-mono text-[0.78rem] text-ink-muted no-underline transition-colors hover:text-accent"
-                  >
-                    {p.branch}
-                  </a>
-                </p>
-              </li>
-            );
-          })}
+              </p>
+            </li>
+          ))}
         </ul>
       )}
     </main>
