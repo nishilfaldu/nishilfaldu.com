@@ -17,9 +17,9 @@ home for now.
 `components/writings.ts`. Turnable leaves (verse / prose / title). Linked
 from home.
 
-**Breathe** — corner tool on every page (`BreatheCorner`), not a route.
-Soft pulse → quiet overlay with cyclic sighs (Stanford / Balban et al.).
-No notes, no path.
+**Site toolbar** — bottom-left bar (`SiteToolbar`): report, breathe, room
+for more tools. Breathe opens a quiet cyclic-sigh overlay (Stanford /
+Balban et al.) — not a route.
 
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.

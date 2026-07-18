@@ -10,7 +10,13 @@ import {
 /**
  * Just the sighs — orb, phase, a thin provenance line. No notes, no essay.
  */
-export function BreatheSession({ onFinished }: { onFinished?: () => void }) {
+export function BreatheSession({
+  onFinished,
+  onClose,
+}: {
+  onFinished?: () => void;
+  onClose?: () => void;
+}) {
   const [phase, setPhase] = useState<SighPhase>("ready");
   const [cycle, setCycle] = useState(0);
   const [running, setRunning] = useState(false);
@@ -131,17 +137,28 @@ export function BreatheSession({ onFinished }: { onFinished?: () => void }) {
           </button>
         ) : null}
         {phase === "done" ? (
-          <button
-            type="button"
-            onClick={() => {
-              setPhase("ready");
-              setCycle(0);
-              setRunning(false);
-            }}
-            className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] font-medium text-accent hover:text-ink"
-          >
-            Again →
-          </button>
+          <>
+            <button
+              type="button"
+              onClick={() => {
+                setPhase("ready");
+                setCycle(0);
+                setRunning(false);
+              }}
+              className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] font-medium text-accent hover:text-ink"
+            >
+              Again →
+            </button>
+            {onClose ? (
+              <button
+                type="button"
+                onClick={onClose}
+                className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] text-ink-muted hover:text-ink"
+              >
+                Done
+              </button>
+            ) : null}
+          </>
         ) : null}
         {running ? (
           <button
@@ -155,6 +172,15 @@ export function BreatheSession({ onFinished }: { onFinished?: () => void }) {
             className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] text-ink-muted hover:text-ink"
           >
             Stop
+          </button>
+        ) : null}
+        {phase === "ready" && onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            className="cursor-pointer border-0 bg-transparent p-0 font-sans text-[0.95rem] text-ink-muted hover:text-ink"
+          >
+            Close
           </button>
         ) : null}
       </div>
