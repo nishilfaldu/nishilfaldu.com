@@ -72,7 +72,7 @@ export const BOOK = {
       slug: "dominoes",
       form: "verse",
       lines: [
-        "क्या-क्या डोमिनोज़ को",
+        "क्या-क्या ईंटों को",
         "किस तरह गिरना पड़ेगा",
         "तुम्हें मेरे तक पहुँचने के लिए।",
       ],
@@ -80,7 +80,11 @@ export const BOOK = {
     {
       slug: "mere-shabd",
       form: "verse",
-      lines: ["ये मेरे शब्द ही ऐसे हैं —", "दूसरों के लिए", "प्यार कम कर ही देते हैं।"],
+      lines: [
+        "ये 'मैं' शब्द ही ऐसा —",
+        "दूसरों के लिए",
+        "प्यार कम कर ही देता है।",
+      ],
     },
     {
       slug: "shayad-usi-din",
@@ -96,9 +100,9 @@ export const BOOK = {
       slug: "life-goes-on",
       form: "verse",
       lines: [
-        "ज़िंदगी चलती रहती है,",
-        "लोग आगे बढ़ जाते हैं —",
-        "पर शो तो चलना ही चाहिए।",
+        "Life goes on,",
+        "people move on,",
+        "but the show must go on.",
       ],
     },
     {
@@ -177,12 +181,12 @@ export const BOOK = {
     {
       slug: "zulfein-suljhane",
       form: "verse",
-      lines: ["तेरी ज़ुल्फ़ें सुलझाने दोगी क्या?"],
+      lines: ["तुम्हारी ज़ुल्फ़ें सुलझाने दोगी क्या?"],
     },
     {
       slug: "aaj-itne-khush",
       form: "verse",
-      lines: ["आज इतने खुश कैसे हो?", "— ख़्वाब में उसकी ज़ुल्फ़ें", "उलझा कर लाया हूँ।"],
+      lines: ["आज इतने खुश कैसे हो?", "— ख़्वाब में उसकी ज़ुल्फ़ें", "उलझा कर आया हूँ।"],
     },
     {
       slug: "zamane-se",
@@ -202,7 +206,7 @@ export const BOOK = {
     {
       slug: "milne-ka-waqt",
       form: "verse",
-      lines: ["सुन —", "भी कोई मिलने का वक़्त होता है क्या?"],
+      lines: ["is “soon” even a time to meet?"],
     },
     {
       slug: "duniya-kamaal",
@@ -241,9 +245,9 @@ export const BOOK = {
       slug: "surprises",
       form: "verse",
       lines: [
-        "तुम कहती हो सरप्राइज़ पसंद है,",
-        "पर ख़ुदा को सरप्राइज़ देने का",
-        "मौक़ा ही नहीं देतीं।",
+        "you say you like surprises,",
+        "but you don’t give God a chance",
+        "to even surprise you.",
       ],
     },
     {

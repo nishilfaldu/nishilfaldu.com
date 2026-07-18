@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects/atlas",
     "/projects/cedar",
     "/ideas",
+    "/writings",
     "/tinkerletter",
     "/tinkerletter/shoe-buyers-field-guide",
     "/scaffolds",

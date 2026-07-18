@@ -14,8 +14,8 @@ pages under `/projects/<slug>` (Sediment, Atlas, Cedar).
 home for now.
 
 **`/writings`** — book UI in `components/writings-book.tsx`; pages in
-`components/writings.ts`. Turnable leaves (verse / prose / title). Not
-linked from home until real writing replaces placeholders.
+`components/writings.ts`. Turnable leaves (verse / prose / title). Linked
+from home.
 
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.
