@@ -29,7 +29,6 @@ export async function aggregateCooking(): Promise<CookingItem[]> {
         const preview = previews.get(pr.sha) ?? null;
         return {
           id: `${repoFull}#${pr.number}`,
-          project: watched.label,
           repo: repoFull,
           branch: pr.branch,
           title: pr.title,

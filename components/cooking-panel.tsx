@@ -44,6 +44,11 @@ export function CookingPanel({
   );
 }
 
+function repoName(repo: string): string {
+  const slash = repo.lastIndexOf("/");
+  return slash === -1 ? repo : repo.slice(slash + 1);
+}
+
 function branchUrl(repo: string, branch: string): string {
   return `https://github.com/${repo}/tree/${branch
     .split("/")
@@ -87,7 +92,14 @@ function CookingRow({ item }: { item: CookingItem }) {
         <span aria-hidden className="text-rule">
           ·
         </span>
-        <span>{item.project}</span>
+        <a
+          href={`https://github.com/${item.repo}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-ink-muted no-underline transition-colors hover:text-accent"
+        >
+          {repoName(item.repo)}
+        </a>
         <span aria-hidden className="text-rule">
           ·
         </span>
