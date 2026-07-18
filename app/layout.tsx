@@ -1,7 +1,7 @@
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { BreathePeek } from "@/components/breathe/breathe-peek";
+import { BreatheCorner } from "@/components/breathe/breathe-corner";
 import {
   personJsonLd,
   SITE_DESCRIPTION,
@@ -84,7 +84,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: personJsonLd() }}
         />
         {children}
-        <BreathePeek />
+        <BreatheCorner />
         <ReportIssue />
       </body>
     </html>
