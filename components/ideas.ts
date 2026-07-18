@@ -74,4 +74,21 @@ export const IDEAS: Idea[] = [
       },
     ],
   },
+  {
+    slug: "attention-residue",
+    title: "Room for attention residue to clear",
+    body: [
+      "Attention residue is the lag after you close the scroll — your head is still half in the last clip, the comment thread, the next swipe, even though the app is gone. Social feeds make it worse because they slam unrelated contexts together; the baseline doesn’t come back for a while.",
+      "I don’t want a ten-step detox routine. I do think most people need some real boredom in a day — half an hour, maybe an hour — with nothing to fill it. Thoughts settle. You get a little more creative. The bigger picture of what you’re actually trying to do shows up. Feelings get room too, instead of being drowned out by the next video.",
+      "The problem is everyone scrolls all the time, so that residue never fully clears. Something that makes space for that void — without turning into another feed — feels worth thinking about.",
+    ],
+    status: "simmering",
+    refs: [
+      {
+        href: "https://www.sciencedirect.com/science/article/abs/pii/S0749597814000699",
+        label: "Sophie Leroy — attention residue",
+        note: "the research term for leftover focus after you switch tasks",
+      },
+    ],
+  },
 ];
