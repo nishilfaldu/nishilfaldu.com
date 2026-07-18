@@ -7,7 +7,7 @@ import {
   SITE_NAME,
   SITE_URL,
 } from "@/components/page-metadata";
-import { ReportIssue } from "@/components/report-issue";
+import { SiteToolbar } from "@/components/site-toolbar";
 import "./globals.css";
 
 /*
@@ -83,7 +83,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: personJsonLd() }}
         />
         {children}
-        <ReportIssue />
+        <SiteToolbar />
       </body>
     </html>
   );

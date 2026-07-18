@@ -1,0 +1,31 @@
+/* Motion for SiteToolbar / breathe overlay only — not a global primitive. */
+@keyframes breathe-room-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toolbar-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.28);
+    opacity: 1;
+  }
+}
+
+.breathe-room-enter {
+  animation: breathe-room-in 0.4s ease-out both;
+}
+
+.toolbar-pulse {
+  animation: toolbar-pulse 4.2s ease-in-out infinite;
+}

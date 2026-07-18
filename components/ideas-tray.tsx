@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { IDEA_STATUS_LABEL, IDEAS, type Idea } from "@/components/ideas";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
+import "./ideas-tray.css";
 
 /**
  * One idea in focus, a short index to jump, and a “draw another” shuffle.
