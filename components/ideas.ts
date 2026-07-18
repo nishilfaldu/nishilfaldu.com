@@ -2,7 +2,7 @@
  * Open ideas — not a notes dump, a short public tray of thoughts that might
  * become something. Editing this file is the whole workflow.
  */
-export type IdeaStatus = "simmering" | "building" | "cooling";
+export type IdeaStatus = "simmering" | "building" | "shipped" | "cooling";
 
 export type IdeaRef = {
   href: string;
@@ -24,6 +24,7 @@ export type Idea = {
 export const IDEA_STATUS_LABEL: Record<IdeaStatus, string> = {
   simmering: "simmering",
   building: "building",
+  shipped: "shipped",
   cooling: "cooling",
 };
 
@@ -140,8 +141,16 @@ export const IDEAS: Idea[] = [
     body: [
       "I write poetry and odd lines now and then. They usually land in Notion or notes — a dump, not a place. I wish there were one interface that just maintained a book: a GUI that feels like pages, not a database table, holding everything I’ve written.",
       "If I ever publish someday (probably not soon), that book would already be the draft. Until then it’s just somewhere honest for the lines to live.",
+      "It’s on the site now — turn the pages at /writings.",
     ],
-    status: "building",
+    status: "shipped",
+    refs: [
+      {
+        href: "/writings",
+        label: "A small book",
+        note: "the turnable pages on this site",
+      },
+    ],
   },
   {
     slug: "train-like-tennis",
