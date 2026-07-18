@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import { BOOK, type WritingLeaf } from "@/components/writings";
+import "./writings-book.css";
 
 /**
  * One book: open spread on wider screens, a single leaf on small ones.
@@ -101,18 +102,18 @@ export function WritingsBook() {
         </p>
       </div>
 
-      <div className="book-stage relative mx-auto w-full">
+      <div className="relative mx-auto w-full [perspective:1600px]">
         <div
           key={`${leftIndex}-${tick}`}
-          className={
-            reducedMotion ? "book-spread" : "book-spread book-spread-enter"
-          }
+          className={`grid min-h-[28rem] grid-cols-1 overflow-hidden rounded-sm border border-rule bg-paper-raised sm:min-h-[32rem] sm:grid-cols-[1fr_1px_1fr]${
+            reducedMotion ? "" : " book-spread-enter"
+          }`}
           aria-live="polite"
         >
           {spread ? (
             <>
               <LeafFace leaf={left} side="left" blank={!left} />
-              <div className="book-gutter" aria-hidden />
+              <div className="bg-rule" aria-hidden />
               <LeafFace leaf={right} side="right" blank={!right} />
             </>
           ) : (
@@ -125,14 +126,14 @@ export function WritingsBook() {
           aria-label="Previous page"
           disabled={atStart}
           onClick={() => go(-1)}
-          className="book-turn book-turn-prev"
+          className="absolute top-0 bottom-0 left-0 z-1 w-[18%] max-w-[5.5rem] cursor-pointer border-0 bg-transparent p-0 disabled:cursor-default hover:enabled:bg-linear-to-l hover:enabled:from-transparent hover:enabled:to-accent/5"
         />
         <button
           type="button"
           aria-label="Next page"
           disabled={atEnd}
           onClick={() => go(1)}
-          className="book-turn book-turn-next"
+          className="absolute top-0 right-0 bottom-0 z-1 w-[18%] max-w-[5.5rem] cursor-pointer border-0 bg-transparent p-0 disabled:cursor-default hover:enabled:bg-linear-to-r hover:enabled:from-transparent hover:enabled:to-accent/5"
         />
       </div>
 
@@ -176,9 +177,18 @@ function LeafFace({
   side: "left" | "right" | "single";
   blank: boolean;
 }) {
+  const leafSide =
+    side === "left"
+      ? " book-leaf-left"
+      : side === "right"
+        ? " book-leaf-right"
+        : "";
+
   return (
     <article
-      className={`book-leaf book-leaf-${side}${blank ? " book-leaf-blank" : ""}`}
+      className={`relative min-h-[28rem] px-6 pt-7 pb-8 sm:min-h-[32rem] sm:px-8 sm:pt-9 sm:pb-10${
+        blank ? " bg-paper-raised" : " bg-paper"
+      }${leafSide}`}
     >
       {leaf && !blank ? <LeafBody leaf={leaf} /> : null}
     </article>
@@ -213,7 +223,7 @@ function LeafBody({ leaf }: { leaf: WritingLeaf }) {
         </p>
       ) : null}
       {leaf.form === "verse" ? (
-        <div className="book-verse">
+        <div className="text-[1.08rem] leading-[1.75] tracking-[0.005em]">
           {leaf.lines.map((line, i) => (
             <p key={`${leaf.slug}-${i}`} className="m-0">
               {line || "\u00a0"}
@@ -221,7 +231,7 @@ function LeafBody({ leaf }: { leaf: WritingLeaf }) {
           ))}
         </div>
       ) : (
-        <div className="book-prose">
+        <div className="text-[1.05rem] leading-[1.7]">
           {leaf.lines.map((paragraph, i) => (
             <p key={`${leaf.slug}-${i}`} className="m-0 mb-[1.05em] last:mb-0">
               {paragraph}

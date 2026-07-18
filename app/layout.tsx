@@ -1,14 +1,13 @@
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { CookingStatus } from "@/components/cooking-status";
 import {
   personJsonLd,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_URL,
 } from "@/components/page-metadata";
-import { ReportIssue } from "@/components/report-issue";
+import { SiteToolbar } from "@/components/site-toolbar";
 import "./globals.css";
 
 /*
@@ -84,8 +83,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: personJsonLd() }}
         />
         {children}
-        <CookingStatus />
-        <ReportIssue />
+        <SiteToolbar />
       </body>
     </html>
   );
