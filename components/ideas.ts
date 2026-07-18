@@ -152,4 +152,13 @@ export const IDEAS: Idea[] = [
     ],
     status: "simmering",
   },
+  {
+    slug: "creative-ads",
+    title: "Ads people actually enjoy",
+    body: [
+      "There’s a lot of room for creativity in advertising. Social platforms will put an ad in front of a huge audience — reach isn’t the scarce part. Conversion usually is. The creative is forgettable, or it doesn’t feel like the brand is worth anything, so people scroll past.",
+      "I want to do something in that space: ads that are actually enjoyable, that show brand value better, that help people convert because they want to — plus sharper creative strategies around that. I don’t know the shape yet. An app? Something in the real world? Unclear. The itch is there.",
+    ],
+    status: "simmering",
+  },
 ];
