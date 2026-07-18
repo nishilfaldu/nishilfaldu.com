@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 
-const DOWNLOAD_API = "https://friendly-firefly-933.convex.site/download";
+/** Convex HTTP gate — production by default; override via env if needed. */
+const DOWNLOAD_API =
+  process.env.NEXT_PUBLIC_SEDIMENT_DOWNLOAD_URL ??
+  "https://bright-lark-824.convex.site/download";
 
 /**
- * Email → welcome note → Mac DMG. Same Convex gate as getsediment.vercel.app.
+ * Email → welcome note → Mac DMG. Convex /download returns latest release assets.
  */
 export function SedimentDownload() {
   const [email, setEmail] = useState("");
