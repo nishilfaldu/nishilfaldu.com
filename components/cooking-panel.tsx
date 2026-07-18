@@ -44,6 +44,13 @@ export function CookingPanel({
   );
 }
 
+function branchUrl(repo: string, branch: string): string {
+  return `https://github.com/${repo}/tree/${branch
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/")}`;
+}
+
 function CookingRow({ item }: { item: CookingItem }) {
   const href = item.url ?? item.prUrl;
   const linkLabel =
@@ -84,7 +91,14 @@ function CookingRow({ item }: { item: CookingItem }) {
         <span aria-hidden className="text-rule">
           ·
         </span>
-        <span className="font-mono text-[0.72rem]">{item.branch}</span>
+        <a
+          href={branchUrl(item.repo, item.branch)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="font-mono text-[0.72rem] text-ink-muted no-underline transition-colors hover:text-accent"
+        >
+          {item.branch}
+        </a>
       </span>
     </li>
   );
