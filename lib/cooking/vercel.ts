@@ -1,6 +1,6 @@
 /**
- * Vercel: preview deployment for a git branch (when VERCEL_TOKEN is set).
- * Prefer aliases from the API over inventing hostnames.
+ * Vercel: resolve project id from a GitHub repo, then fetch preview deploys
+ * for a branch. Needs VERCEL_TOKEN + VERCEL_TEAM_ID only — no per-project env.
  */
 
 export type VercelPreview = {
@@ -28,6 +28,17 @@ type VercelDeploymentDetail = {
   readyState?: string;
 };
 
+type VercelProjectListItem = {
+  id: string;
+  name: string;
+  link?: {
+    type?: string;
+    repo?: string;
+    org?: string;
+    repoOwner?: string;
+  } | null;
+};
+
 function vercelHeaders(): HeadersInit | null {
   const token = process.env.VERCEL_TOKEN;
   if (!token) return null;
@@ -37,7 +48,7 @@ function vercelHeaders(): HeadersInit | null {
   };
 }
 
-/** Requires VERCEL_TEAM_ID — no team slug fallback (keeps the namespace out of source). */
+/** Requires VERCEL_TEAM_ID — no team slug in source. */
 function teamQuery(): string | null {
   const teamId = process.env.VERCEL_TEAM_ID;
   if (!teamId) return null;
@@ -58,8 +69,48 @@ function mapState(raw: string): VercelPreview["state"] {
 }
 
 /**
- * Latest deployment for project + branch. Returns null if token/team/project
- * missing or no match.
+ * Find the Vercel project linked to `owner/repo` (via list filter `repo=`).
+ * Returns null if token/team missing or no linked project.
+ */
+export async function projectIdForGithubRepo(
+  owner: string,
+  repo: string,
+): Promise<string | null> {
+  const headers = vercelHeaders();
+  const team = teamQuery();
+  if (!headers || !team) return null;
+
+  const full = `${owner}/${repo}`;
+  const url = `https://api.vercel.com/v10/projects?repo=${encodeURIComponent(full)}&limit=5&${team}`;
+  const res = await fetch(url, { headers, cache: "no-store" });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(
+      `Vercel projects → ${res.status}${text ? `: ${text.slice(0, 200)}` : ""}`,
+    );
+  }
+
+  const json = (await res.json()) as {
+    projects?: VercelProjectListItem[];
+  };
+  const projects = json.projects ?? [];
+  if (projects.length === 0) return null;
+
+  // Prefer exact github link match when present; else first hit for that repo filter.
+  const exact = projects.find((p) => {
+    const linkRepo = p.link?.repo;
+    if (!linkRepo) return false;
+    if (linkRepo === full || linkRepo === repo) return true;
+    const org = p.link?.org ?? p.link?.repoOwner;
+    return Boolean(org) && `${org}/${linkRepo}` === full;
+  });
+
+  return (exact ?? projects[0])?.id ?? null;
+}
+
+/**
+ * Latest deployment for project + branch. Returns null if inputs missing
+ * or no match.
  */
 export async function previewForBranch(
   projectId: string,
@@ -98,7 +149,6 @@ export async function previewForBranch(
       ? new Date(deployment.createdAt).toISOString()
       : null;
 
-  // Prefer a stable alias from deployment detail when Ready.
   let url: string | null = deployment.url ? `https://${deployment.url}` : null;
 
   if (state === "READY") {

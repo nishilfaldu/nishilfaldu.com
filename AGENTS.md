@@ -42,11 +42,13 @@ Env — empty keys live in `.env.example` (copy to `.env.local` locally).
 Same names on the Vercel project → Environment Variables (never expose to the
 client):
 
-- `GITHUB_TOKEN` — read access to open PRs / deployments on watched repos
-- `VERCEL_TOKEN` — optional; read deployments for stable preview aliases
-- `VERCEL_TEAM_ID` — team scope for Vercel API (required if using `VERCEL_TOKEN`)
-- `VERCEL_PROJECT_ID` — Vercel project id for the portfolio cooking entry
+- `GITHUB_TOKEN` — read PRs/deployments; scope to the repos in `COOKING_REPOS`
+- `VERCEL_TOKEN` — optional; list team projects + preview deployments
+- `VERCEL_TEAM_ID` — required if using `VERCEL_TOKEN` (no team slug in source)
 - `NEXT_PUBLIC_SEDIMENT_DOWNLOAD_URL` — optional override for Sediment’s download gate
+
+Vercel project ids are **not** env vars: with token + team id we look up the
+project linked to each allowlisted GitHub repo.
 
 If preview links ask for a Vercel login, turn off **Deployment Protection** for
 Preview in the Vercel project settings so visitors can open them.

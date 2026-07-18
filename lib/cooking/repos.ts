@@ -2,8 +2,8 @@
  * Repos that feed the cooking toolbar. Add one entry to watch another product.
  * Do not auto-scan projects.ts — most of those repos have no Vercel previews.
  *
- * Vercel project id comes from env (`vercelProjectEnv`), not from a hardcoded
- * project name/namespace in source.
+ * Vercel project ids are resolved at runtime (token + team id → match GitHub
+ * repo). GitHub token scope should include only these repos.
  */
 
 export type CookingRepo = {
@@ -11,11 +11,6 @@ export type CookingRepo = {
   repo: string;
   /** Short label in the cooking panel. */
   label: string;
-  /**
-   * Name of the env var that holds this repo’s Vercel project id
-   * (e.g. VERCEL_PROJECT_ID). Resolved at runtime.
-   */
-  vercelProjectEnv: string;
 };
 
 export const COOKING_REPOS: readonly CookingRepo[] = [
@@ -23,6 +18,5 @@ export const COOKING_REPOS: readonly CookingRepo[] = [
     owner: "nishilfaldu",
     repo: "nishilfaldu.com",
     label: "Portfolio",
-    vercelProjectEnv: "VERCEL_PROJECT_ID",
   },
 ] as const;
