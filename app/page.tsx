@@ -273,6 +273,10 @@ export default function Home() {
             Scaffolds
           </ProseLink>{" "}
           ·{" "}
+          <ProseLink nowrap href="/previews">
+            In the works
+          </ProseLink>{" "}
+          ·{" "}
           <ProseLink nowrap href="https://x.com/FalduNishil">
             <span className="line-through decoration-1">Twitter</span> X
           </ProseLink>{" "}

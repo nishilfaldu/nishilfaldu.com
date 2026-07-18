@@ -14,6 +14,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/tinkerletter",
     "/tinkerletter/shoe-buyers-field-guide",
     "/scaffolds",
+    "/previews",
   ] as const;
 
   return paths.map((path) => ({

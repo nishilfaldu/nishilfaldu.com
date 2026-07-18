@@ -25,6 +25,13 @@ from home.
 Official CLIs, not stale templates. Expo keeps create-expo-app’s AGENTS.md and
 installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
+**`/previews`** — “In the works”: live Vercel preview links for WIP branches.
+Source of truth is `components/previews.ts` on **main** (same edit-the-file
+pattern as ideas). After you push a WIP branch, add or update an entry there
+with `title`, `note`, `branch`, and `status`. Preview URL is derived from the
+branch name via `vercelPreviewUrl()` — don’t paste deployment hashes. Remove
+the entry when the work merges. Linked from home.
+
 **Page files** hold the page component only; everything else in `components/`.
 
 **Theme** — CSS variables at the top of `app/globals.css` (Geist values;
