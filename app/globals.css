@@ -146,3 +146,137 @@
 .ideas-focus-enter {
   animation: ideas-focus-in 0.38s ease-out both;
 }
+
+/* /writings — open book. Paper from the theme; turn is a soft leaf settle. */
+.book-stage {
+  --book-radius: 2px;
+  perspective: 1600px;
+}
+
+.book-spread {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 28rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--book-radius);
+  background: var(--color-paper-raised);
+  overflow: hidden;
+}
+
+@media (min-width: 40rem) {
+  .book-spread {
+    grid-template-columns: 1fr 1px 1fr;
+    min-height: 32rem;
+  }
+}
+
+.book-gutter {
+  background: var(--color-rule);
+}
+
+.book-leaf {
+  position: relative;
+  padding: 1.75rem 1.5rem 2rem;
+  background: var(--color-paper);
+  min-height: 28rem;
+}
+
+@media (min-width: 40rem) {
+  .book-leaf {
+    padding: 2.25rem 2rem 2.5rem;
+    min-height: 32rem;
+  }
+
+  .book-leaf-left {
+    box-shadow: inset -12px 0 18px -18px rgb(0 0 0 / 0.18);
+  }
+
+  .book-leaf-right {
+    box-shadow: inset 12px 0 18px -18px rgb(0 0 0 / 0.18);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .book-leaf-left {
+    box-shadow: inset -12px 0 18px -18px rgb(0 0 0 / 0.55);
+  }
+
+  .book-leaf-right {
+    box-shadow: inset 12px 0 18px -18px rgb(0 0 0 / 0.55);
+  }
+}
+
+.book-leaf-blank {
+  background: var(--color-paper-raised);
+}
+
+.book-verse {
+  font-size: 1.08rem;
+  line-height: 1.75;
+  letter-spacing: 0.005em;
+}
+
+.book-prose {
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.book-turn {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18%;
+  max-width: 5.5rem;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.book-turn:disabled {
+  cursor: default;
+}
+
+.book-turn-prev {
+  left: 0;
+}
+
+.book-turn-next {
+  right: 0;
+}
+
+.book-turn:not(:disabled):hover {
+  background: linear-gradient(to right, transparent, rgb(170 77 0 / 0.04));
+}
+
+.book-turn-prev:not(:disabled):hover {
+  background: linear-gradient(to left, transparent, rgb(170 77 0 / 0.04));
+}
+
+@media (prefers-color-scheme: dark) {
+  .book-turn:not(:disabled):hover {
+    background: linear-gradient(to right, transparent, rgb(255 147 0 / 0.06));
+  }
+
+  .book-turn-prev:not(:disabled):hover {
+    background: linear-gradient(to left, transparent, rgb(255 147 0 / 0.06));
+  }
+}
+
+@keyframes book-spread-in {
+  from {
+    opacity: 0;
+    transform: rotateY(-7deg) translateX(0.35rem);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0) translateX(0);
+  }
+}
+
+.book-spread-enter {
+  transform-origin: left center;
+  animation: book-spread-in 0.42s ease-out both;
+}

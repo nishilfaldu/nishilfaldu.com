@@ -141,7 +141,7 @@ export const IDEAS: Idea[] = [
       "I write poetry and odd lines now and then. They usually land in Notion or notes — a dump, not a place. I wish there were one interface that just maintained a book: a GUI that feels like pages, not a database table, holding everything I’ve written.",
       "If I ever publish someday (probably not soon), that book would already be the draft. Until then it’s just somewhere honest for the lines to live.",
     ],
-    status: "simmering",
+    status: "building",
   },
   {
     slug: "train-like-tennis",

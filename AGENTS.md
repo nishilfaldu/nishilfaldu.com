@@ -10,7 +10,12 @@ Hover preview + dash stack are fine; tiles aren’t.
 pages under `/projects/<slug>` (Sediment, Atlas, Cedar).
 
 **`/ideas`** — open loops in `components/ideas.ts`; interactive tray at
-`/ideas` (one in focus, draw another). Not a notes dump.
+`/ideas` (one in focus, draw another). Not a notes dump. Not linked from
+home for now.
+
+**`/writings`** — book UI in `components/writings-book.tsx`; pages in
+`components/writings.ts`. Turnable leaves (verse / prose / title). Not
+linked from home until real writing replaces placeholders.
 
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.
