@@ -1,6 +1,6 @@
 /**
  * GitHub: open PRs on a watched repo, plus Preview deployment URLs
- * (Vercel posts these as GitHub Deployments).
+ * (Vercel posts these as GitHub Deployments when the project is linked).
  */
 
 export type OpenPull = {
@@ -33,7 +33,6 @@ function githubHeaders(): HeadersInit {
 async function githubJson<T>(path: string): Promise<T> {
   const res = await fetch(`https://api.github.com${path}`, {
     headers: githubHeaders(),
-    // Always fresh when the route revalidates.
     cache: "no-store",
   });
   if (!res.ok) {
@@ -85,54 +84,75 @@ type GhDeploymentStatus = {
   created_at: string;
 };
 
+const KNOWN_STATES = [
+  "success",
+  "pending",
+  "failure",
+  "error",
+  "inactive",
+] as const;
+
+function mapState(raw: string): GithubPreview["state"] {
+  return KNOWN_STATES.includes(raw as (typeof KNOWN_STATES)[number])
+    ? (raw as (typeof KNOWN_STATES)[number])
+    : "unknown";
+}
+
 /**
- * Latest Preview deployment status for a commit SHA (Vercel → GitHub Deployments).
+ * Latest Preview deployment per commit SHA (one list request, then statuses
+ * only for SHAs we care about).
  */
-export async function previewForSha(
+export async function previewsForShas(
   owner: string,
   repo: string,
-  sha: string,
-): Promise<GithubPreview | null> {
+  shas: ReadonlySet<string>,
+): Promise<Map<string, GithubPreview>> {
+  const out = new Map<string, GithubPreview>();
+  if (shas.size === 0) return out;
+
   const deployments = await githubJson<GhDeployment[]>(
     `/repos/${owner}/${repo}/deployments?per_page=30`,
   );
-  const match = deployments.find(
-    (d) => d.environment === "Preview" && d.sha === sha,
-  );
-  if (!match) return null;
 
-  const statuses = await githubJson<GhDeploymentStatus[]>(
-    `/repos/${owner}/${repo}/deployments/${match.id}/statuses`,
-  );
-  const latest = statuses[0];
-  if (!latest) {
-    return {
-      state: "pending",
-      url: null,
-      updatedAt: match.updated_at,
-    };
+  const matched: GhDeployment[] = [];
+  const seenSha = new Set<string>();
+  for (const d of deployments) {
+    if (d.environment !== "Preview" || !shas.has(d.sha) || seenSha.has(d.sha)) {
+      continue;
+    }
+    seenSha.add(d.sha);
+    matched.push(d);
   }
 
-  const raw = latest.state;
-  const known = ["success", "pending", "failure", "error", "inactive"] as const;
-  const state: GithubPreview["state"] = known.includes(
-    raw as (typeof known)[number],
-  )
-    ? (raw as (typeof known)[number])
-    : "unknown";
+  await Promise.all(
+    matched.map(async (d) => {
+      const statuses = await githubJson<GhDeploymentStatus[]>(
+        `/repos/${owner}/${repo}/deployments/${d.id}/statuses`,
+      );
+      const latest = statuses[0];
+      if (!latest) {
+        out.set(d.sha, {
+          state: "pending",
+          url: null,
+          updatedAt: d.updated_at,
+        });
+        return;
+      }
+      out.set(d.sha, {
+        state: mapState(latest.state),
+        url: latest.environment_url,
+        updatedAt: latest.created_at,
+      });
+    }),
+  );
 
-  return {
-    state,
-    url: latest.environment_url,
-    updatedAt: latest.created_at,
-  };
+  return out;
 }
 
 /** First readable paragraph from a PR body for the cooking note. */
 export function noteFromPrBody(body: string | null | undefined): string {
   if (!body) return "";
   const cleaned = body
-    // Agent / Cursor PR wrappers and HTML comments.
     .replace(/<!--[\s\S]*?-->/g, "")
     .replace(/\r\n/g, "\n")
     .trim();

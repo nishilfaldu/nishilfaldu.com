@@ -32,23 +32,18 @@ Official CLIs, not stale templates. Expo keeps create-expo-app’s AGENTS.md and
 installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
 **Cooking (WIP previews)** — automatic. `/api/cooking` lists open PRs on repos
-in `lib/cooking/repos.ts`, then attaches Vercel Preview URLs (via `VERCEL_TOKEN`
-when set, or GitHub Preview deployments as a fallback). Title/note come from
-the PR. To show work: open a PR with a clear title. To hide it: merge or close
-the PR. To watch another product: add one entry to `COOKING_REPOS`. Do not
-hand-edit a status file on `main`.
+in `lib/cooking/repos.ts`, then attaches Preview URLs from GitHub Deployments
+(Vercel posts these when the project is linked to GitHub). No Vercel API.
+Title/note come from the PR. To show work: open a PR with a clear title. To
+hide it: merge or close the PR. To watch another product: add one entry to
+`COOKING_REPOS`. Do not hand-edit a status file on `main`.
 
 Env — empty keys live in `.env.example` (copy to `.env.local` locally).
 Same names on the Vercel project → Environment Variables (never expose to the
 client):
 
 - `GITHUB_TOKEN` — read PRs/deployments; scope to the repos in `COOKING_REPOS`
-- `VERCEL_TOKEN` — optional; list team projects + preview deployments
-- `VERCEL_TEAM_ID` — required if using `VERCEL_TOKEN` (no team slug in source)
 - `NEXT_PUBLIC_SEDIMENT_DOWNLOAD_URL` — optional override for Sediment’s download gate
-
-Vercel project ids are **not** env vars: with token + team id we look up the
-project linked to each allowlisted GitHub repo.
 
 If preview links ask for a Vercel login, turn off **Deployment Protection** for
 Preview in the Vercel project settings so visitors can open them.

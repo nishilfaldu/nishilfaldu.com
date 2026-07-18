@@ -1,21 +1,19 @@
 "use client";
 
-import { COOKING_STATUS_LABEL, type CookingItem } from "@/components/cooking";
+import type { CookingItem } from "@/lib/cooking/types";
 
 /**
- * WIP Vercel previews — panel for the site toolbar’s “cooking” tool.
- * Items come from `/api/cooking` (open PRs + preview deploys).
+ * WIP previews — panel for the site toolbar’s “cooking” tool.
+ * Items come from `/api/cooking` (open PRs + GitHub Preview deployments).
  */
 export function CookingPanel({
   id,
   onClose,
   items,
-  error,
 }: {
   id: string;
   onClose: () => void;
   items: CookingItem[];
-  error?: string | null;
 }) {
   return (
     <div
@@ -37,11 +35,6 @@ export function CookingPanel({
       <p className="mb-4 text-[0.92rem] leading-snug text-ink-muted">
         Live previews of open PRs that haven’t landed yet.
       </p>
-      {error ? (
-        <p className="mb-3 text-[0.92rem] text-ink-muted">
-          Couldn’t load what’s cooking right now.
-        </p>
-      ) : null}
       <ul className="m-0 list-none p-0">
         {items.map((item) => (
           <CookingRow key={item.id} item={item} />
@@ -83,9 +76,7 @@ function CookingRow({ item }: { item: CookingItem }) {
         ) : null}
       </a>
       <span className="mt-2 flex flex-wrap items-baseline gap-x-2 text-[0.78rem] text-ink-muted">
-        <span className="uppercase tracking-[0.04em]">
-          {COOKING_STATUS_LABEL[item.status]}
-        </span>
+        <span className="uppercase tracking-[0.04em]">{item.status}</span>
         <span aria-hidden className="text-rule">
           ·
         </span>

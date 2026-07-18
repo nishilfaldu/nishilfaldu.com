@@ -1,6 +1,6 @@
 /**
- * Shared cooking types — live WIP from open PRs + Vercel/GitHub preview deploys.
- * The toolbar fetches `/api/cooking`; nothing is hand-edited on main.
+ * Cooking domain types — open-PR WIP for the toolbar.
+ * UI imports from here; do not define these under components/.
  */
 
 export type CookingStatus = "cooking" | "ready" | "building";
@@ -24,12 +24,6 @@ export type CookingItem = {
   prUrl: string;
   /** ISO timestamp from PR or deployment. */
   updatedAt: string;
-};
-
-export const COOKING_STATUS_LABEL: Record<CookingStatus, string> = {
-  cooking: "cooking",
-  ready: "ready",
-  building: "building",
 };
 
 export type CookingResponse = {
