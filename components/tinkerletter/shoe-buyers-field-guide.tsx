@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ProseLink } from "@/components/prose-link";
 import { LabModal } from "@/components/tinkerletter/lab-modal";
 import { initShoeGuide } from "@/components/tinkerletter/shoe-guide/init-shoe-guide";
 import { labArchHtml } from "@/components/tinkerletter/shoe-guide/labs/labArch";
@@ -14,6 +15,45 @@ import "@/components/tinkerletter/shoe-guide/shoe-guide.css";
 import "@/components/tinkerletter/tinker-article.css";
 
 type LabId = "step" | "arch" | "wear" | "pron" | null;
+
+/** Pieces I read before writing this — not exhaustive, just the trail. */
+const REFERENCES: { href: string; title: string; source: string }[] = [
+  {
+    href: "https://marathonhandbook.com/tennis-shoes-vs-running-shoes/",
+    title: "Tennis shoes vs running shoes",
+    source: "Marathon Handbook",
+  },
+  {
+    href: "https://treadlabs.com/blogs/insoles-reach-your-stride/arch-height-101-how-to-tell-if-you-have-high-arches",
+    title: "Arch height 101",
+    source: "Tread Labs",
+  },
+  {
+    href: "https://heelthatpain.com/foot-arch-type-test/",
+    title: "Foot arch type test",
+    source: "Heel That Pain",
+  },
+  {
+    href: "https://heelthatpain.com/pronation/over-pronation/",
+    title: "Overpronation",
+    source: "Heel That Pain",
+  },
+  {
+    href: "https://www.mayoclinic.org/diseases-conditions/plantar-fasciitis/symptoms-causes/syc-20354846",
+    title: "Plantar fasciitis",
+    source: "Mayo Clinic",
+  },
+  {
+    href: "https://www.henryford.com/blog/2024/12/high-arches-or-flat-feet",
+    title: "High arches or flat feet",
+    source: "Henry Ford Health",
+  },
+  {
+    href: "https://www.henryford.com/blog/2023/08/stretching-done-right-easy-tips-to-stay-limber",
+    title: "Stretching done right",
+    source: "Henry Ford Health",
+  },
+];
 
 function LabMount({ html }: { html: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -182,6 +222,22 @@ export function ShoeBuyersFieldGuide() {
           That was the whole rabbit hole: match the shoe to your foot{" "}
           <em>and</em> to your week. Not the wall of boxes.
         </p>
+      </section>
+
+      <section className="tinker-refs">
+        <h2>References</h2>
+        <p>
+          A few of the pieces I read while going down this rabbit hole — not
+          exhaustive, just the trail.
+        </p>
+        <ol>
+          {REFERENCES.map((ref) => (
+            <li key={ref.href}>
+              <ProseLink href={ref.href}>{ref.title}</ProseLink>
+              <span className="tinker-ref-source"> — {ref.source}</span>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <footer className="tinker-footer">
