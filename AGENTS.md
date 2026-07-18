@@ -38,12 +38,15 @@ the PR. To show work: open a PR with a clear title. To hide it: merge or close
 the PR. To watch another product: add one entry to `COOKING_REPOS`. Do not
 hand-edit a status file on `main`.
 
-Env (Vercel project → Environment Variables; never expose to the client):
+Env — empty keys live in `.env.example` (copy to `.env.local` locally).
+Same names on the Vercel project → Environment Variables (never expose to the
+client):
 
 - `GITHUB_TOKEN` — read access to open PRs / deployments on watched repos
 - `VERCEL_TOKEN` — optional; read deployments for stable preview aliases
-- `VERCEL_TEAM_ID` or `VERCEL_TEAM_SLUG` — team scope for Vercel API
-  (slug default `nishil-faldus-projects`)
+- `VERCEL_TEAM_ID` — team scope for Vercel API (required if using `VERCEL_TOKEN`)
+- `VERCEL_PROJECT_ID` — Vercel project id for the portfolio cooking entry
+- `NEXT_PUBLIC_SEDIMENT_DOWNLOAD_URL` — optional override for Sediment’s download gate
 
 If preview links ask for a Vercel login, turn off **Deployment Protection** for
 Preview in the Vercel project settings so visitors can open them.

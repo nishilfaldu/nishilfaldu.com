@@ -6,7 +6,8 @@ export const revalidate = 60;
 
 /**
  * Live WIP: open PRs on allowlisted repos + preview deploy status.
- * Secrets stay server-side (GITHUB_TOKEN, VERCEL_TOKEN, VERCEL_TEAM_ID/SLUG).
+ * Secrets stay server-side (GITHUB_TOKEN, VERCEL_TOKEN, VERCEL_TEAM_ID,
+ * VERCEL_PROJECT_ID). See .env.example.
  */
 export async function GET() {
   try {

@@ -40,7 +40,8 @@ export async function aggregateCooking(): Promise<CookingItem[]> {
       let updatedAt = pr.updatedAt;
 
       try {
-        const vercel = await previewForBranch(watched.vercelProject, pr.branch);
+        const projectId = process.env[watched.vercelProjectEnv] ?? "";
+        const vercel = await previewForBranch(projectId, pr.branch);
         if (vercel) {
           vercelState = vercel.state;
           if (vercel.url) url = vercel.url;

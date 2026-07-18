@@ -37,11 +37,11 @@ function vercelHeaders(): HeadersInit | null {
   };
 }
 
-function teamQuery(): string {
+/** Requires VERCEL_TEAM_ID — no team slug fallback (keeps the namespace out of source). */
+function teamQuery(): string | null {
   const teamId = process.env.VERCEL_TEAM_ID;
-  const slug = process.env.VERCEL_TEAM_SLUG ?? "nishil-faldus-projects";
-  if (teamId) return `teamId=${encodeURIComponent(teamId)}`;
-  return `slug=${encodeURIComponent(slug)}`;
+  if (!teamId) return null;
+  return `teamId=${encodeURIComponent(teamId)}`;
 }
 
 function readyStateOf(d: VercelDeploymentListItem): string {
@@ -58,22 +58,22 @@ function mapState(raw: string): VercelPreview["state"] {
 }
 
 /**
- * Latest deployment for project + branch. Returns null if no token or no match.
+ * Latest deployment for project + branch. Returns null if token/team/project
+ * missing or no match.
  */
 export async function previewForBranch(
-  projectIdOrName: string,
+  projectId: string,
   branch: string,
 ): Promise<VercelPreview | null> {
   const headers = vercelHeaders();
-  if (!headers) return null;
+  const team = teamQuery();
+  if (!headers || !team || !projectId) return null;
 
   const params = new URLSearchParams({
-    projectId: projectIdOrName,
+    projectId,
     branch,
-    limit: "5",
+    limit: "1",
   });
-  // teamQuery adds teamId or slug — merge carefully
-  const team = teamQuery();
   const listUrl = `https://api.vercel.com/v6/deployments?${params}&${team}`;
 
   const listRes = await fetch(listUrl, { headers, cache: "no-store" });
