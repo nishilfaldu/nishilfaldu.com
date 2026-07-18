@@ -9,6 +9,6 @@ export default function Image() {
   return renderOgCard({
     title: "Scaffolds",
     description:
-      "Prompts that scaffold Next.js, TanStack Start, and Electron the way I always set projects up.",
+      "Prompts that scaffold Next.js, TanStack Start, Electron, and Expo the way I always set projects up.",
   });
 }

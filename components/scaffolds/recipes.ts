@@ -1,3 +1,5 @@
+import { EXPO_APP_PROMPT } from "@/components/scaffolds/expo-prompt";
+
 /**
  * Scaffold recipes — prompts you open in Cursor (or copy elsewhere).
  * Editing this file is the whole workflow for adding a new recipe.
@@ -113,6 +115,14 @@ export const SCAFFOLDS: Scaffold[] = [
     tagline:
       "Electron Forge TypeScript — Vite (default) or Webpack. Official CLI, not a stale boilerplate.",
     status: "builder",
+  },
+  {
+    slug: "expo",
+    name: "Expo",
+    tagline:
+      "default@sdk-57 — Expo Router, native tabs, keep AGENTS.md, project Expo Skills for Cursor.",
+    prompt: EXPO_APP_PROMPT,
+    status: "ready",
   },
 ];
 

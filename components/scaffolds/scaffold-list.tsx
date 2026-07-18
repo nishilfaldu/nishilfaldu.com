@@ -72,6 +72,13 @@ export function ScaffoldList() {
         . TanStack Start is different: pick add-ons in the builder, and Intent
         loads library skills from the packages you install.
       </p>
+      <p className="mt-6 text-ink-muted">
+        Expo has no plugin on the Cursor Marketplace (unlike Convex). The Expo
+        recipe installs official{" "}
+        <ProseLink href="https://docs.expo.dev/skills/">Expo Skills</ProseLink>{" "}
+        into the project so Cursor cloud agents that clone the repo can use them;
+        use a global skills install only if you rarely run cloud agents.
+      </p>
     </main>
   );
 }

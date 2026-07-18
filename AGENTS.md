@@ -12,8 +12,10 @@ story pages under `/projects/<slug>`.
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.
 
-**`/scaffolds`** — CLI prompts in `components/scaffolds/`. Ready recipes +
-builders (TanStack add-ons, Electron Forge). Official CLIs, not stale templates.
+**`/scaffolds`** — CLI prompts in `components/scaffolds/`. Ready recipes
+(Next, Next+Convex, Expo) + builders (TanStack add-ons, Electron Forge).
+Official CLIs, not stale templates. Expo keeps create-expo-app’s AGENTS.md and
+installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
 **Page files** hold the page component only; everything else in `components/`.
 

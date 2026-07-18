@@ -9,7 +9,7 @@ import { ScaffoldList } from "@/components/scaffolds/scaffold-list";
 export const metadata: Metadata = pageMetadata({
   title: "Scaffolds",
   description:
-    "Prompts that scaffold Next.js, TanStack Start, and Electron the way I always set projects up — open in Cursor or copy.",
+    "Prompts that scaffold Next.js, TanStack Start, Electron, and Expo the way I always set projects up — open in Cursor or copy.",
   path: "/scaffolds",
 });
 
