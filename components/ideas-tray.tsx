@@ -1,13 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { IDEA_STATUS_LABEL, IDEAS, type Idea } from "@/components/ideas";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
-import {
-  IDEA_STATUS_LABEL,
-  type Idea,
-  IDEAS,
-} from "@/components/ideas";
 
 /**
  * One idea in focus, a short index to jump, and a “draw another” shuffle.
@@ -102,7 +98,13 @@ export function IdeasTray() {
                     }`}
                     aria-hidden
                   />
-                  <span className="leading-[1.35] tracking-[0.01em]">
+                  <span
+                    className={`leading-[1.35] tracking-[0.01em]${
+                      item.status === "shipped"
+                        ? " line-through decoration-1"
+                        : ""
+                    }`}
+                  >
                     {item.title}
                   </span>
                 </button>
@@ -148,7 +150,11 @@ function IdeaFocus({ idea, animate }: { idea: Idea; animate: boolean }) {
       <p className="mb-3 text-[0.88rem] tracking-[0.02em] text-ink-muted">
         {IDEA_STATUS_LABEL[idea.status]}
       </p>
-      <h2 className="m-0 mb-4 text-[1.35rem] font-medium tracking-[0.01em] text-ink">
+      <h2
+        className={`m-0 mb-4 text-[1.35rem] font-medium tracking-[0.01em] text-ink${
+          idea.status === "shipped" ? " line-through decoration-1" : ""
+        }`}
+      >
         {idea.title}
       </h2>
       {idea.body.map((paragraph) => (
