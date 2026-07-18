@@ -31,6 +31,9 @@ installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
 **Page files** hold the page component only; everything else in `components/`.
 
-**Theme** — CSS variables at the top of `app/globals.css` (Geist values;
-borrowed, not ours to republish). Feature motion stays next to the component
-that uses it — don’t grow globals for one-off styles.
+**CSS** — `app/globals.css` is theme + sitewide base only (`@theme` tokens,
+body type, selection, focus, reduced-motion). Something belongs there only if
+it’s genuinely used in a lot of places. One feature’s motion or layout goes
+next to that component (Tailwind first; a co-located `.css` only when keyframes
+or selectors can’t live in the component). Don’t invent global classes for a
+single UI.
