@@ -8,14 +8,11 @@
 export type CookingRepo = {
   owner: string;
   repo: string;
-  /** Short label in the cooking panel. */
-  label: string;
 };
 
 export const COOKING_REPOS: readonly CookingRepo[] = [
   {
     owner: "nishilfaldu",
     repo: "nishilfaldu.com",
-    label: "Portfolio",
   },
 ] as const;

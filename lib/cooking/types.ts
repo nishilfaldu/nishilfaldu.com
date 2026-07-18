@@ -8,8 +8,6 @@ export type CookingStatus = "cooking" | "ready" | "building";
 export type CookingItem = {
   /** Stable id: `${repo}#${prNumber}` */
   id: string;
-  /** Display name from the allowlist, e.g. "Portfolio". */
-  project: string;
   /** Full repo, e.g. "nishilfaldu/nishilfaldu.com". */
   repo: string;
   branch: string;
