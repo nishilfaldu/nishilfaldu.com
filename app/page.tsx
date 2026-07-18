@@ -269,12 +269,8 @@ export default function Home() {
             Tinkerletter
           </ProseLink>{" "}
           ·{" "}
-          <ProseLink nowrap href="/scaffolds">
-            Scaffolds
-          </ProseLink>{" "}
-          ·{" "}
-          <ProseLink nowrap href="/previews">
-            In the works
+          <ProseLink nowrap href="/elsewhere">
+            Elsewhere
           </ProseLink>{" "}
           ·{" "}
           <ProseLink nowrap href="https://x.com/FalduNishil">

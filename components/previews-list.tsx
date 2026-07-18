@@ -23,7 +23,7 @@ export function PreviewsList() {
       <p className="mb-12 text-ink-muted">
         Live Vercel previews of branches that haven’t landed yet. Peek at what’s
         coming, or open one when you want to see how it’s going.{" "}
-        <ProseLink href="/">Back to the story</ProseLink>.
+        <ProseLink href="/elsewhere">Elsewhere</ProseLink>.
       </p>
 
       {PREVIEWS.length === 0 ? (
