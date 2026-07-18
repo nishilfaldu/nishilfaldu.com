@@ -19,8 +19,8 @@ home for now.
 from home.
 
 **Site toolbar** — bottom-left bar (`SiteToolbar`): report, breathe, and
-**cooking** when WIP previews exist (`components/previews.ts`). Cooking opens
-a panel of live Vercel preview links. Breathe opens a quiet cyclic-sigh
+**cooking** when open PRs exist on allowlisted repos. Cooking opens a panel of
+live preview links from `/api/cooking`. Breathe opens a quiet cyclic-sigh
 overlay (Stanford / Balban et al.) — not a route.
 
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
@@ -31,12 +31,19 @@ overlay (Stanford / Balban et al.) — not a route.
 Official CLIs, not stale templates. Expo keeps create-expo-app’s AGENTS.md and
 installs official Expo Skills into the project (no Cursor Marketplace plugin).
 
-**WIP previews** — `components/previews.ts` on **main** is the source of truth
-(same edit-the-file pattern as ideas). After you push a WIP branch and Vercel
-posts a Preview URL, add or update an entry with `title`, `note`, `branch`,
-`status`, and `url` (the stable `…-git-…vercel.app` alias from the Vercel bot /
-PR comment — not a per-deploy hash). Remove the entry when the work merges.
-The toolbar **cooking** tool reads this file; empty list = tool hidden.
+**Cooking (WIP previews)** — automatic. `/api/cooking` lists open PRs on repos
+in `lib/cooking/repos.ts`, then attaches Vercel Preview URLs (via `VERCEL_TOKEN`
+when set, or GitHub Preview deployments as a fallback). Title/note come from
+the PR. To show work: open a PR with a clear title. To hide it: merge or close
+the PR. To watch another product: add one entry to `COOKING_REPOS`. Do not
+hand-edit a status file on `main`.
+
+Env (Vercel project → Environment Variables; never expose to the client):
+
+- `GITHUB_TOKEN` — read access to open PRs / deployments on watched repos
+- `VERCEL_TOKEN` — optional; read deployments for stable preview aliases
+- `VERCEL_TEAM_ID` or `VERCEL_TEAM_SLUG` — team scope for Vercel API
+  (slug default `nishil-faldus-projects`)
 
 If preview links ask for a Vercel login, turn off **Deployment Protection** for
 Preview in the Vercel project settings so visitors can open them.

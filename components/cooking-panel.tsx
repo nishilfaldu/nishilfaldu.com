@@ -1,21 +1,21 @@
 "use client";
 
-import {
-  PREVIEW_STATUS_LABEL,
-  PREVIEWS,
-  type Preview,
-} from "@/components/previews";
+import { COOKING_STATUS_LABEL, type CookingItem } from "@/components/cooking";
 
 /**
  * WIP Vercel previews — panel for the site toolbar’s “cooking” tool.
- * Lists every branch in flight; empty `PREVIEWS` means the tool isn’t shown.
+ * Items come from `/api/cooking` (open PRs + preview deploys).
  */
 export function CookingPanel({
   id,
   onClose,
+  items,
+  error,
 }: {
   id: string;
   onClose: () => void;
+  items: CookingItem[];
+  error?: string | null;
 }) {
   return (
     <div
@@ -35,44 +35,65 @@ export function CookingPanel({
         </button>
       </div>
       <p className="mb-4 text-[0.92rem] leading-snug text-ink-muted">
-        Live Vercel previews of branches that haven’t landed yet.
+        Live previews of open PRs that haven’t landed yet.
       </p>
+      {error ? (
+        <p className="mb-3 text-[0.92rem] text-ink-muted">
+          Couldn’t load what’s cooking right now.
+        </p>
+      ) : null}
       <ul className="m-0 list-none p-0">
-        {PREVIEWS.map((p) => (
-          <CookingItem key={p.branch} preview={p} />
+        {items.map((item) => (
+          <CookingRow key={item.id} item={item} />
         ))}
       </ul>
     </div>
   );
 }
 
-function CookingItem({ preview }: { preview: Preview }) {
+function CookingRow({ item }: { item: CookingItem }) {
+  const href = item.url ?? item.prUrl;
+  const linkLabel =
+    item.status === "ready" && item.url
+      ? "Preview ↗"
+      : item.status === "building"
+        ? "Building…"
+        : "PR ↗";
+
   return (
     <li className="border-t border-rule py-4 first:border-t-0 first:pt-0 last:pb-0">
       <a
-        href={preview.url}
+        href={href}
         target="_blank"
         rel="noopener noreferrer"
         className="group block no-underline text-ink"
       >
         <span className="flex items-baseline justify-between gap-3">
           <span className="font-medium tracking-[0.01em] transition-colors group-hover:text-accent">
-            {preview.title}
+            {item.title}
           </span>
-          <span className="shrink-0 text-[0.82rem] text-accent">Preview ↗</span>
+          <span className="shrink-0 text-[0.82rem] text-accent">
+            {linkLabel}
+          </span>
         </span>
-        <span className="mt-1.5 block text-[0.92rem] leading-snug text-ink-muted">
-          {preview.note}
-        </span>
+        {item.note ? (
+          <span className="mt-1.5 block text-[0.92rem] leading-snug text-ink-muted">
+            {item.note}
+          </span>
+        ) : null}
       </a>
       <span className="mt-2 flex flex-wrap items-baseline gap-x-2 text-[0.78rem] text-ink-muted">
         <span className="uppercase tracking-[0.04em]">
-          {PREVIEW_STATUS_LABEL[preview.status]}
+          {COOKING_STATUS_LABEL[item.status]}
         </span>
         <span aria-hidden className="text-rule">
           ·
         </span>
-        <span className="font-mono text-[0.72rem]">{preview.branch}</span>
+        <span>{item.project}</span>
+        <span aria-hidden className="text-rule">
+          ·
+        </span>
+        <span className="font-mono text-[0.72rem]">{item.branch}</span>
       </span>
     </li>
   );

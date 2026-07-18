@@ -2,15 +2,15 @@
 
 import { useEffect, useId, useState } from "react";
 import { BreatheRoom } from "@/components/breathe/breathe-room";
+import type { CookingItem, CookingResponse } from "@/components/cooking";
 import { CookingPanel } from "@/components/cooking-panel";
-import { PREVIEWS } from "@/components/previews";
 import { ReportPanel } from "@/components/report-panel";
 import "./site-toolbar.css";
 
 /**
  * Site tools — one quiet bar, bottom-left. Report, breathe, cooking (when
  * something’s in flight), and room for more. Shell only: tool state + dismiss.
- * Panels own their own UI.
+ * Panels own their own UI. Cooking items come from `/api/cooking`.
  */
 
 type Tool = "report" | "breathe" | "cooking";
@@ -27,7 +27,8 @@ export function SiteToolbar() {
   const cookingId = useId();
   const [tool, setTool] = useState<Tool | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const hasCooking = PREVIEWS.length > 0;
+  const [cookingItems, setCookingItems] = useState<CookingItem[]>([]);
+  const [cookingError, setCookingError] = useState<string | null>(null);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -37,6 +38,34 @@ export function SiteToolbar() {
     }
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadCooking() {
+      try {
+        const res = await fetch("/api/cooking");
+        const data = (await res.json()) as CookingResponse;
+        if (cancelled) return;
+        setCookingItems(data.items ?? []);
+        setCookingError(data.error ?? null);
+      } catch {
+        if (cancelled) return;
+        setCookingItems([]);
+        setCookingError("Failed to load");
+      }
+    }
+
+    void loadCooking();
+    const timer = window.setInterval(() => {
+      void loadCooking();
+    }, 60_000);
+
+    return () => {
+      cancelled = true;
+      window.clearInterval(timer);
+    };
   }, []);
 
   useEffect(() => {
@@ -65,6 +94,8 @@ export function SiteToolbar() {
     };
   }, [tool]);
 
+  const hasCooking = cookingItems.length > 0;
+
   function closeTool() {
     setTool(null);
   }
@@ -91,7 +122,12 @@ export function SiteToolbar() {
       ) : null}
 
       {tool === "cooking" && hasCooking ? (
-        <CookingPanel id={cookingId} onClose={closeTool} />
+        <CookingPanel
+          id={cookingId}
+          onClose={closeTool}
+          items={cookingItems}
+          error={cookingError}
+        />
       ) : null}
 
       <nav
@@ -126,7 +162,7 @@ export function SiteToolbar() {
               ariaControls={cookingId}
               onClick={() => openTool("cooking")}
               pulse={!reducedMotion && tool !== "cooking"}
-              ariaLabel={`What’s cooking: ${PREVIEWS.length} preview${PREVIEWS.length === 1 ? "" : "s"}`}
+              ariaLabel={`What’s cooking: ${cookingItems.length} preview${cookingItems.length === 1 ? "" : "s"}`}
             >
               cooking
             </ToolbarButton>
