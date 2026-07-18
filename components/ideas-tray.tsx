@@ -143,7 +143,7 @@ function IdeaFocus({ idea, animate }: { idea: Idea; animate: boolean }) {
     <article
       className={
         animate
-          ? "ideas-focus-enter border-t border-rule pt-6"
+          ? "animate-ideas-focus border-t border-rule pt-6"
           : "border-t border-rule pt-6"
       }
     >

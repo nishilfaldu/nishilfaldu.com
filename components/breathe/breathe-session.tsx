@@ -105,18 +105,38 @@ export function BreatheSession({
             ? 0.68
             : 1;
 
-  const orbClass = reducedMotion
-    ? "breathe-orb breathe-orb-lg"
-    : `breathe-orb breathe-orb-lg breathe-orb-${phase}`;
+  const durationMs =
+    phase === "inhale1"
+      ? SIGH.inhale1Ms
+      : phase === "inhale2"
+        ? SIGH.inhale2Ms
+        : phase === "exhale"
+          ? SIGH.exhaleMs
+          : phase === "rest"
+            ? 500
+            : 600;
 
   return (
     <div className="flex flex-col items-center text-center">
-      <output className="breathe-stage" aria-labelledby={labelId}>
+      <output
+        className="flex min-h-56 flex-col items-center justify-center pt-6 pb-2"
+        aria-labelledby={labelId}
+      >
         <div
-          className={orbClass}
-          style={reducedMotion ? { transform: `scale(${scale})` } : undefined}
+          className="h-[9.5rem] w-[9.5rem] rounded-full border border-rule bg-paper-raised shadow-[inset_0_0_0_1px_rgb(255_174_0/0.12)]"
+          style={{
+            transform: `scale(${scale})`,
+            transition: reducedMotion
+              ? undefined
+              : `transform ${durationMs}ms ${
+                  phase === "exhale" ? "ease-in" : "ease-in-out"
+                }`,
+          }}
         />
-        <p id={labelId} className="breathe-phase-label m-0">
+        <p
+          id={labelId}
+          className="mt-5 m-0 text-[1.05rem] tracking-[0.01em] text-ink"
+        >
           {phaseLabel(phase)}
         </p>
         {phase !== "ready" && phase !== "done" ? (

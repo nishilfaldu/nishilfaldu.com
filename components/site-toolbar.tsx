@@ -120,7 +120,10 @@ export function SiteToolbar() {
   }
 
   return (
-    <div data-site-toolbar className="site-toolbar">
+    <div
+      data-site-toolbar
+      className="fixed bottom-[1.35rem] left-[1.35rem] z-30 flex flex-col items-start"
+    >
       {tool === "report" ? (
         <form
           id={reportId}
@@ -183,7 +186,7 @@ export function SiteToolbar() {
         >
           <div
             className={`w-full max-w-sm${
-              reducedMotion ? "" : " breathe-room-enter"
+              reducedMotion ? "" : " animate-breathe-room"
             }`}
           >
             <BreatheSession onClose={closeTool} />
@@ -241,7 +244,12 @@ function ToolbarButton({
         active ? "text-accent" : "text-ink-muted hover:text-accent"
       }`}
     >
-      {pulse ? <span className="site-toolbar-pulse" aria-hidden /> : null}
+      {pulse ? (
+        <span
+          className="absolute top-[0.45rem] right-[0.35rem] h-[0.35rem] w-[0.35rem] animate-toolbar-pulse rounded-full bg-dot"
+          aria-hidden
+        />
+      ) : null}
       {children}
     </button>
   );
