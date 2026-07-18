@@ -101,4 +101,20 @@ export const IDEAS: Idea[] = [
     ],
     status: "simmering",
   },
+  {
+    slug: "fridge-to-kroger",
+    title: "Order from the fridge, not from a list",
+    body: [
+      "Grocery runs start at the refrigerator. I notice what’s missing, write it down or try to hold it in my head, then at Kroger I rebuild the list from notes or memory. That’s another list to maintain, and it’s annoying.",
+      "It would be nicer to stand there and just say order this, order that — and have something talk to Kroger’s API so the cart fills itself. Voice at the fridge, not a second notes app between me and the store. (Public API can add to cart; checkout still finishes in Kroger — good enough if the list stops living in my head.)",
+    ],
+    status: "simmering",
+    refs: [
+      {
+        href: "https://developer.kroger.com/",
+        label: "Kroger Developer Portal",
+        note: "products, locations, cart — the official API surface",
+      },
+    ],
+  },
 ];
