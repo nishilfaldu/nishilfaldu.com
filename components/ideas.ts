@@ -100,8 +100,26 @@ export const IDEAS: Idea[] = [
       "When I’m deep with AI agents I hop — two agents, four projects, five threads — shipping without absorbing anything. I’m not really learning. I’m not enjoying it. I forget to breathe. Not the automatic kind; the kind where you notice you’re here.",
       "After a break the overwhelm shows up. It would be nice to have something tiny for that — not a productivity suite. A corner of the computer. A cute dog that peeks in after half an hour of constant work and says it’s time to breathe. Or some other gentle interrupt that isn’t another dashboard.",
       "The point isn’t mindfulness theater. It’s a reminder that the pace of agents isn’t a pace a person can hold without gaps.",
+      "Sketch on this site: /breathe, plus a dog that may peek after you’ve been hopping.",
     ],
-    status: "simmering",
+    status: "building",
+    refs: [
+      {
+        href: "/breathe",
+        label: "Breathe",
+        note: "the gap on this site",
+      },
+      {
+        href: "https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/",
+        label: "Balban et al. — cyclic sighing",
+        note: "brief exhale-focused breathwork, mood and arousal",
+      },
+      {
+        href: "https://www.uwb.edu/business/faculty/sophie-leroy/attention-residue",
+        label: "Sophie Leroy — attention residue",
+        note: "why hopping leaves you half elsewhere",
+      },
+    ],
   },
   {
     slug: "fridge-to-kroger",

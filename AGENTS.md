@@ -17,6 +17,10 @@ home for now.
 `components/writings.ts`. Turnable leaves (verse / prose / title). Linked
 from home.
 
+**`/breathe`** — tiny gap for agent-pace overwhelm: guided cyclic sigh
+(Stanford / Balban et al.), optional ready-to-resume note. Site-wide peek
+(`BreathePeek`) may offer it after dwell or hops — not every visit.
+
 **`/tinkerletter`** — issues in `components/tinkerletter/issues.ts`; pages under
 `/tinkerletter/<slug>`. Prose column; interactives in modals, not inline.
 
