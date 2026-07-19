@@ -101,6 +101,28 @@ export const IDEAS: Idea[] = [
     ],
   },
   {
+    slug: "morning-brief-no-feeds",
+    title: "A morning brief instead of social apps",
+    body: [
+      "These days a lot of what I learn — new releases, weird agent tricks, a blog post worth reading, something about tech or life or how to decide — arrives through Instagram, Twitter, LinkedIn. People I follow, or just someone who lands in the feed. The knowledge is real. The delivery system is the problem.",
+      "I want to get to a place where I can delete those apps from my phone. Every morning, maybe overnight or once at dawn, an agent goes out and pulls what might be worth knowing: Hacker News for what’s shipping, Product Hunt for new products, a couple of news sources that aren’t always relevant to my day but are interesting anyway. Web search when it helps. Not a feed I scroll — a short brief.",
+      "It shows up once. Inbox, iMessage, whatever gets my attention without asking me to open a social app. I read it in the morning and I’m done. The signal without the residue.",
+    ],
+    status: "simmering",
+    refs: [
+      {
+        href: "https://news.ycombinator.com/",
+        label: "Hacker News",
+        note: "what’s shipping, what’s being argued about",
+      },
+      {
+        href: "https://www.producthunt.com/",
+        label: "Product Hunt",
+        note: "new products landing in public",
+      },
+    ],
+  },
+  {
     slug: "breathe-nudge",
     title: "Something tiny that asks you to breathe",
     body: [
