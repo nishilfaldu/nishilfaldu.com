@@ -72,6 +72,11 @@ export const IDEAS: Idea[] = [
         note: "family records hub and document help",
       },
       {
+        href: "https://guavahealth.com/",
+        label: "Guava",
+        note: "personal records + labs + devices; portal sync, visit prep, caring for loved ones",
+      },
+      {
         href: "https://aere.health/",
         label: "Aere",
         note: "personal stack — wearables + labs + PDF intelligence",
