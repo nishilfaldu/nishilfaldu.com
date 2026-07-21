@@ -113,7 +113,7 @@ export const SCAFFOLDS: Scaffold[] = [
     slug: "electron",
     name: "Electron",
     tagline:
-      "Electron Forge TypeScript + React — Vite (default) or Webpack, pnpm. Official CLI, not a stale boilerplate.",
+      "Electron Forge TypeScript + React + Biome — Vite (default) or Webpack, pnpm. Official CLI, not a stale boilerplate.",
     status: "builder",
   },
   {

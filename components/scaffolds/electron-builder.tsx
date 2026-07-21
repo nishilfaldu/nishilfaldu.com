@@ -39,8 +39,8 @@ export function ElectronBuilder() {
       <p className="m-0 text-[0.92rem] text-ink-muted">
         Official Electron Forge via{" "}
         <code className="text-[0.88em]">create-electron-app</code> — pick a
-        TypeScript bundler template, then the prompt adds React. The prompt
-        updates.
+        TypeScript bundler template, then the prompt adds React and Biome. The
+        prompt updates.
       </p>
 
       <fieldset className="mt-5 m-0 border-0 p-0">

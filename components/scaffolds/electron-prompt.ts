@@ -40,7 +40,7 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
         ].join("\n");
 
   return [
-    `Scaffold a new Electron desktop app with Electron Forge + React. If a project name isn't obvious from context, ask me for one. Prefer official CLIs, \`pnpm\`, and package install commands over cloning third-party boilerplates or hand-rolling setup. Never hang forever on interactive prompts.`,
+    `Scaffold a new Electron desktop app with Electron Forge + React + Biome. If a project name isn't obvious from context, ask me for one. Prefer official CLIs, \`pnpm\`, and package install commands over cloning third-party boilerplates or hand-rolling setup. Never hang forever on interactive prompts.`,
     ``,
     `1. Create the app with the current Forge CLI (prefer \`pnpm create electron-app@latest\` so the template and package manager match today):`,
     ``,
@@ -58,8 +58,15 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
     ``,
     reactStep,
     ``,
-    `4. Keep Electron security defaults. Do not turn off \`contextIsolation\` or \`sandbox\`, and do not enable \`nodeIntegration\` in renderer windows, unless I explicitly ask.`,
+    `4. Add Biome for lint + format. Prefer install + init commands over hand-writing config.`,
     ``,
-    `5. Stop. Do not add a UI kit, auto-updater, or packaging tweaks unless I ask. Summarize: folder name, template (${template}), pnpm + React wired, and how to start it.`,
+    `\`pnpm add -D -E @biomejs/biome\``,
+    `\`pnpm exec biome init\``,
+    ``,
+    `If those commands have changed, follow the current Biome getting-started docs with pnpm. Add \`lint\` / \`format\` (or \`check\`) scripts that run Biome. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped ESLint/Prettier, remove those in favor of Biome — don't leave two linters fighting.`,
+    ``,
+    `5. Keep Electron security defaults. Do not turn off \`contextIsolation\` or \`sandbox\`, and do not enable \`nodeIntegration\` in renderer windows, unless I explicitly ask.`,
+    ``,
+    `6. Stop. Do not add a UI kit, auto-updater, or packaging tweaks unless I ask. Summarize: folder name, template (${template}), pnpm + React + Biome wired, and how to start / lint it.`,
   ].join("\n");
 }
