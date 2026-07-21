@@ -1,6 +1,6 @@
 /**
  * Curated TanStack CLI add-ons for the /scaffolds builder.
- * Refresh from: npx @tanstack/cli@latest create --list-add-ons --json
+ * Refresh from: pnpm dlx @tanstack/cli@latest create --list-add-ons --json
  */
 
 export type AddonGroupId = "tanstack" | "database" | "orm" | "auth" | "deploy";

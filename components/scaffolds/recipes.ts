@@ -65,7 +65,7 @@ If a flag has been renamed or removed, check \`create-next-app --help\` (or the 
 
 3. Install the package with the project's package manager: \`pnpm add convex\`.
 
-4. Initialize against a Convex deployment with the current CLI (prefer \`pnpm exec convex\` / \`npx convex@latest\` so the command matches today):
+4. Initialize against a Convex deployment with the current CLI (prefer \`pnpm exec convex\` so the command matches today):
 
 \`pnpm exec convex dev --once\`
 
@@ -113,7 +113,7 @@ export const SCAFFOLDS: Scaffold[] = [
     slug: "electron",
     name: "Electron",
     tagline:
-      "Electron Forge TypeScript — Vite (default) or Webpack. Official CLI, not a stale boilerplate.",
+      "Electron Forge TypeScript + React — Vite (default) or Webpack, pnpm. Official CLI, not a stale boilerplate.",
     status: "builder",
   },
   {

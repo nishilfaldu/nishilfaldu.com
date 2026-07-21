@@ -11,7 +11,7 @@ export type TanstackPromptOptions = {
 export function tanstackCreateCommand(opts: TanstackPromptOptions): string {
   const addons = addonsForCli(opts.selectedAddons);
   const lines = [
-    "npx @tanstack/cli@latest create <project-name> \\",
+    "pnpm dlx @tanstack/cli@latest create <project-name> \\",
     "  --framework React \\",
     "  --package-manager pnpm \\",
     "  --toolchain biome \\",
@@ -34,11 +34,11 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
   const parts: string[] = [
     `Scaffold a new TanStack Start app. If a project name isn't obvious from context, ask me for one. Prefer the official TanStack CLI over copying a template. Never hang forever on interactive prompts — if login or project creation needs me, pause and say what to do.`,
     ``,
-    `1. Create the app with the current CLI (prefer \`npx @tanstack/cli@latest\` so flags match today):`,
+    `1. Create the app with the current CLI (prefer \`pnpm dlx @tanstack/cli@latest\` so flags match today; always \`--package-manager pnpm\`):`,
     ``,
     command,
     ``,
-    `If a flag or add-on id has been renamed or removed, check \`npx @tanstack/cli@latest create --help\` and \`--list-add-ons\`, then map to the same intent: React, pnpm, Biome toolchain, no demo examples, ${opts.intent ? "TanStack Intent on" : "TanStack Intent off"}${addons.length ? `, add-ons: ${addons.join(", ")}` : ", no extra add-ons"}.`,
+    `If a flag or add-on id has been renamed or removed, check \`pnpm dlx @tanstack/cli@latest create --help\` and \`--list-add-ons\`, then map to the same intent: React, pnpm, Biome toolchain, no demo examples, ${opts.intent ? "TanStack Intent on" : "TanStack Intent off"}${addons.length ? `, add-ons: ${addons.join(", ")}` : ", no extra add-ons"}.`,
     ``,
     `2. cd into the project. Confirm the app starts (\`pnpm dev\` or the generated script). Fix only if the scaffold itself is broken.`,
   ];
@@ -48,7 +48,7 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
   if (opts.intent) {
     parts.push(
       ``,
-      `${step}. Intent was requested. If the create step didn't fully wire agent skill guidance, run the current Intent consumer setup (\`npx @tanstack/intent@latest install\` or whatever \`--help\` shows) so AGENTS.md (or the project's agent config) can load skills from installed packages on demand.`,
+      `${step}. Intent was requested. If the create step didn't fully wire agent skill guidance, run the current Intent consumer setup (\`pnpm dlx @tanstack/intent@latest install\` or whatever \`--help\` shows) so AGENTS.md (or the project's agent config) can load skills from installed packages on demand.`,
     );
     step += 1;
   }

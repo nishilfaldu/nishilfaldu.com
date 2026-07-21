@@ -20,7 +20,7 @@ If the template tag or flag has been renamed or removed, check \`pnpm create exp
 
 The default template ships Expo Router with native tabs (\`expo-router/unstable-native-tabs\` on native). That is expected — do not swap them for the older JS \`Tabs\` layout unless I ask.
 
-2. cd into the project. Confirm it starts (\`pnpm start\` / \`npx expo start\`). Prefer a **development build** / simulator or \`expo run:ios\` / \`expo run:android\` over Expo Go. Fix only if the scaffold itself is broken.
+2. cd into the project. Confirm it starts (\`pnpm start\` / \`pnpm exec expo start\`). Prefer a **development build** / simulator or \`pnpm exec expo run:ios\` / \`pnpm exec expo run:android\` over Expo Go. Fix only if the scaffold itself is broken.
 
 3. Install official Expo Skills into **this project** (not globally) so Cursor cloud agents that clone the repo get them. There is no Expo plugin on the Cursor Marketplace — skills via the official CLI are the supported path:
 
