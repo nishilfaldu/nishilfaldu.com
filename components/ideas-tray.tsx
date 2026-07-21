@@ -1,17 +1,27 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { IDEA_STATUS_LABEL, IDEAS, type Idea } from "@/components/ideas";
+import {
+  IDEA_STATUS_LABEL,
+  IDEAS,
+  type Idea,
+  ideaIndexBySlug,
+} from "@/components/ideas";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import "./ideas-tray.css";
 
 /**
  * One idea in focus, a short index to jump, and a “draw another” shuffle.
- * Fun enough to poke — still a quiet page, not a dashboard.
+ * Deep link with `?idea=<slug>` — selection stays in the URL.
  */
 export function IdeasTray() {
-  const [index, setIndex] = useState(0);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const ideaParam = searchParams.get("idea");
+
+  const [index, setIndex] = useState(() => ideaIndexBySlug(ideaParam));
   const [tick, setTick] = useState(0);
   const [reducedMotion, setReducedMotion] = useState(false);
 
@@ -25,6 +35,12 @@ export function IdeasTray() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
 
+  // Honor URL changes (shared links, back/forward).
+  useEffect(() => {
+    const next = ideaIndexBySlug(ideaParam);
+    setIndex((current) => (current === next ? current : next));
+  }, [ideaParam]);
+
   const idea = IDEAS[index] ?? IDEAS[0];
   if (!idea) {
     return (
@@ -37,8 +53,13 @@ export function IdeasTray() {
   }
 
   function select(i: number) {
+    const next = IDEAS[i];
+    if (!next) return;
     setIndex(i);
     setTick((t) => t + 1);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("idea", next.slug);
+    router.replace(`/ideas?${params.toString()}`, { scroll: false });
   }
 
   function drawAnother() {
@@ -53,8 +74,6 @@ export function IdeasTray() {
     select(next);
   }
 
-  // Wider than measure so the tray sits beside a full reading column —
-  // not both squeezed into 38rem.
   return (
     <main className="mx-auto max-w-[55rem] px-6 pt-22 pb-28 sm:px-8 sm:pt-32 sm:pb-36">
       <div className="max-w-measure">
