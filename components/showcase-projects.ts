@@ -21,6 +21,13 @@ export type ShowcaseProject = {
 
 export const SHOWCASE: ShowcaseProject[] = [
   {
+    slug: "agent",
+    name: "Agent",
+    tagline:
+      "Notice something on this site, type a prompt, and a Cursor cloud agent goes off on the repo.",
+    path: "/projects/agent",
+  },
+  {
     slug: "sediment",
     name: "Sediment",
     tagline: "An inspiration dashboard for the pieces you already know matter.",
