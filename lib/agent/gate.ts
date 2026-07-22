@@ -22,6 +22,35 @@ function tokensEqual(a: string, b: string): boolean {
   return timingSafeEqual(left, right);
 }
 
+async function expectedGateToken(): Promise<string | null> {
+  const secret = agentAccessSecret();
+  if (!secret) return null;
+  return gateToken(secret);
+}
+
+/** True when the request carries a valid unlock cookie. */
+export async function hasAgentGateCookie(): Promise<boolean> {
+  const expected = await expectedGateToken();
+  if (!expected) return false;
+
+  const jar = await cookies();
+  const cookie = jar.get(AGENT_COOKIE)?.value;
+  if (!cookie) return false;
+
+  return tokensEqual(cookie, expected);
+}
+
+async function setUnlockCookie(expected: string): Promise<void> {
+  const jar = await cookies();
+  jar.set(AGENT_COOKIE, expected, {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: process.env.NODE_ENV === "production",
+    path: "/",
+    maxAge: AGENT_COOKIE_MAX_AGE,
+  });
+}
+
 /**
  * Accept a valid unlock cookie or a matching access code.
  * On a fresh code match, set the unlock cookie for later visits.
@@ -29,8 +58,8 @@ function tokensEqual(a: string, b: string): boolean {
 export async function assertAgentAccess(
   accessCode: string | undefined,
 ): Promise<{ ok: true } | { ok: false; status: 401 | 503; error: string }> {
-  const secret = agentAccessSecret();
-  if (!secret) {
+  const expected = await expectedGateToken();
+  if (!expected) {
     return {
       ok: false,
       status: 503,
@@ -38,10 +67,7 @@ export async function assertAgentAccess(
     };
   }
 
-  const expected = gateToken(secret);
-  const jar = await cookies();
-  const cookie = jar.get(AGENT_COOKIE)?.value;
-  if (cookie && tokensEqual(cookie, expected)) {
+  if (await hasAgentGateCookie()) {
     return { ok: true };
   }
 
@@ -50,13 +76,6 @@ export async function assertAgentAccess(
     return { ok: false, status: 401, error: "Invalid access code." };
   }
 
-  jar.set(AGENT_COOKIE, expected, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: AGENT_COOKIE_MAX_AGE,
-  });
-
+  await setUnlockCookie(expected);
   return { ok: true };
 }

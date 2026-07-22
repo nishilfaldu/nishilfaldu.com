@@ -20,23 +20,19 @@ const submitClass =
   "cursor-pointer rounded-[10px] border border-rule bg-paper px-3 py-1.5 text-[0.92rem] text-accent hover:border-accent disabled:cursor-default disabled:opacity-60";
 
 /**
- * Owner-only cloud agent launcher. Separate from the public site toolbar —
- * fixed bottom-right trigger, React modal overlay (no native <dialog> sync),
- * posts to /api/agent.
+ * Owner-only cloud agent launcher. Mounted only when the unlock cookie is
+ * present (see OwnerAgentLauncher). Prompt modal → POST /api/agent.
  */
 export function AgentLauncher() {
   const pathname = usePathname();
   const titleId = useId();
   const promptId = useId();
-  const accessId = useId();
   const promptRef = useRef<HTMLTextAreaElement>(null);
-  const accessRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const dismissRef = useRef<() => void>(() => {});
 
   const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
-  const [access, setAccess] = useState("");
   const [state, setState] = useState<LaunchState>({ status: "idle" });
 
   function cancelInFlight() {
@@ -46,7 +42,6 @@ export function AgentLauncher() {
 
   function resetForm() {
     setPrompt("");
-    setAccess("");
     setState({ status: "idle" });
   }
 
@@ -107,7 +102,6 @@ export function AgentLauncher() {
         signal: controller.signal,
         body: JSON.stringify({
           prompt: trimmed,
-          access: access.trim() || undefined,
           pagePath: pathname,
         }),
       });
@@ -128,9 +122,6 @@ export function AgentLauncher() {
       const data = parseAgentLaunchResponse(raw);
 
       if (!res.ok) {
-        if (res.status === 401) {
-          accessRef.current?.focus();
-        }
         setState({
           status: "error",
           message:
@@ -147,7 +138,6 @@ export function AgentLauncher() {
         return;
       }
 
-      setAccess("");
       setPrompt("");
       setState({
         status: "done",
@@ -247,27 +237,6 @@ export function AgentLauncher() {
                 </div>
               ) : (
                 <form onSubmit={submit}>
-                  <div className="mb-4">
-                    <label
-                      htmlFor={accessId}
-                      className="mb-2 block text-[0.92rem] text-ink-muted"
-                    >
-                      Access code
-                    </label>
-                    <input
-                      ref={accessRef}
-                      id={accessId}
-                      name="access"
-                      type="password"
-                      autoComplete="current-password"
-                      value={access}
-                      disabled={busy}
-                      onChange={(e) => setAccess(e.target.value)}
-                      placeholder="Leave blank if already unlocked"
-                      className={fieldClass}
-                    />
-                  </div>
-
                   <div className="mb-4">
                     <label
                       htmlFor={promptId}
