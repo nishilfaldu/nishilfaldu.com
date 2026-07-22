@@ -44,23 +44,24 @@ export default function CookingPage() {
 
       <p>
         Cooking is that window. It lives in the bottom-left toolbar on this
-        site. It watches a short list of GitHub repos, lists open PRs, and
-        attaches whatever “try it” link makes sense: a Preview when Vercel (or
-        anything else) posted a GitHub Deployment, or the latest Release when
-        the project is native — like Sediment’s Electron builds.
+        site. It watches whatever GitHub repos the site token can read — open a
+        PR and it shows up; grant the token a new repo (like Volt) and that
+        joins the tray. Try-links are a Preview when Vercel (or anything else)
+        posted a GitHub Deployment, or the latest Release when the project is
+        native — like Sediment’s Electron builds.
       </p>
 
       <p>
         Each row is small on purpose. Title and a note from the PR. Links to the
         preview or release, the repo, and the pull request via the branch name.
-        Underneath, every repo on the watch list, so you can see what this
+        Underneath, every repo on the live watch list, so you can see what this
         corner of the site is paying attention to even when nothing is open.
       </p>
 
       <p>
         No hand-edited status board. Open a PR and it shows up. Merge or close
-        it and it goes away. Add another repo to the allowlist (and the GitHub
-        token) and it joins the tray.
+        it and it goes away. Add a repo to the GitHub token and it joins the
+        tray — no deploy just to widen the watch list.
       </p>
 
       <p>

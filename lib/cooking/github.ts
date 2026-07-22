@@ -1,7 +1,12 @@
 /**
- * GitHub: open PRs on a watched repo, plus Preview deployment URLs
+ * GitHub: repos the token can read, open PRs, Preview deployment URLs
  * (Vercel posts these as GitHub Deployments when the project is linked).
  */
+
+export type AccessibleRepo = {
+  owner: string;
+  repo: string;
+};
 
 export type OpenPull = {
   number: number;
@@ -42,6 +47,45 @@ async function githubJson<T>(path: string): Promise<T> {
     );
   }
   return (await res.json()) as T;
+}
+
+type GhRepo = {
+  name: string;
+  full_name: string;
+  fork: boolean;
+  archived: boolean;
+  pushed_at: string | null;
+  owner: { login: string };
+};
+
+/** Drop long-idle repos so a broad PAT doesn’t flood the tray. */
+const MAX_IDLE_MS = 540 * 24 * 60 * 60 * 1000; // ~18 months
+
+/**
+ * Repos the GITHUB_TOKEN can see. Fine-grained tokens return only the repos
+ * they were granted — that grant list is the cooking allowlist.
+ * Skips forks, archived repos, and long-idle ones.
+ */
+export async function listAccessibleRepos(): Promise<AccessibleRepo[]> {
+  const out: AccessibleRepo[] = [];
+  const now = Date.now();
+  // Cap pages so a broad classic PAT cannot turn every request into a crawl.
+  const maxPages = 3;
+  for (let page = 1; page <= maxPages; page++) {
+    const batch = await githubJson<GhRepo[]>(
+      `/user/repos?per_page=100&page=${page}&affiliation=owner,collaborator&sort=pushed`,
+    );
+    for (const r of batch) {
+      if (r.fork || r.archived) continue;
+      if (r.pushed_at) {
+        const pushed = Date.parse(r.pushed_at);
+        if (!Number.isNaN(pushed) && now - pushed > MAX_IDLE_MS) continue;
+      }
+      out.push({ owner: r.owner.login, repo: r.name });
+    }
+    if (batch.length < 100) break;
+  }
+  return out;
 }
 
 type GhPull = {
