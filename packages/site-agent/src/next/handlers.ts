@@ -4,7 +4,7 @@ import {
   type AgentLaunchSuccess,
   MAX_PAGE_PATH_CHARS,
   MAX_PROMPT_CHARS,
-  resolveAgentConfig,
+  resolveRepo,
   type SiteAgentConfig,
 } from "../constants";
 import { createCloudAgent, cursorApiKey } from "../cursor";
@@ -34,18 +34,19 @@ function jsonError(error: string, status: number) {
 }
 
 /**
- * Build Next.js App Router handlers for launch + unlock.
+ * Next.js App Router handlers for launch + unlock.
  *
  * ```ts
+ * const agent = createSiteAgent(config);
  * // app/api/agent/route.ts
- * export const { POST, runtime } = createAgentHandlers(config);
- *
+ * export const { POST, runtime } = agent.launch;
  * // app/api/agent/unlock/route.ts
- * export const { GET, runtime } = createAgentUnlockHandler(config);
+ * export const { GET, runtime } = agent.unlock;
  * ```
  */
-export function createAgentHandlers(config: SiteAgentConfig) {
-  const resolved = resolveAgentConfig(config);
+export function createSiteAgent(config: SiteAgentConfig) {
+  const { repoUrl, startingRef } = resolveRepo(config);
+  const runtime = "nodejs" as const;
 
   async function POST(request: Request) {
     const apiKey = cursorApiKey();
@@ -65,7 +66,7 @@ export function createAgentHandlers(config: SiteAgentConfig) {
       return jsonError("Invalid JSON body.", 400);
     }
 
-    const gate = await assertAgentAccess(undefined, resolved.cookieName);
+    const gate = await assertAgentAccess(undefined);
     if (!gate.ok) {
       return jsonError(gate.error, gate.status);
     }
@@ -88,9 +89,8 @@ export function createAgentHandlers(config: SiteAgentConfig) {
       const agent = await createCloudAgent({
         apiKey,
         prompt: fullPrompt,
-        repoUrl: resolved.repoUrl,
-        startingRef: resolved.startingRef,
-        autoCreatePR: resolved.autoCreatePR,
+        repoUrl,
+        startingRef,
       });
       const body: AgentLaunchSuccess = agent;
       return NextResponse.json(body, {
@@ -104,15 +104,9 @@ export function createAgentHandlers(config: SiteAgentConfig) {
     }
   }
 
-  return { POST, runtime: "nodejs" as const };
-}
-
-export function createAgentUnlockHandler(config: SiteAgentConfig) {
-  const resolved = resolveAgentConfig(config);
-
   async function GET(request: Request) {
     const code = new URL(request.url).searchParams.get("code") ?? "";
-    const gate = await assertAgentAccess(code || undefined, resolved.cookieName);
+    const gate = await assertAgentAccess(code || undefined);
     if (!gate.ok) {
       return new NextResponse(gate.error, {
         status: gate.status,
@@ -120,11 +114,13 @@ export function createAgentUnlockHandler(config: SiteAgentConfig) {
       });
     }
 
-    return NextResponse.redirect(
-      new URL(resolved.unlockRedirectTo, request.url),
-      { headers: { "Cache-Control": "no-store" } },
-    );
+    return NextResponse.redirect(new URL("/", request.url), {
+      headers: { "Cache-Control": "no-store" },
+    });
   }
 
-  return { GET, runtime: "nodejs" as const };
+  return {
+    launch: { POST, runtime },
+    unlock: { GET, runtime },
+  };
 }

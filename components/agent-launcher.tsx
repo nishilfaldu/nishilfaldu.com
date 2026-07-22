@@ -1,12 +1,12 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 import {
-  DEFAULT_LAUNCH_PATH,
+  AGENT_LAUNCH_PATH,
   MAX_PROMPT_CHARS,
   parseAgentLaunchResponse,
-} from "../constants";
+} from "@nishilfaldu/site-agent";
+import { usePathname } from "next/navigation";
+import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 
 type LaunchState =
   | { status: "idle" }
@@ -20,18 +20,11 @@ const fieldClass =
 const submitClass =
   "cursor-pointer rounded-[10px] border border-rule bg-paper px-3 py-1.5 text-[0.92rem] text-accent hover:border-accent disabled:cursor-default disabled:opacity-60";
 
-export type AgentLauncherProps = {
-  /** POST path (default `/api/agent`). */
-  launchPath?: string;
-};
-
 /**
- * Owner-only cloud agent launcher UI. Mount only when unlocked
- * (see OwnerAgentLauncher).
+ * Owner-only cloud agent launcher. Mounted only when the unlock cookie is
+ * present (see OwnerAgentLauncher). Prompt modal → POST /api/agent.
  */
-export function AgentLauncher({
-  launchPath = DEFAULT_LAUNCH_PATH,
-}: AgentLauncherProps) {
+export function AgentLauncher() {
   const pathname = usePathname();
   const titleId = useId();
   const promptId = useId();
@@ -104,7 +97,7 @@ export function AgentLauncher({
     setState({ status: "submitting" });
 
     try {
-      const res = await fetch(launchPath, {
+      const res = await fetch(AGENT_LAUNCH_PATH, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,
@@ -265,7 +258,7 @@ export function AgentLauncher({
                       className={`${fieldClass} resize-y`}
                     />
                     <p className="mt-2 mb-0 text-[0.82rem] text-ink-muted">
-                      Starts a cloud agent on this app’s repo. Launch context:{" "}
+                      Starts a cloud agent on this site’s repo. Launch context:{" "}
                       <code className="font-mono text-[0.78rem]">
                         {pathname}
                       </code>

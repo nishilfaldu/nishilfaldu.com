@@ -5,12 +5,12 @@ export const MAX_PROMPT_CHARS = 8000;
 /** Bound launch-context path so it cannot bloat the Cursor prompt. */
 export const MAX_PAGE_PATH_CHARS = 200;
 
-export const DEFAULT_AGENT_COOKIE = "nf_agent_gate";
+export const AGENT_COOKIE = "nf_agent_gate";
 
 /** 30 days. */
 export const AGENT_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
-export const DEFAULT_LAUNCH_PATH = "/api/agent";
+export const AGENT_LAUNCH_PATH = "/api/agent";
 
 export type AgentLaunchSuccess = {
   agentId: string;
@@ -23,37 +23,21 @@ export type AgentLaunchError = {
   error: string;
 };
 
-/** Per-app wiring for handlers and the owner UI. */
+/** Per-app wiring — only the repo target varies today. */
 export type SiteAgentConfig = {
   /** GitHub repo the cloud agent always targets. */
   repoUrl: string;
-  /** Branch or SHA to start from. */
+  /** Branch or SHA to start from (default `main`). */
   startingRef?: string;
-  /** httpOnly unlock cookie name. */
-  cookieName?: string;
-  /** POST path the launcher calls (default `/api/agent`). */
-  launchPath?: string;
-  /** Where unlock redirects after success (default `/`). */
-  unlockRedirectTo?: string;
-  /** Open a PR when the agent finishes (default true). */
-  autoCreatePR?: boolean;
 };
 
-export function resolveAgentConfig(config: SiteAgentConfig): {
+export function resolveRepo(config: SiteAgentConfig): {
   repoUrl: string;
   startingRef: string;
-  cookieName: string;
-  launchPath: string;
-  unlockRedirectTo: string;
-  autoCreatePR: boolean;
 } {
   return {
     repoUrl: config.repoUrl,
     startingRef: config.startingRef?.trim() || "main",
-    cookieName: config.cookieName?.trim() || DEFAULT_AGENT_COOKIE,
-    launchPath: config.launchPath?.trim() || DEFAULT_LAUNCH_PATH,
-    unlockRedirectTo: config.unlockRedirectTo?.trim() || "/",
-    autoCreatePR: config.autoCreatePR ?? true,
   };
 }
 

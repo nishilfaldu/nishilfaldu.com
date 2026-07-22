@@ -1,14 +1,13 @@
+/** Client-safe surface: types, constants, response parsing. Server APIs live under `./next`. */
 export {
+  AGENT_COOKIE,
   AGENT_COOKIE_MAX_AGE,
-  DEFAULT_AGENT_COOKIE,
-  DEFAULT_LAUNCH_PATH,
+  AGENT_LAUNCH_PATH,
+  type AgentLaunchError,
+  type AgentLaunchSuccess,
   MAX_PAGE_PATH_CHARS,
   MAX_PROMPT_CHARS,
   parseAgentLaunchResponse,
-  resolveAgentConfig,
-  type AgentLaunchError,
-  type AgentLaunchSuccess,
+  resolveRepo,
   type SiteAgentConfig,
 } from "./constants";
-export { createCloudAgent, cursorApiKey } from "./cursor";
-export { agentAccessSecret, assertAgentAccess, hasAgentGateCookie } from "./gate";

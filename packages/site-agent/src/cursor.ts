@@ -25,7 +25,6 @@ export async function createCloudAgent(args: {
   prompt: string;
   repoUrl: string;
   startingRef: string;
-  autoCreatePR?: boolean;
 }): Promise<AgentLaunchSuccess> {
   const response = await fetch("https://api.cursor.com/v1/agents", {
     method: "POST",
@@ -41,7 +40,7 @@ export async function createCloudAgent(args: {
           startingRef: args.startingRef,
         },
       ],
-      autoCreatePR: args.autoCreatePR ?? true,
+      autoCreatePR: true,
     }),
   });
 

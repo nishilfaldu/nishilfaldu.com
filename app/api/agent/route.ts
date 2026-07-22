@@ -1,4 +1,3 @@
-import { createAgentHandlers } from "@nishilfaldu/site-agent/next";
-import { siteAgentConfig } from "@/lib/site-agent";
+import { siteAgent } from "@/lib/site-agent";
 
-export const { POST, runtime } = createAgentHandlers(siteAgentConfig);
+export const { POST, runtime } = siteAgent.launch;

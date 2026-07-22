@@ -2,7 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
-import { OwnerAgentLauncher } from "@nishilfaldu/site-agent/react/owner";
+import { OwnerAgentLauncher } from "@/components/owner-agent-launcher";
 import {
   personJsonLd,
   SITE_DESCRIPTION,
@@ -10,7 +10,6 @@ import {
   SITE_URL,
 } from "@/components/page-metadata";
 import { SiteToolbar } from "@/components/site-toolbar";
-import { siteAgentConfig } from "@/lib/site-agent";
 import "./globals.css";
 
 /*
@@ -87,7 +86,7 @@ export default function RootLayout({
         />
         {children}
         <SiteToolbar />
-        <OwnerAgentLauncher config={siteAgentConfig} />
+        <OwnerAgentLauncher />
         <Analytics />
       </body>
     </html>

@@ -1,4 +1,3 @@
-import { createAgentUnlockHandler } from "@nishilfaldu/site-agent/next";
-import { siteAgentConfig } from "@/lib/site-agent";
+import { siteAgent } from "@/lib/site-agent";
 
-export const { GET, runtime } = createAgentUnlockHandler(siteAgentConfig);
+export const { GET, runtime } = siteAgent.unlock;
