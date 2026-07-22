@@ -11,3 +11,14 @@ export const AGENT_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 export const AGENT_REPO_URL = "https://github.com/nishilfaldu/nishilfaldu.com";
 
 export const AGENT_REPO_REF = "main";
+
+export type AgentLaunchSuccess = {
+  agentId: string;
+  name: string;
+  url: string;
+  runId: string | null;
+};
+
+export type AgentLaunchError = {
+  error: string;
+};

@@ -1,11 +1,8 @@
-import { AGENT_REPO_REF, AGENT_REPO_URL } from "@/lib/agent/constants";
-
-export type CreateAgentResult = {
-  agentId: string;
-  name: string;
-  url: string;
-  runId: string | null;
-};
+import {
+  AGENT_REPO_REF,
+  AGENT_REPO_URL,
+  type AgentLaunchSuccess,
+} from "@/lib/agent/constants";
 
 type CursorCreateResponse = {
   agent?: {
@@ -25,7 +22,7 @@ type CursorCreateResponse = {
 export async function createCloudAgent(args: {
   apiKey: string;
   prompt: string;
-}): Promise<CreateAgentResult> {
+}): Promise<AgentLaunchSuccess> {
   const response = await fetch("https://api.cursor.com/v1/agents", {
     method: "POST",
     headers: {
@@ -67,10 +64,5 @@ export async function createCloudAgent(args: {
     throw new Error("Cursor API returned an incomplete agent payload.");
   }
 
-  return {
-    agentId,
-    name,
-    url,
-    runId,
-  };
+  return { agentId, name, url, runId };
 }

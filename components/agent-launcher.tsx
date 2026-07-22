@@ -1,8 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { type FormEvent, useEffect, useId, useRef, useState } from "react";
-import { MAX_PROMPT_CHARS } from "@/lib/agent/constants";
+import { type FormEvent, useId, useRef, useState } from "react";
+import {
+  type AgentLaunchError,
+  type AgentLaunchSuccess,
+  MAX_PROMPT_CHARS,
+} from "@/lib/agent/constants";
 import "./agent-launcher.css";
 
 type LaunchState =
@@ -13,7 +17,7 @@ type LaunchState =
 
 /**
  * Owner-only cloud agent launcher. Separate from the public site toolbar —
- * fixed bottom-right, opens a modal, posts to /api/agent.
+ * fixed bottom-right, native dialog, posts to /api/agent.
  */
 export function AgentLauncher() {
   const pathname = usePathname();
@@ -24,55 +28,25 @@ export function AgentLauncher() {
   const promptRef = useRef<HTMLTextAreaElement>(null);
   const accessRef = useRef<HTMLInputElement>(null);
 
-  const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [access, setAccess] = useState("");
-  const [needsAccess, setNeedsAccess] = useState(true);
   const [state, setState] = useState<LaunchState>({ status: "idle" });
 
-  useEffect(() => {
-    let cancelled = false;
-    async function checkGate() {
-      try {
-        const res = await fetch("/api/agent", { method: "GET" });
-        if (!res.ok) return;
-        const data = (await res.json()) as { unlocked?: boolean };
-        if (!cancelled) setNeedsAccess(!data.unlocked);
-      } catch {
-        // Stay locked; submit will re-check.
-      }
-    }
-    void checkGate();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (open && !dialog.open) {
-      dialog.showModal();
-      const focusTarget = needsAccess ? accessRef.current : promptRef.current;
-      focusTarget?.focus();
-    } else if (!open && dialog.open) {
-      dialog.close();
-    }
-  }, [open, needsAccess]);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  function close() {
-    setOpen(false);
+  function openDialog() {
     setState({ status: "idle" });
+    dialogRef.current?.showModal();
+    promptRef.current?.focus();
+  }
+
+  function resetForm() {
+    setPrompt("");
+    setAccess("");
+    setState({ status: "idle" });
+  }
+
+  function closeDialog() {
+    resetForm();
+    dialogRef.current?.close();
   }
 
   async function submit(e: FormEvent) {
@@ -80,10 +54,6 @@ export function AgentLauncher() {
     const trimmed = prompt.trim();
     if (!trimmed) {
       promptRef.current?.focus();
-      return;
-    }
-    if (needsAccess && !access.trim()) {
-      accessRef.current?.focus();
       return;
     }
 
@@ -95,34 +65,26 @@ export function AgentLauncher() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prompt: trimmed,
-          access: needsAccess ? access.trim() : undefined,
+          access: access.trim() || undefined,
           pagePath: pathname,
         }),
       });
 
-      const data = (await res.json()) as {
-        error?: string;
-        name?: string;
-        url?: string;
-      };
+      const data = (await res.json()) as AgentLaunchSuccess | AgentLaunchError;
 
       if (!res.ok) {
+        const message =
+          "error" in data && data.error
+            ? data.error
+            : "Could not start the agent.";
         if (res.status === 401) {
-          setNeedsAccess(true);
-          setState({
-            status: "error",
-            message: data.error ?? "Invalid access code.",
-          });
-          return;
+          accessRef.current?.focus();
         }
-        setState({
-          status: "error",
-          message: data.error ?? "Could not start the agent.",
-        });
+        setState({ status: "error", message });
         return;
       }
 
-      if (!data.url) {
+      if (!("url" in data) || !data.url) {
         setState({
           status: "error",
           message: "Agent started, but no URL came back.",
@@ -130,12 +92,11 @@ export function AgentLauncher() {
         return;
       }
 
-      setNeedsAccess(false);
       setAccess("");
       setPrompt("");
       setState({
         status: "done",
-        name: data.name?.trim() || "Cloud agent",
+        name: data.name.trim() || "Cloud agent",
         url: data.url,
       });
       window.open(data.url, "_blank", "noopener,noreferrer");
@@ -155,8 +116,7 @@ export function AgentLauncher() {
         type="button"
         className="agent-launcher-trigger"
         aria-haspopup="dialog"
-        aria-expanded={open}
-        onClick={() => setOpen(true)}
+        onClick={openDialog}
       >
         agent
       </button>
@@ -165,7 +125,7 @@ export function AgentLauncher() {
         ref={dialogRef}
         className="agent-launcher-modal"
         aria-labelledby={titleId}
-        onClose={close}
+        onClose={resetForm}
       >
         <form className="agent-launcher-panel" onSubmit={submit}>
           <header className="agent-launcher-header">
@@ -175,7 +135,7 @@ export function AgentLauncher() {
             <button
               type="button"
               className="agent-launcher-close"
-              onClick={close}
+              onClick={closeDialog}
               aria-label="Close"
             >
               Close
@@ -209,22 +169,20 @@ export function AgentLauncher() {
               </div>
             ) : (
               <>
-                {needsAccess ? (
-                  <div className="agent-launcher-field">
-                    <label htmlFor={accessId}>Access code</label>
-                    <input
-                      ref={accessRef}
-                      id={accessId}
-                      name="access"
-                      type="password"
-                      autoComplete="current-password"
-                      value={access}
-                      disabled={busy}
-                      onChange={(e) => setAccess(e.target.value)}
-                      placeholder="Only you have this"
-                    />
-                  </div>
-                ) : null}
+                <div className="agent-launcher-field">
+                  <label htmlFor={accessId}>Access code</label>
+                  <input
+                    ref={accessRef}
+                    id={accessId}
+                    name="access"
+                    type="password"
+                    autoComplete="current-password"
+                    value={access}
+                    disabled={busy}
+                    onChange={(e) => setAccess(e.target.value)}
+                    placeholder="Leave blank if already unlocked"
+                  />
+                </div>
 
                 <div className="agent-launcher-field">
                   <label htmlFor={promptId}>Prompt</label>
@@ -240,7 +198,7 @@ export function AgentLauncher() {
                     placeholder="What should the agent do on this repo?"
                   />
                   <p className="agent-launcher-muted">
-                    Runs against this site’s repo from{" "}
+                    Starts a cloud agent on this site’s repo. Launch context:{" "}
                     <code className="agent-launcher-code">{pathname}</code>.
                   </p>
                 </div>
@@ -255,7 +213,7 @@ export function AgentLauncher() {
                   <button
                     type="button"
                     className="agent-launcher-cancel"
-                    onClick={close}
+                    onClick={closeDialog}
                     disabled={busy}
                   >
                     Cancel

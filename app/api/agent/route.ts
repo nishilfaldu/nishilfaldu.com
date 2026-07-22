@@ -1,90 +1,96 @@
 import { NextResponse } from "next/server";
-import { cursorApiKey, MAX_PROMPT_CHARS } from "@/lib/agent/config";
+import {
+  type AgentLaunchError,
+  type AgentLaunchSuccess,
+  MAX_PROMPT_CHARS,
+} from "@/lib/agent/constants";
 import { createCloudAgent } from "@/lib/agent/cursor";
-import { assertAgentAccess, hasAgentGateCookie } from "@/lib/agent/gate";
+import { assertAgentAccess, cursorApiKey } from "@/lib/agent/gate";
 
 export const runtime = "nodejs";
 
-type AgentBody = {
-  prompt?: unknown;
-  access?: unknown;
-  pagePath?: unknown;
+type ParsedBody = {
+  prompt: string;
+  access: string;
+  pagePath: string;
 };
 
-function asTrimmedString(value: unknown): string {
+function readString(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
-/** Whether this browser already holds a valid unlock cookie. */
-export async function GET() {
-  const unlocked = await hasAgentGateCookie();
-  return NextResponse.json(
-    { unlocked },
-    { headers: { "Cache-Control": "no-store" } },
-  );
+function parseBody(value: unknown): ParsedBody | null {
+  if (typeof value !== "object" || value === null) return null;
+  const record = value as Record<string, unknown>;
+  return {
+    prompt: readString(record.prompt),
+    access: readString(record.access),
+    pagePath: readString(record.pagePath),
+  };
 }
 
 /**
  * Spin a Cursor cloud agent for this repo.
  * Server secrets: CURSOR_API_KEY, AGENT_ACCESS_SECRET.
+ * Auth: unlock cookie or access code in the body.
  */
 export async function POST(request: Request) {
   const apiKey = cursorApiKey();
   if (!apiKey) {
-    return NextResponse.json(
-      { error: "CURSOR_API_KEY is not configured." },
-      { status: 503 },
-    );
+    const body: AgentLaunchError = {
+      error: "CURSOR_API_KEY is not configured.",
+    };
+    return NextResponse.json(body, { status: 503 });
   }
 
-  let body: AgentBody;
+  let json: unknown;
   try {
-    body = (await request.json()) as AgentBody;
+    json = await request.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+    const body: AgentLaunchError = { error: "Invalid JSON body." };
+    return NextResponse.json(body, { status: 400 });
   }
 
-  const access = asTrimmedString(body.access);
-  const gate = await assertAgentAccess(access || undefined);
+  const parsed = parseBody(json);
+  if (!parsed) {
+    const body: AgentLaunchError = { error: "Invalid JSON body." };
+    return NextResponse.json(body, { status: 400 });
+  }
+
+  const gate = await assertAgentAccess(parsed.access || undefined);
   if (!gate.ok) {
-    return NextResponse.json({ error: gate.error }, { status: gate.status });
+    const body: AgentLaunchError = { error: gate.error };
+    return NextResponse.json(body, { status: gate.status });
   }
 
-  const prompt = asTrimmedString(body.prompt);
-  if (!prompt) {
-    return NextResponse.json({ error: "Prompt is required." }, { status: 400 });
+  if (!parsed.prompt) {
+    const body: AgentLaunchError = { error: "Prompt is required." };
+    return NextResponse.json(body, { status: 400 });
   }
-  if (prompt.length > MAX_PROMPT_CHARS) {
-    return NextResponse.json(
-      { error: `Prompt must be at most ${MAX_PROMPT_CHARS} characters.` },
-      { status: 400 },
-    );
+  if (parsed.prompt.length > MAX_PROMPT_CHARS) {
+    const body: AgentLaunchError = {
+      error: `Prompt must be at most ${MAX_PROMPT_CHARS} characters.`,
+    };
+    return NextResponse.json(body, { status: 400 });
   }
 
-  const pagePath = asTrimmedString(body.pagePath);
-  const fullPrompt =
-    pagePath.length > 0
-      ? `${prompt}\n\n(Launched from site path: ${pagePath})`
-      : prompt;
+  const fullPrompt = parsed.pagePath
+    ? `${parsed.prompt}\n\n(Launched from site path: ${parsed.pagePath})`
+    : parsed.prompt;
 
   try {
     const agent = await createCloudAgent({ apiKey, prompt: fullPrompt });
-    return NextResponse.json(
-      {
-        agentId: agent.agentId,
-        name: agent.name,
-        url: agent.url,
-        runId: agent.runId,
-      },
-      { headers: { "Cache-Control": "no-store" } },
-    );
+    const body: AgentLaunchSuccess = agent;
+    return NextResponse.json(body, {
+      headers: { "Cache-Control": "no-store" },
+    });
   } catch (error) {
     const message =
       error instanceof Error ? error.message : "Failed to create agent.";
     console.error("Cloud agent create failed:", message);
-    return NextResponse.json(
-      { error: "Could not start the cloud agent." },
-      { status: 502 },
-    );
+    const body: AgentLaunchError = {
+      error: "Could not start the cloud agent.",
+    };
+    return NextResponse.json(body, { status: 502 });
   }
 }

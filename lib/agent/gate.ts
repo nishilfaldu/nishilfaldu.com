@@ -1,33 +1,33 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
-import { agentAccessSecret } from "@/lib/agent/config";
 import { AGENT_COOKIE, AGENT_COOKIE_MAX_AGE } from "@/lib/agent/constants";
+
+function envTrim(name: string): string | null {
+  const value = process.env[name]?.trim();
+  return value || null;
+}
+
+export function cursorApiKey(): string | null {
+  return envTrim("CURSOR_API_KEY");
+}
+
+export function agentAccessSecret(): string | null {
+  return envTrim("AGENT_ACCESS_SECRET");
+}
 
 function gateToken(secret: string): string {
   return createHash("sha256").update(`nf-agent:${secret}`).digest("hex");
 }
 
-function secretsEqual(a: string, b: string): boolean {
+function tokensEqual(a: string, b: string): boolean {
   const left = Buffer.from(a);
   const right = Buffer.from(b);
   if (left.length !== right.length) return false;
   return timingSafeEqual(left, right);
 }
 
-/** True when the request carries a valid unlock cookie. */
-export async function hasAgentGateCookie(): Promise<boolean> {
-  const secret = agentAccessSecret();
-  if (!secret) return false;
-
-  const jar = await cookies();
-  const value = jar.get(AGENT_COOKIE)?.value;
-  if (!value) return false;
-
-  return secretsEqual(value, gateToken(secret));
-}
-
 /**
- * Accept either a valid cookie or a matching access code.
+ * Accept a valid unlock cookie or a matching access code.
  * On a fresh code match, set the unlock cookie for later visits.
  */
 export async function assertAgentAccess(
@@ -42,17 +42,19 @@ export async function assertAgentAccess(
     };
   }
 
-  if (await hasAgentGateCookie()) {
+  const expected = gateToken(secret);
+  const jar = await cookies();
+  const cookie = jar.get(AGENT_COOKIE)?.value;
+  if (cookie && tokensEqual(cookie, expected)) {
     return { ok: true };
   }
 
   const code = accessCode?.trim() ?? "";
-  if (!code || !secretsEqual(code, secret)) {
+  if (!code || !tokensEqual(gateToken(code), expected)) {
     return { ok: false, status: 401, error: "Invalid access code." };
   }
 
-  const jar = await cookies();
-  jar.set(AGENT_COOKIE, gateToken(secret), {
+  jar.set(AGENT_COOKIE, expected, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
