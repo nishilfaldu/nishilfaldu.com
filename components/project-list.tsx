@@ -4,6 +4,7 @@ import {
   projectHref,
   projectLinkLabel,
   SHOWCASE,
+  SHOWCASE_STATUS_LABEL,
 } from "@/components/showcase-projects";
 
 /**
@@ -35,8 +36,15 @@ export function ProjectList() {
               className="group block no-underline text-ink"
             >
               <span className="flex items-baseline justify-between gap-4">
-                <span className="font-medium tracking-[0.01em] group-hover:text-accent transition-colors">
-                  {p.name}
+                <span className="min-w-0">
+                  <span className="font-medium tracking-[0.01em] group-hover:text-accent transition-colors">
+                    {p.name}
+                  </span>
+                  {p.status ? (
+                    <span className="ml-2 text-[0.88rem] tracking-[0.02em] text-ink-muted">
+                      {SHOWCASE_STATUS_LABEL[p.status]}
+                    </span>
+                  ) : null}
                 </span>
                 <span className="shrink-0 text-[0.92rem] text-accent">
                   {projectLinkLabel(p)} ↗

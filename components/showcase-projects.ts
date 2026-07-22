@@ -7,7 +7,10 @@
  * `path` → internal story page (takes precedence).
  * `url` → live deployment.
  * Neither → GitHub repo under nishilfaldu/<slug>.
+ * `status` → optional label when the work isn’t finished yet.
  */
+export type ShowcaseStatus = "building";
+
 export type ShowcaseProject = {
   slug: string;
   name: string;
@@ -17,6 +20,12 @@ export type ShowcaseProject = {
   path?: string;
   /** Live deployment. */
   url?: string;
+  /** Omit when shipped. */
+  status?: ShowcaseStatus;
+};
+
+export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
+  building: "building",
 };
 
 export const SHOWCASE: ShowcaseProject[] = [
@@ -26,6 +35,13 @@ export const SHOWCASE: ShowcaseProject[] = [
     tagline:
       "Notice something on this site, type a prompt, and a Cursor cloud agent goes off on the repo.",
     path: "/projects/agent",
+  },
+  {
+    slug: "native-harbor",
+    name: "Native Harbor",
+    tagline:
+      "A native Mac app I’m still building — watched from Cooking when PRs are open.",
+    status: "building",
   },
   {
     slug: "sediment",
