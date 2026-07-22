@@ -28,4 +28,9 @@ export const COOKING_REPOS: readonly CookingRepo[] = [
     repo: "sediment",
     try: "release",
   },
+  {
+    owner: "nishilfaldu",
+    repo: "native-harbor",
+    try: "release",
+  },
 ] as const;
