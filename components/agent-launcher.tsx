@@ -7,13 +7,18 @@ import {
   type AgentLaunchSuccess,
   MAX_PROMPT_CHARS,
 } from "@/lib/agent/constants";
-import "./agent-launcher.css";
 
 type LaunchState =
   | { status: "idle" }
   | { status: "submitting" }
   | { status: "error"; message: string }
   | { status: "done"; name: string; url: string };
+
+const fieldClass =
+  "w-full rounded-[10px] border border-rule bg-paper px-3 py-2 font-sans text-[1rem] leading-snug text-ink placeholder:text-ink-muted/60 focus-visible:outline-none disabled:opacity-65";
+
+const submitClass =
+  "cursor-pointer rounded-[10px] border border-rule bg-paper px-3 py-1.5 text-[0.92rem] text-accent hover:border-accent disabled:cursor-default disabled:opacity-60";
 
 /**
  * Owner-only cloud agent launcher. Separate from the public site toolbar —
@@ -118,10 +123,15 @@ export function AgentLauncher() {
   const busy = state.status === "submitting";
 
   return (
-    <div data-agent-launcher className="agent-launcher">
+    <div
+      data-agent-launcher
+      className="fixed right-[1.35rem] bottom-[1.35rem] z-30 max-[40rem]:right-4 max-[40rem]:bottom-4"
+    >
       <button
         type="button"
-        className="agent-launcher-trigger"
+        className={`cursor-pointer rounded-[12px] border border-rule bg-paper px-[0.95rem] py-[0.7rem] font-sans text-[0.82rem] leading-none tracking-[0.01em] shadow-[0_2px_12px_rgb(0_0_0/0.10)] transition-colors hover:border-accent/35 hover:text-accent ${
+          open ? "text-accent" : "text-ink-muted"
+        }`}
         aria-haspopup="dialog"
         aria-expanded={open}
         onClick={() => {
@@ -134,18 +144,24 @@ export function AgentLauncher() {
 
       <dialog
         ref={dialogRef}
-        className="agent-launcher-modal"
+        className="fixed inset-0 m-auto w-[min(28rem,calc(100vw-1.5rem))] max-h-[min(90vh,36rem)] rounded-[14px] border border-rule bg-paper p-0 font-sans text-ink shadow-[0_24px_80px_rgb(0_0_0/0.28)] [&::backdrop]:bg-black/55"
         aria-labelledby={titleId}
         onClose={close}
       >
-        <form className="agent-launcher-panel" onSubmit={submit}>
-          <header className="agent-launcher-header">
-            <h2 id={titleId} className="agent-launcher-title">
+        <form
+          className="flex max-h-[min(90vh,36rem)] flex-col"
+          onSubmit={submit}
+        >
+          <header className="flex shrink-0 items-center justify-between gap-4 border-b border-rule px-5 py-4">
+            <h2
+              id={titleId}
+              className="m-0 text-[1.05rem] font-semibold tracking-[-0.03em]"
+            >
               Spin a cloud agent
             </h2>
             <button
               type="button"
-              className="agent-launcher-close"
+              className="cursor-pointer border-0 bg-transparent p-1 font-sans text-[0.9rem] font-medium tracking-[-0.01em] text-ink-muted hover:text-ink"
               onClick={close}
               aria-label="Close"
             >
@@ -153,23 +169,27 @@ export function AgentLauncher() {
             </button>
           </header>
 
-          <div className="agent-launcher-body">
+          <div className="overflow-auto px-5 pt-[1.15rem] pb-[1.35rem]">
             {state.status === "done" ? (
-              <div className="agent-launcher-done">
-                <p>
-                  Started{" "}
-                  <span className="agent-launcher-name">{state.name}</span>.
+              <div className="flex flex-col gap-3">
+                <p className="m-0">
+                  Started <span className="text-accent">{state.name}</span>.
                 </p>
-                <p className="agent-launcher-muted">
+                <p className="m-0 text-[0.82rem] text-ink-muted">
                   Opened in a new tab. If it didn’t,{" "}
-                  <a href={state.url} target="_blank" rel="noopener noreferrer">
+                  <a
+                    href={state.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent underline-offset-[0.12em]"
+                  >
                     open the agent
                   </a>
                   .
                 </p>
                 <button
                   type="button"
-                  className="agent-launcher-submit"
+                  className={`${submitClass} mt-1 self-start`}
                   onClick={() => {
                     setState({ status: "idle" });
                     promptRef.current?.focus();
@@ -180,8 +200,13 @@ export function AgentLauncher() {
               </div>
             ) : (
               <>
-                <div className="agent-launcher-field">
-                  <label htmlFor={accessId}>Access code</label>
+                <div className="mb-4">
+                  <label
+                    htmlFor={accessId}
+                    className="mb-2 block text-[0.92rem] text-ink-muted"
+                  >
+                    Access code
+                  </label>
                   <input
                     ref={accessRef}
                     id={accessId}
@@ -192,11 +217,17 @@ export function AgentLauncher() {
                     disabled={busy}
                     onChange={(e) => setAccess(e.target.value)}
                     placeholder="Leave blank if already unlocked"
+                    className={fieldClass}
                   />
                 </div>
 
-                <div className="agent-launcher-field">
-                  <label htmlFor={promptId}>Prompt</label>
+                <div className="mb-4">
+                  <label
+                    htmlFor={promptId}
+                    className="mb-2 block text-[0.92rem] text-ink-muted"
+                  >
+                    Prompt
+                  </label>
                   <textarea
                     ref={promptRef}
                     id={promptId}
@@ -207,33 +238,34 @@ export function AgentLauncher() {
                     disabled={busy}
                     onChange={(e) => setPrompt(e.target.value)}
                     placeholder="What should the agent do on this repo?"
+                    className={`${fieldClass} resize-y`}
                   />
-                  <p className="agent-launcher-muted">
+                  <p className="mt-2 mb-0 text-[0.82rem] text-ink-muted">
                     Starts a cloud agent on this site’s repo. Launch context:{" "}
-                    <code className="agent-launcher-code">{pathname}</code>.
+                    <code className="font-mono text-[0.78rem]">{pathname}</code>
+                    .
                   </p>
                 </div>
 
                 {state.status === "error" ? (
-                  <p className="agent-launcher-error" role="alert">
+                  <p
+                    className="mb-[0.9rem] text-[0.9rem] text-accent"
+                    role="alert"
+                  >
                     {state.message}
                   </p>
                 ) : null}
 
-                <div className="agent-launcher-actions">
+                <div className="mt-1 flex justify-end gap-2">
                   <button
                     type="button"
-                    className="agent-launcher-cancel"
+                    className="cursor-pointer rounded-[10px] border-0 bg-transparent px-3 py-1.5 font-sans text-[0.92rem] text-ink-muted hover:text-ink disabled:cursor-default disabled:opacity-60"
                     onClick={close}
                     disabled={busy}
                   >
                     Cancel
                   </button>
-                  <button
-                    type="submit"
-                    className="agent-launcher-submit"
-                    disabled={busy}
-                  >
+                  <button type="submit" className={submitClass} disabled={busy}>
                     {busy ? "Starting…" : "Start agent"}
                   </button>
                 </div>
