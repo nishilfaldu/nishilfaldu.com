@@ -1,12 +1,12 @@
 /**
- * Repos that feed the cooking toolbar. Add one entry to watch another product.
- * Do not auto-scan projects.ts — most of those repos have no preview deploys.
+ * Cooking repo config.
  *
- * Scope a fine-grained GITHUB_TOKEN to these repos only.
+ * Watched repos are discovered at runtime from whatever GITHUB_TOKEN can
+ * read — scope a fine-grained token to the products you care about, and they
+ * show up. No need to edit this file just to watch a new repo.
  *
- * `try` — what visitors can open while a PR is cooking:
- * - `preview` (default): GitHub Preview deployment URL (Vercel, etc.)
- * - `release`: latest GitHub Release (native / Electron apps)
+ * Use COOKING_TRY_OVERRIDES when a repo should surface GitHub Releases
+ * (native / Electron) instead of the default Preview deployment link.
  */
 
 export type CookingTry = "preview" | "release";
@@ -17,20 +17,12 @@ export type CookingRepo = {
   try?: CookingTry;
 };
 
-export const COOKING_REPOS: readonly CookingRepo[] = [
-  {
-    owner: "nishilfaldu",
-    repo: "nishilfaldu.com",
-    try: "preview",
-  },
-  {
-    owner: "nishilfaldu",
-    repo: "sediment",
-    try: "release",
-  },
-  {
-    owner: "nishilfaldu",
-    repo: "native-harbor",
-    try: "release",
-  },
-] as const;
+/** `owner/repo` → try mode. Anything else defaults to `preview`. */
+export const COOKING_TRY_OVERRIDES: Readonly<Record<string, CookingTry>> = {
+  "nishilfaldu/sediment": "release",
+  "nishilfaldu/native-harbor": "release",
+};
+
+export function tryModeFor(owner: string, repo: string): CookingTry {
+  return COOKING_TRY_OVERRIDES[`${owner}/${repo}`] ?? "preview";
+}

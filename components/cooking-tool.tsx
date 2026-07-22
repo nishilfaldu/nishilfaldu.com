@@ -8,14 +8,17 @@ import {
   useState,
 } from "react";
 import { CookingPanel } from "@/components/cooking-panel";
-import { COOKING_REPOS } from "@/lib/cooking/repos";
-import type { CookingItem, CookingResponse } from "@/lib/cooking/types";
+import type {
+  CookingItem,
+  CookingResponse,
+  CookingWatchedRepo,
+} from "@/lib/cooking/types";
 
 const PANEL_ID = "site-toolbar-cooking";
-const WATCHING = COOKING_REPOS.length > 0;
 
 type CookingFeed = {
   items: CookingItem[];
+  watching: CookingWatchedRepo[];
   hasItems: boolean;
 };
 
@@ -23,9 +26,9 @@ const CookingContext = createContext<CookingFeed | null>(null);
 
 function useCookingFeed(): CookingFeed {
   const [items, setItems] = useState<CookingItem[]>([]);
+  const [watching, setWatching] = useState<CookingWatchedRepo[]>([]);
 
   useEffect(() => {
-    if (!WATCHING) return;
     let cancelled = false;
 
     async function load() {
@@ -34,9 +37,11 @@ function useCookingFeed(): CookingFeed {
         const data = (await res.json()) as CookingResponse;
         if (cancelled) return;
         setItems(data.items ?? []);
+        setWatching(data.watching ?? []);
       } catch {
         if (cancelled) return;
         setItems([]);
+        setWatching([]);
       }
     }
 
@@ -51,7 +56,7 @@ function useCookingFeed(): CookingFeed {
     };
   }, []);
 
-  return { items, hasItems: items.length > 0 };
+  return { items, watching, hasItems: items.length > 0 };
 }
 
 function useCookingContext(): CookingFeed {
@@ -70,9 +75,16 @@ function Provider({ children }: { children: ReactNode }) {
 }
 
 function Panel({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { items } = useCookingContext();
-  if (!open || !WATCHING) return null;
-  return <CookingPanel id={PANEL_ID} onClose={onClose} items={items} />;
+  const { items, watching } = useCookingContext();
+  if (!open) return null;
+  return (
+    <CookingPanel
+      id={PANEL_ID}
+      onClose={onClose}
+      items={items}
+      watching={watching}
+    />
+  );
 }
 
 function NavButton({
@@ -85,8 +97,6 @@ function NavButton({
   pulse?: boolean;
 }) {
   const { items, hasItems } = useCookingContext();
-
-  if (!WATCHING) return null;
 
   return (
     <>
@@ -121,7 +131,8 @@ function NavButton({
 
 /**
  * Cooking feature for the site toolbar: fetch/poll, panel, and nav button.
- * Always available while COOKING_REPOS is non-empty; pulse only when PRs are open.
+ * Watch list comes from the API (repos the GitHub token can read).
+ * Pulse only when PRs are open.
  */
 export const CookingTool = {
   Provider,

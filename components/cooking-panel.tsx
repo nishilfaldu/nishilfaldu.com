@@ -1,8 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { COOKING_REPOS } from "@/lib/cooking/repos";
-import type { CookingItem } from "@/lib/cooking/types";
+import type { CookingItem, CookingWatchedRepo } from "@/lib/cooking/types";
 
 /**
  * WIP panel for the site toolbar’s cooking tool.
@@ -19,10 +18,12 @@ export function CookingPanel({
   id,
   onClose,
   items,
+  watching,
 }: {
   id: string;
   onClose: () => void;
   items: CookingItem[];
+  watching: CookingWatchedRepo[];
 }) {
   return (
     <div
@@ -59,19 +60,21 @@ export function CookingPanel({
         </p>
       )}
 
-      <WatchedRepos />
+      <WatchedRepos watching={watching} />
     </div>
   );
 }
 
-function WatchedRepos() {
+function WatchedRepos({ watching }: { watching: CookingWatchedRepo[] }) {
+  if (watching.length === 0) return null;
+
   return (
     <div className="mt-5 border-t border-rule pt-4">
       <p className="m-0 mb-2 text-[0.72rem] tracking-[0.06em] text-ink-muted uppercase">
         Watching
       </p>
       <ul className="m-0 flex list-none flex-wrap items-center gap-x-0 gap-y-1.5 p-0">
-        {COOKING_REPOS.map((watched, i) => {
+        {watching.map((watched, i) => {
           const full = `${watched.owner}/${watched.repo}`;
           return (
             <li key={full} className="flex items-center">

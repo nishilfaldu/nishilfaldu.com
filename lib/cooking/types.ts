@@ -29,6 +29,13 @@ export type CookingItem = {
   updatedAt: string;
 };
 
+export type CookingWatchedRepo = {
+  owner: string;
+  repo: string;
+};
+
 export type CookingResponse = {
   items: CookingItem[];
+  /** Repos the token can read — the live watch list. */
+  watching: CookingWatchedRepo[];
 };

@@ -1,19 +1,18 @@
 import {
+  type AccessibleRepo,
   type GithubPreview,
   latestRelease,
+  listAccessibleRepos,
   listOpenPulls,
   noteFromPrBody,
   previewsForShas,
 } from "@/lib/cooking/github";
-import {
-  COOKING_REPOS,
-  type CookingRepo,
-  type CookingTry,
-} from "@/lib/cooking/repos";
+import { type CookingTry, tryModeFor } from "@/lib/cooking/repos";
 import type {
   CookingItem,
   CookingStatus,
   CookingTryLink,
+  CookingWatchedRepo,
 } from "@/lib/cooking/types";
 
 function statusFromPreview(preview: GithubPreview | null): CookingStatus {
@@ -22,16 +21,27 @@ function statusFromPreview(preview: GithubPreview | null): CookingStatus {
   return "cooking";
 }
 
+export type CookingAggregate = {
+  items: CookingItem[];
+  watching: CookingWatchedRepo[];
+};
+
 /**
- * Open PRs on allowlisted repos.
- * - `try: preview` → GitHub Preview deployment URL when present
- * - `try: release` → latest GitHub Release (Electron / native)
+ * Open PRs on every repo the GITHUB_TOKEN can read.
+ * - default / override `preview` → GitHub Preview deployment URL when present
+ * - override `release` → latest GitHub Release (Electron / native)
  *
  * One unreachable repo (404 / token scope) must not empty the whole tray.
  */
-export async function aggregateCooking(): Promise<CookingItem[]> {
+export async function aggregateCooking(): Promise<CookingAggregate> {
+  const repos = await listAccessibleRepos();
+  const watching: CookingWatchedRepo[] = repos.map((r) => ({
+    owner: r.owner,
+    repo: r.repo,
+  }));
+
   const perRepo = await Promise.all(
-    COOKING_REPOS.map(async (watched) => {
+    repos.map(async (watched) => {
       try {
         return await cookingItemsForRepo(watched);
       } catch (err) {
@@ -44,15 +54,18 @@ export async function aggregateCooking(): Promise<CookingItem[]> {
     }),
   );
 
-  return perRepo.flat().sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
+  return {
+    items: perRepo.flat().sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1)),
+    watching,
+  };
 }
 
 async function cookingItemsForRepo(
-  watched: CookingRepo,
+  watched: AccessibleRepo,
 ): Promise<CookingItem[]> {
   const pulls = await listOpenPulls(watched.owner, watched.repo);
   const repoFull = `${watched.owner}/${watched.repo}`;
-  const mode: CookingTry = watched.try ?? "preview";
+  const mode: CookingTry = tryModeFor(watched.owner, watched.repo);
 
   if (mode === "release") {
     const release = await latestRelease(watched.owner, watched.repo);

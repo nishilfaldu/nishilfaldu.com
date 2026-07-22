@@ -52,6 +52,13 @@ export const SHOWCASE: ShowcaseProject[] = [
     status: "building",
   },
   {
+    slug: "volt",
+    name: "Volt",
+    tagline:
+      "A new project in flight — Cooking picks it up from the GitHub token, no allowlist edit.",
+    status: "building",
+  },
+  {
     slug: "sediment",
     name: "Sediment",
     tagline: "An inspiration dashboard for the pieces you already know matter.",
@@ -75,7 +82,7 @@ export const SHOWCASE: ShowcaseProject[] = [
     slug: "cooking",
     name: "Cooking",
     tagline:
-      "A quiet corner of this site that shows open PRs, previews, and releases across the repos I’m watching.",
+      "A quiet corner of this site that shows open PRs, previews, and releases across whatever repos the GitHub token can read.",
     path: "/projects/cooking",
   },
 ];
