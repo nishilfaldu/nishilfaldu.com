@@ -230,8 +230,13 @@ export const IDEAS: Idea[] = [
       "Same for the other side. A recruiter I meet should get that packet into a place that stores it on purpose — an app or vault — not another pile in Notes crowding their phone. Meet, tap, both sides keep a clean record of the exchange.",
       "NameDrop covers the contact-card gesture. Digital business cards cover richer profiles and NFC/QR. What’s still interesting is the job packet plus a dedicated home for the receiver — resume and links in, not just name and number.",
     ],
-    status: "simmering",
+    status: "building",
     refs: [
+      {
+        href: "/projects/phone-tap",
+        label: "Phone Tap",
+        note: "the write-up on /projects — in progress",
+      },
       {
         href: "https://support.apple.com/guide/iphone/share-your-contact-information-iph1b6c664b7/ios",
         label: "Apple NameDrop",
