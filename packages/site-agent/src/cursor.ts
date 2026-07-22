@@ -1,8 +1,4 @@
-import {
-  AGENT_REPO_REF,
-  AGENT_REPO_URL,
-  type AgentLaunchSuccess,
-} from "@/lib/agent/constants";
+import type { AgentLaunchSuccess } from "./constants";
 
 type CursorCreateResponse = {
   agent?: {
@@ -21,12 +17,15 @@ export function cursorApiKey(): string | null {
 }
 
 /**
- * Create a Cursor cloud agent against this repo and enqueue the first run.
+ * Create a Cursor cloud agent against a repo and enqueue the first run.
  * https://cursor.com/docs/cloud-agent/api/endpoints
  */
 export async function createCloudAgent(args: {
   apiKey: string;
   prompt: string;
+  repoUrl: string;
+  startingRef: string;
+  autoCreatePR?: boolean;
 }): Promise<AgentLaunchSuccess> {
   const response = await fetch("https://api.cursor.com/v1/agents", {
     method: "POST",
@@ -38,11 +37,11 @@ export async function createCloudAgent(args: {
       prompt: { text: args.prompt },
       repos: [
         {
-          url: AGENT_REPO_URL,
-          startingRef: AGENT_REPO_REF,
+          url: args.repoUrl,
+          startingRef: args.startingRef,
         },
       ],
-      autoCreatePR: true,
+      autoCreatePR: args.autoCreatePR ?? true,
     }),
   });
 

@@ -1,6 +1,9 @@
 import { createHash, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
-import { AGENT_COOKIE, AGENT_COOKIE_MAX_AGE } from "@/lib/agent/constants";
+import {
+  AGENT_COOKIE_MAX_AGE,
+  DEFAULT_AGENT_COOKIE,
+} from "./constants";
 
 function envTrim(name: string): string | null {
   const value = process.env[name]?.trim();
@@ -29,20 +32,25 @@ async function expectedGateToken(): Promise<string | null> {
 }
 
 /** True when the request carries a valid unlock cookie. */
-export async function hasAgentGateCookie(): Promise<boolean> {
+export async function hasAgentGateCookie(
+  cookieName: string = DEFAULT_AGENT_COOKIE,
+): Promise<boolean> {
   const expected = await expectedGateToken();
   if (!expected) return false;
 
   const jar = await cookies();
-  const cookie = jar.get(AGENT_COOKIE)?.value;
+  const cookie = jar.get(cookieName)?.value;
   if (!cookie) return false;
 
   return tokensEqual(cookie, expected);
 }
 
-async function setUnlockCookie(expected: string): Promise<void> {
+async function setUnlockCookie(
+  expected: string,
+  cookieName: string,
+): Promise<void> {
   const jar = await cookies();
-  jar.set(AGENT_COOKIE, expected, {
+  jar.set(cookieName, expected, {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
@@ -57,6 +65,7 @@ async function setUnlockCookie(expected: string): Promise<void> {
  */
 export async function assertAgentAccess(
   accessCode: string | undefined,
+  cookieName: string = DEFAULT_AGENT_COOKIE,
 ): Promise<{ ok: true } | { ok: false; status: 401 | 503; error: string }> {
   const expected = await expectedGateToken();
   if (!expected) {
@@ -67,7 +76,7 @@ export async function assertAgentAccess(
     };
   }
 
-  if (await hasAgentGateCookie()) {
+  if (await hasAgentGateCookie(cookieName)) {
     return { ok: true };
   }
 
@@ -76,6 +85,6 @@ export async function assertAgentAccess(
     return { ok: false, status: 401, error: "Invalid access code." };
   }
 
-  await setUnlockCookie(expected);
+  await setUnlockCookie(expected, cookieName);
   return { ok: true };
 }
