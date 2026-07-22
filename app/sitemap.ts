@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/",
     "/projects",
     "/projects/agent",
+    "/projects/phone-tap",
     "/projects/sediment",
     "/projects/atlas",
     "/projects/cedar",

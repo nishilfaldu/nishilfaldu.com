@@ -25,7 +25,7 @@ export type ShowcaseProject = {
 };
 
 export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
-  building: "building",
+  building: "in progress",
 };
 
 export const SHOWCASE: ShowcaseProject[] = [
@@ -35,6 +35,14 @@ export const SHOWCASE: ShowcaseProject[] = [
     tagline:
       "Notice something on this site, type a prompt, and a Cursor cloud agent goes off on the repo.",
     path: "/projects/agent",
+  },
+  {
+    slug: "phone-tap",
+    name: "Phone Tap",
+    tagline:
+      "Tap two phones and hand over a job packet — resume, LinkedIn, the professional stuff — into a place that keeps it on purpose.",
+    path: "/projects/phone-tap",
+    status: "building",
   },
   {
     slug: "native-harbor",
