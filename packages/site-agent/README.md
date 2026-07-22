@@ -17,7 +17,7 @@ Requires Node.js **22.13+** (`@cursor/sdk`).
 import type { SiteAgentConfig } from "@nishilfaldu/site-agent";
 import { createSiteAgent } from "@nishilfaldu/site-agent/next";
 
-export const siteAgentConfig = {
+const siteAgentConfig = {
   repoUrl: "https://github.com/nishilfaldu/nishilfaldu.com",
   startingRef: "main",
 } satisfies SiteAgentConfig;
@@ -35,6 +35,11 @@ import { siteAgent } from "@/lib/site-agent";
 export const { GET, runtime } = siteAgent.unlock;
 ```
 
+```tsx
+// components/owner-agent-launcher.tsx
+import { hasAgentGateCookie } from "@nishilfaldu/site-agent/gate";
+```
+
 3. Unlock once: `/api/agent/unlock?code=AGENT_ACCESS_SECRET`
 
 ## Exports
@@ -42,4 +47,5 @@ export const { GET, runtime } = siteAgent.unlock;
 | Import | Purpose |
 | --- | --- |
 | `@nishilfaldu/site-agent` | Client-safe types/constants + `parseAgentLaunchResponse` |
-| `@nishilfaldu/site-agent/next` | `createSiteAgent`, gate helpers, Cursor client |
+| `@nishilfaldu/site-agent/gate` | `hasAgentGateCookie` (RSC-safe; no Cursor SDK) |
+| `@nishilfaldu/site-agent/next` | `createSiteAgent` only |

@@ -1,4 +1,4 @@
-import { hasAgentGateCookie } from "@nishilfaldu/site-agent/next";
+import { hasAgentGateCookie } from "@nishilfaldu/site-agent/gate";
 import { AgentLauncher } from "@/components/agent-launcher";
 
 /**

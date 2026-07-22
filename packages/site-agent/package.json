@@ -8,6 +8,7 @@
   },
   "exports": {
     ".": "./src/index.ts",
+    "./gate": "./src/gate-public.ts",
     "./next": "./src/next/index.ts"
   },
   "peerDependencies": {

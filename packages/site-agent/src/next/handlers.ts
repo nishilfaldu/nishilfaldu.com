@@ -8,7 +8,7 @@ import {
   type SiteAgentConfig,
 } from "../constants";
 import { createCloudAgent, cursorApiKey } from "../cursor";
-import { assertAgentAccess } from "../gate";
+import { requireGateCookie, unlockWithCode } from "../gate";
 
 type ParsedBody = {
   prompt: string;
@@ -66,7 +66,7 @@ export function createSiteAgent(config: SiteAgentConfig) {
       return jsonError("Invalid JSON body.", 400);
     }
 
-    const gate = await assertAgentAccess(undefined);
+    const gate = await requireGateCookie();
     if (!gate.ok) {
       return jsonError(gate.error, gate.status);
     }
@@ -106,7 +106,7 @@ export function createSiteAgent(config: SiteAgentConfig) {
 
   async function GET(request: Request) {
     const code = new URL(request.url).searchParams.get("code") ?? "";
-    const gate = await assertAgentAccess(code || undefined);
+    const gate = await unlockWithCode(code);
     if (!gate.ok) {
       return new NextResponse(gate.error, {
         status: gate.status,

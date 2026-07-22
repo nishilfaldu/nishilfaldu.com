@@ -7,7 +7,7 @@ function envTrim(name: string): string | null {
   return value || null;
 }
 
-export function agentAccessSecret(): string | null {
+function agentAccessSecret(): string | null {
   return envTrim("AGENT_ACCESS_SECRET");
 }
 
@@ -27,6 +27,9 @@ async function expectedGateToken(): Promise<string | null> {
   if (!secret) return null;
   return gateToken(secret);
 }
+
+type GateFail = { ok: false; status: 401 | 503; error: string };
+type GateOk = { ok: true };
 
 /** True when the request carries a valid unlock cookie. */
 export async function hasAgentGateCookie(): Promise<boolean> {
@@ -51,13 +54,8 @@ async function setUnlockCookie(expected: string): Promise<void> {
   });
 }
 
-/**
- * Accept a valid unlock cookie or a matching access code.
- * On a fresh code match, set the unlock cookie for later visits.
- */
-export async function assertAgentAccess(
-  accessCode: string | undefined,
-): Promise<{ ok: true } | { ok: false; status: 401 | 503; error: string }> {
+/** Cookie-only check for launch. */
+export async function requireGateCookie(): Promise<GateOk | GateFail> {
   const expected = await expectedGateToken();
   if (!expected) {
     return {
@@ -67,11 +65,35 @@ export async function assertAgentAccess(
     };
   }
 
-  if (await hasAgentGateCookie()) {
+  const jar = await cookies();
+  const cookie = jar.get(AGENT_COOKIE)?.value;
+  if (!cookie || !tokensEqual(cookie, expected)) {
+    return { ok: false, status: 401, error: "Agent unlock required." };
+  }
+
+  return { ok: true };
+}
+
+/** Unlock via access code (sets cookie) or accept an existing cookie. */
+export async function unlockWithCode(
+  accessCode: string,
+): Promise<GateOk | GateFail> {
+  const expected = await expectedGateToken();
+  if (!expected) {
+    return {
+      ok: false,
+      status: 503,
+      error: "Agent gate is not configured.",
+    };
+  }
+
+  const jar = await cookies();
+  const cookie = jar.get(AGENT_COOKIE)?.value;
+  if (cookie && tokensEqual(cookie, expected)) {
     return { ok: true };
   }
 
-  const code = accessCode?.trim() ?? "";
+  const code = accessCode.trim();
   if (!code || !tokensEqual(gateToken(code), expected)) {
     return { ok: false, status: 401, error: "Invalid access code." };
   }

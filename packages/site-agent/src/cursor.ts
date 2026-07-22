@@ -33,24 +33,11 @@ export async function createCloudAgent(args: {
 
   try {
     const run = await agent.send(args.prompt);
-    const agentId = agent.agentId;
-    if (!agentId) {
-      throw new Error("Cursor SDK returned an incomplete agent id.");
-    }
-
-    let name = "Cloud agent";
-    try {
-      const info = await Agent.get(agentId, { apiKey: args.apiKey });
-      if (info.name.trim()) name = info.name.trim();
-    } catch {
-      // Title is best-effort; the agent URL is what matters for the UI.
-    }
-
     return {
-      agentId,
-      name,
-      url: `${AGENT_WEB_BASE}/${agentId}`,
-      runId: run.id || null,
+      agentId: agent.agentId,
+      name: "Cloud agent",
+      url: `${AGENT_WEB_BASE}/${agent.agentId}`,
+      runId: run.id,
     };
   } finally {
     agent.close();
