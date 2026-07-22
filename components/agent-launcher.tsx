@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { type FormEvent, useId, useRef, useState } from "react";
+import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 import {
   type AgentLaunchError,
   type AgentLaunchSuccess,
@@ -17,7 +17,11 @@ type LaunchState =
 
 /**
  * Owner-only cloud agent launcher. Separate from the public site toolbar —
- * fixed bottom-right, native dialog, posts to /api/agent.
+ * fixed bottom-right, modal, posts to /api/agent.
+ *
+ * Dialog open state is React-controlled (same pattern as LabModal). Calling
+ * showModal() alone does not survive re-renders — React clears the native
+ * open flag unless `open` is kept in sync.
  */
 export function AgentLauncher() {
   const pathname = usePathname();
@@ -28,25 +32,28 @@ export function AgentLauncher() {
   const promptRef = useRef<HTMLTextAreaElement>(null);
   const accessRef = useRef<HTMLInputElement>(null);
 
+  const [open, setOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [access, setAccess] = useState("");
   const [state, setState] = useState<LaunchState>({ status: "idle" });
 
-  function openDialog() {
-    setState({ status: "idle" });
-    dialogRef.current?.showModal();
-    promptRef.current?.focus();
-  }
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
 
-  function resetForm() {
+    if (open && !dialog.open) {
+      dialog.showModal();
+      promptRef.current?.focus();
+    } else if (!open && dialog.open) {
+      dialog.close();
+    }
+  }, [open]);
+
+  function close() {
+    setOpen(false);
     setPrompt("");
     setAccess("");
     setState({ status: "idle" });
-  }
-
-  function closeDialog() {
-    resetForm();
-    dialogRef.current?.close();
   }
 
   async function submit(e: FormEvent) {
@@ -116,7 +123,11 @@ export function AgentLauncher() {
         type="button"
         className="agent-launcher-trigger"
         aria-haspopup="dialog"
-        onClick={openDialog}
+        aria-expanded={open}
+        onClick={() => {
+          setState({ status: "idle" });
+          setOpen(true);
+        }}
       >
         agent
       </button>
@@ -125,7 +136,7 @@ export function AgentLauncher() {
         ref={dialogRef}
         className="agent-launcher-modal"
         aria-labelledby={titleId}
-        onClose={resetForm}
+        onClose={close}
       >
         <form className="agent-launcher-panel" onSubmit={submit}>
           <header className="agent-launcher-header">
@@ -135,7 +146,7 @@ export function AgentLauncher() {
             <button
               type="button"
               className="agent-launcher-close"
-              onClick={closeDialog}
+              onClick={close}
               aria-label="Close"
             >
               Close
@@ -213,7 +224,7 @@ export function AgentLauncher() {
                   <button
                     type="button"
                     className="agent-launcher-cancel"
-                    onClick={closeDialog}
+                    onClick={close}
                     disabled={busy}
                   >
                     Cancel

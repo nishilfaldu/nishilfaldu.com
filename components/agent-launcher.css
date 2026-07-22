@@ -33,6 +33,10 @@
   border-color: color-mix(in srgb, var(--color-accent) 35%, var(--color-rule));
 }
 
+.agent-launcher-trigger[aria-expanded="true"] {
+  color: var(--color-accent);
+}
+
 .agent-launcher-modal {
   position: fixed;
   inset: 0;
