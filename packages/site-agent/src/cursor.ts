@@ -1,15 +1,7 @@
+import { Agent } from "@cursor/sdk";
 import type { AgentLaunchSuccess } from "./constants";
 
-type CursorCreateResponse = {
-  agent?: {
-    id?: string;
-    name?: string;
-    url?: string;
-  };
-  run?: {
-    id?: string;
-  };
-};
+const AGENT_WEB_BASE = "https://cursor.com/agents";
 
 export function cursorApiKey(): string | null {
   const key = process.env.CURSOR_API_KEY?.trim();
@@ -18,7 +10,7 @@ export function cursorApiKey(): string | null {
 
 /**
  * Create a Cursor cloud agent against a repo and enqueue the first run.
- * https://cursor.com/docs/cloud-agent/api/endpoints
+ * https://cursor.com/docs/sdk/typescript
  */
 export async function createCloudAgent(args: {
   apiKey: string;
@@ -26,14 +18,9 @@ export async function createCloudAgent(args: {
   repoUrl: string;
   startingRef: string;
 }): Promise<AgentLaunchSuccess> {
-  const response = await fetch("https://api.cursor.com/v1/agents", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${args.apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      prompt: { text: args.prompt },
+  const agent = await Agent.create({
+    apiKey: args.apiKey,
+    cloud: {
       repos: [
         {
           url: args.repoUrl,
@@ -41,31 +28,31 @@ export async function createCloudAgent(args: {
         },
       ],
       autoCreatePR: true,
-    }),
+    },
   });
 
-  const raw = await response.text();
-  let data: CursorCreateResponse | null = null;
-  if (raw) {
-    try {
-      data = JSON.parse(raw) as CursorCreateResponse;
-    } catch {
-      data = null;
+  try {
+    const run = await agent.send(args.prompt);
+    const agentId = agent.agentId;
+    if (!agentId) {
+      throw new Error("Cursor SDK returned an incomplete agent id.");
     }
-  }
 
-  if (!response.ok) {
-    const detail = raw.slice(0, 400) || response.statusText;
-    throw new Error(`Cursor API ${response.status}: ${detail}`);
-  }
+    let name = "Cloud agent";
+    try {
+      const info = await Agent.get(agentId, { apiKey: args.apiKey });
+      if (info.name.trim()) name = info.name.trim();
+    } catch {
+      // Title is best-effort; the agent URL is what matters for the UI.
+    }
 
-  const agentId = data?.agent?.id;
-  const url = data?.agent?.url;
-  const name = data?.agent?.name?.trim() || "Cloud agent";
-  const runId = data?.run?.id ?? null;
-  if (!agentId || !url) {
-    throw new Error("Cursor API returned an incomplete agent payload.");
+    return {
+      agentId,
+      name,
+      url: `${AGENT_WEB_BASE}/${agentId}`,
+      runId: run.id || null,
+    };
+  } finally {
+    agent.close();
   }
-
-  return { agentId, name, url, runId };
 }

@@ -1,9 +1,11 @@
 # @nishilfaldu/site-agent
 
 Private workspace package: Cursor cloud-agent **server** bits for this site
-(gate, Cursor client, App Router handlers).
+(gate, `@cursor/sdk` client, App Router handlers).
 
 UI stays in the app — it uses this site’s design tokens. Not published.
+
+Requires Node.js **22.13+** (`@cursor/sdk`).
 
 ## Wire-up
 
