@@ -1,11 +1,12 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 import {
+  AGENT_LAUNCH_PATH,
   MAX_PROMPT_CHARS,
   parseAgentLaunchResponse,
-} from "@/lib/agent/constants";
+} from "@nishilfaldu/site-agent";
+import { usePathname } from "next/navigation";
+import { type FormEvent, useEffect, useId, useRef, useState } from "react";
 
 type LaunchState =
   | { status: "idle" }
@@ -96,7 +97,7 @@ export function AgentLauncher() {
     setState({ status: "submitting" });
 
     try {
-      const res = await fetch("/api/agent", {
+      const res = await fetch(AGENT_LAUNCH_PATH, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         signal: controller.signal,

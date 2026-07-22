@@ -10,10 +10,7 @@ export const AGENT_COOKIE = "nf_agent_gate";
 /** 30 days. */
 export const AGENT_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
 
-/** This site’s repo — cloud agents always target this, nowhere else. */
-export const AGENT_REPO_URL = "https://github.com/nishilfaldu/nishilfaldu.com";
-
-export const AGENT_REPO_REF = "main";
+export const AGENT_LAUNCH_PATH = "/api/agent";
 
 export type AgentLaunchSuccess = {
   agentId: string;
@@ -25,6 +22,24 @@ export type AgentLaunchSuccess = {
 export type AgentLaunchError = {
   error: string;
 };
+
+/** Per-app wiring — only the repo target varies today. */
+export type SiteAgentConfig = {
+  /** GitHub repo the cloud agent always targets. */
+  repoUrl: string;
+  /** Branch or SHA to start from (default `main`). */
+  startingRef?: string;
+};
+
+export function resolveRepo(config: SiteAgentConfig): {
+  repoUrl: string;
+  startingRef: string;
+} {
+  return {
+    repoUrl: config.repoUrl,
+    startingRef: config.startingRef?.trim() || "main",
+  };
+}
 
 /** Narrow unknown JSON from POST /api/agent into a typed result. */
 export function parseAgentLaunchResponse(
