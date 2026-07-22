@@ -12,7 +12,6 @@ export const runtime = "nodejs";
 
 type ParsedBody = {
   prompt: string;
-  access: string;
   pagePath: string;
 };
 
@@ -25,7 +24,6 @@ function parseBody(value: unknown): ParsedBody | null {
   const record = value as Record<string, unknown>;
   return {
     prompt: readString(record.prompt),
-    access: readString(record.access),
     pagePath: readString(record.pagePath).slice(0, MAX_PAGE_PATH_CHARS),
   };
 }
@@ -38,7 +36,7 @@ function jsonError(error: string, status: number) {
 /**
  * Spin a Cursor cloud agent for this repo.
  * Server secrets: CURSOR_API_KEY, AGENT_ACCESS_SECRET.
- * Auth: unlock cookie or access code in the body.
+ * Auth: unlock cookie only (set via GET /api/agent/unlock?code=…).
  */
 export async function POST(request: Request) {
   const apiKey = cursorApiKey();
@@ -58,7 +56,7 @@ export async function POST(request: Request) {
     return jsonError("Invalid JSON body.", 400);
   }
 
-  const gate = await assertAgentAccess(parsed.access || undefined);
+  const gate = await assertAgentAccess(undefined);
   if (!gate.ok) {
     return jsonError(gate.error, gate.status);
   }
