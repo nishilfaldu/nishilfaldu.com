@@ -15,6 +15,11 @@ type CursorCreateResponse = {
   };
 };
 
+export function cursorApiKey(): string | null {
+  const key = process.env.CURSOR_API_KEY?.trim();
+  return key || null;
+}
+
 /**
  * Create a Cursor cloud agent against this repo and enqueue the first run.
  * https://cursor.com/docs/cloud-agent/api/endpoints

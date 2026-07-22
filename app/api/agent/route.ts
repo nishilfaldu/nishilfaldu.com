@@ -2,10 +2,11 @@ import { NextResponse } from "next/server";
 import {
   type AgentLaunchError,
   type AgentLaunchSuccess,
+  MAX_PAGE_PATH_CHARS,
   MAX_PROMPT_CHARS,
 } from "@/lib/agent/constants";
-import { createCloudAgent } from "@/lib/agent/cursor";
-import { assertAgentAccess, cursorApiKey } from "@/lib/agent/gate";
+import { createCloudAgent, cursorApiKey } from "@/lib/agent/cursor";
+import { assertAgentAccess } from "@/lib/agent/gate";
 
 export const runtime = "nodejs";
 
@@ -25,8 +26,13 @@ function parseBody(value: unknown): ParsedBody | null {
   return {
     prompt: readString(record.prompt),
     access: readString(record.access),
-    pagePath: readString(record.pagePath),
+    pagePath: readString(record.pagePath).slice(0, MAX_PAGE_PATH_CHARS),
   };
+}
+
+function jsonError(error: string, status: number) {
+  const body: AgentLaunchError = { error };
+  return NextResponse.json(body, { status });
 }
 
 /**
@@ -37,41 +43,34 @@ function parseBody(value: unknown): ParsedBody | null {
 export async function POST(request: Request) {
   const apiKey = cursorApiKey();
   if (!apiKey) {
-    const body: AgentLaunchError = {
-      error: "CURSOR_API_KEY is not configured.",
-    };
-    return NextResponse.json(body, { status: 503 });
+    return jsonError("CURSOR_API_KEY is not configured.", 503);
   }
 
   let json: unknown;
   try {
     json = await request.json();
   } catch {
-    const body: AgentLaunchError = { error: "Invalid JSON body." };
-    return NextResponse.json(body, { status: 400 });
+    return jsonError("Invalid JSON body.", 400);
   }
 
   const parsed = parseBody(json);
   if (!parsed) {
-    const body: AgentLaunchError = { error: "Invalid JSON body." };
-    return NextResponse.json(body, { status: 400 });
+    return jsonError("Invalid JSON body.", 400);
   }
 
   const gate = await assertAgentAccess(parsed.access || undefined);
   if (!gate.ok) {
-    const body: AgentLaunchError = { error: gate.error };
-    return NextResponse.json(body, { status: gate.status });
+    return jsonError(gate.error, gate.status);
   }
 
   if (!parsed.prompt) {
-    const body: AgentLaunchError = { error: "Prompt is required." };
-    return NextResponse.json(body, { status: 400 });
+    return jsonError("Prompt is required.", 400);
   }
   if (parsed.prompt.length > MAX_PROMPT_CHARS) {
-    const body: AgentLaunchError = {
-      error: `Prompt must be at most ${MAX_PROMPT_CHARS} characters.`,
-    };
-    return NextResponse.json(body, { status: 400 });
+    return jsonError(
+      `Prompt must be at most ${MAX_PROMPT_CHARS} characters.`,
+      400,
+    );
   }
 
   const fullPrompt = parsed.pagePath
@@ -88,9 +87,6 @@ export async function POST(request: Request) {
     const message =
       error instanceof Error ? error.message : "Failed to create agent.";
     console.error("Cloud agent create failed:", message);
-    const body: AgentLaunchError = {
-      error: "Could not start the cloud agent.",
-    };
-    return NextResponse.json(body, { status: 502 });
+    return jsonError("Could not start the cloud agent.", 502);
   }
 }

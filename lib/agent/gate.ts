@@ -7,10 +7,6 @@ function envTrim(name: string): string | null {
   return value || null;
 }
 
-export function cursorApiKey(): string | null {
-  return envTrim("CURSOR_API_KEY");
-}
-
 export function agentAccessSecret(): string | null {
   return envTrim("AGENT_ACCESS_SECRET");
 }
