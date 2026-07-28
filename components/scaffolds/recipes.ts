@@ -1,4 +1,6 @@
 import { EXPO_APP_PROMPT } from "@/components/scaffolds/expo-prompt";
+import { nextCreateCommand } from "@/components/scaffolds/next-prompt";
+import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
 
 /**
  * Scaffold recipes — prompts you open in Cursor (or copy elsewhere).
@@ -10,44 +12,22 @@ export type Scaffold = {
   name: string;
   /** One sentence under the name. */
   tagline: string;
-  /** Full agent prompt. Keep under ~6k chars so the Cursor deeplink stays < 8k URL. */
+  /**
+   * Full agent prompt. Now includes the standing-practices phase, so these
+   * run well past the old ~6k "safe URL" budget — the Cursor deeplink can
+   * still exceed typical URL limits in some browsers. "Copy prompt" in
+   * ScaffoldActions is the reliable fallback; don't shrink prompt content
+   * to chase the deeplink budget.
+   */
   prompt?: string;
   /** ready = deeplink works; soon = listed but not wired yet; builder = interactive picker. */
   status: "ready" | "soon" | "builder";
 };
 
-/** Shared create-next-app invocation — keep Next recipes in lockstep. */
-export const NEXT_CREATE_COMMAND = `pnpm create next-app@latest <project-name> \\
-  --typescript \\
-  --biome \\
-  --react-compiler \\
-  --tailwind \\
-  --app \\
-  --no-src-dir \\
-  --import-alias "@/*" \\
-  --use-pnpm \\
-  --agents-md`;
+const NEXT_CONVEX_CREATE_COMMAND = nextCreateCommand({ linter: "biome" });
 
-const NEXT_CREATE_INTENT =
+const NEXT_CONVEX_CREATE_INTENT =
   "TypeScript, Biome, React Compiler, Tailwind, App Router, no src/, @/* imports, pnpm, keep AGENTS.md";
-
-export const NEXT_APP_PROMPT = `Scaffold a new Next.js app. If a project name isn't obvious from context, ask me for one. Run the CLI non-interactively — never hang waiting for prompts.
-
-1. Create the app with the current create-next-app (prefer \`pnpm create next-app@latest\` so flags match today's CLI):
-
-${NEXT_CREATE_COMMAND}
-
-If a flag has been renamed or removed, check \`create-next-app --help\` (or the live Next.js docs) and keep the same intent: ${NEXT_CREATE_INTENT}.
-
-2. cd into the project.
-
-3. Confirm the lint script runs (\`pnpm lint\` or whatever the scaffold generated). Fix only if the scaffold itself is broken.
-
-4. Stop. Do not add a backend, database, auth, UI kit, or other packages unless I ask. Tell me the folder name and the flags you used.
-
-Notes:
-- Prefer the official CLI over copying an old template.
-- Keep the generated AGENTS.md. You may add project rules below it; don't overwrite the generated section.`;
 
 export const NEXT_CONVEX_PROMPT = `Scaffold a new Next.js app with Convex. If a project name isn't obvious from context, ask me for one. Prefer official CLIs over copying templates. Never hang forever on interactive prompts — if login or project creation needs me, pause and say what to do.
 
@@ -55,9 +35,9 @@ export const NEXT_CONVEX_PROMPT = `Scaffold a new Next.js app with Convex. If a 
 
 1. Create the app:
 
-${NEXT_CREATE_COMMAND}
+${NEXT_CONVEX_CREATE_COMMAND}
 
-If a flag has been renamed or removed, check \`create-next-app --help\` (or the live Next.js docs) and keep the same intent: ${NEXT_CREATE_INTENT}.
+If a flag has been renamed or removed, check \`create-next-app --help\` (or the live Next.js docs) and keep the same intent: ${NEXT_CONVEX_CREATE_INTENT}.
 
 2. cd into the project. Confirm the lint script runs; fix only if the scaffold itself is broken.
 
@@ -81,18 +61,19 @@ On first run this may ask me to log in and pick/create a project. Pause for that
 
 Don't try to install the plugin from the terminal; that's a Cursor UI step.
 
-## D. Stop
+## D. Wrap up Phase 1
 
-7. Do not add auth, UI kits, or extra packages unless I ask. Summarize: folder name, Next flags, Convex wired. Remind me about the Convex plugin if I still need it, and that day-to-day I should run \`pnpm exec convex dev\` alongside the Next dev server.`;
+7. Do not add auth, UI kits, or extra packages beyond this. Remind me about the Convex plugin if I still need it, and that day-to-day I should run \`pnpm exec convex dev\` alongside the Next dev server.
+
+${buildPracticesPhase(8)}`;
 
 export const SCAFFOLDS: Scaffold[] = [
   {
     slug: "next-app",
     name: "Next.js app",
     tagline:
-      "TypeScript, Biome, React Compiler, Tailwind, App Router, pnpm — no src/.",
-    prompt: NEXT_APP_PROMPT,
-    status: "ready",
+      "TypeScript, Biome or ESLint, React Compiler, Tailwind, App Router, pnpm — no src/.",
+    status: "builder",
   },
   {
     slug: "next-convex",

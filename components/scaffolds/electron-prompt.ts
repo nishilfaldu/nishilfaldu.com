@@ -1,3 +1,5 @@
+import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
+
 export type ElectronBundler = "vite" | "webpack";
 
 export type ElectronPromptOptions = {
@@ -67,6 +69,8 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
     ``,
     `5. Keep Electron security defaults. Do not turn off \`contextIsolation\` or \`sandbox\`, and do not enable \`nodeIntegration\` in renderer windows, unless I explicitly ask.`,
     ``,
-    `6. Stop. Do not add a UI kit, auto-updater, or packaging tweaks unless I ask. Summarize: folder name, template (${template}), pnpm + React + Biome wired, and how to start / lint it.`,
+    `6. Do not add a UI kit, auto-updater, or packaging tweaks beyond this.`,
+    ``,
+    buildPracticesPhase(7),
   ].join("\n");
 }

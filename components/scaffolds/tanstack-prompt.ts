@@ -1,3 +1,4 @@
+import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
 import { addonsForCli } from "@/components/scaffolds/tanstack-addons";
 
 export type TanstackPromptOptions = {
@@ -66,7 +67,9 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
 
   parts.push(
     ``,
-    `${step}. Stop. Do not add packages or add-ons beyond what I selected unless I ask. Summarize: folder name, flags, add-ons${opts.intent ? ", Intent" : ""}${hasConvex ? ", Convex plugin reminder" : ""}.`,
+    `${step}. Do not add packages or add-ons beyond what I selected.`,
+    ``,
+    buildPracticesPhase(step + 1),
   );
 
   return parts.join("\n");

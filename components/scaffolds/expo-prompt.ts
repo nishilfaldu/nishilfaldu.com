@@ -1,3 +1,5 @@
+import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
+
 /** Fixed Expo create invocation — default template, SDK 57, pnpm. */
 export const EXPO_CREATE_COMMAND =
   "pnpm create expo-app@latest <project-name> --template default@sdk-57 -y";
@@ -30,4 +32,6 @@ If that CLI syntax has changed, check https://docs.expo.dev/skills/ and https://
 
 If I explicitly say I want skills only on this machine and not in the repo, use the same command with \`-g\` / \`--global\` instead — and do not commit skill files.
 
-4. Stop. Do not add EAS config, auth, UI kits, NativeWind, or extra packages unless I ask. Summarize: folder name, template/SDK, that AGENTS.md was kept, that Expo Skills are in the project (or global if I asked), and how to start / run a dev build.`;
+4. Do not add EAS config, auth, UI kits, NativeWind, or extra packages beyond this. Keep the generated AGENTS.md — you'll add to it below, not overwrite it.
+
+${buildPracticesPhase(5)}`;

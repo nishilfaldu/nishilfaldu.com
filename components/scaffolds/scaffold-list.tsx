@@ -1,6 +1,7 @@
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import { ElectronBuilder } from "@/components/scaffolds/electron-builder";
+import { NextBuilder } from "@/components/scaffolds/next-builder";
 import { SCAFFOLDS } from "@/components/scaffolds/recipes";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 import { TanstackBuilder } from "@/components/scaffolds/tanstack-builder";
@@ -45,6 +46,9 @@ export function ScaffoldList() {
             {s.status === "builder" && s.slug === "electron" ? (
               <ElectronBuilder />
             ) : null}
+            {s.status === "builder" && s.slug === "next-app" ? (
+              <NextBuilder />
+            ) : null}
             {s.status === "ready" && s.prompt ? (
               <>
                 <ScaffoldActions prompt={s.prompt} />
@@ -76,8 +80,8 @@ export function ScaffoldList() {
         Expo has no plugin on the Cursor Marketplace (unlike Convex). The Expo
         recipe installs official{" "}
         <ProseLink href="https://docs.expo.dev/skills/">Expo Skills</ProseLink>{" "}
-        into the project so Cursor cloud agents that clone the repo can use them;
-        use a global skills install only if you rarely run cloud agents.
+        into the project so Cursor cloud agents that clone the repo can use
+        them; use a global skills install only if you rarely run cloud agents.
       </p>
     </main>
   );
