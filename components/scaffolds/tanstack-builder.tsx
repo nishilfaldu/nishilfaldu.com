@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { LINTERS } from "@/components/scaffolds/linter-options";
+import type { NextLinter } from "@/components/scaffolds/next-prompt";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 import {
   type AddonGroup,
@@ -21,9 +23,18 @@ export function TanstackBuilder() {
     ...DEFAULT_SELECTED_ADDONS,
   ]);
   const [intent, setIntent] = useState(true);
+  const [toolchain, setToolchain] = useState<NextLinter>("biome");
 
-  const prompt = buildTanstackPrompt({ selectedAddons: selected, intent });
-  const command = tanstackCreateCommand({ selectedAddons: selected, intent });
+  const prompt = buildTanstackPrompt({
+    selectedAddons: selected,
+    intent,
+    toolchain,
+  });
+  const command = tanstackCreateCommand({
+    selectedAddons: selected,
+    intent,
+    toolchain,
+  });
 
   function toggleMulti(id: string) {
     setSelected((prev) => {
@@ -61,9 +72,37 @@ export function TanstackBuilder() {
   return (
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
-        Locked base: React, pnpm, Biome, Start (not router-only), no demo
-        examples. Pick add-ons — the prompt updates.
+        Locked base: React, pnpm, Start (not router-only), no demo examples.
+        Pick a toolchain and add-ons — the prompt updates.
       </p>
+
+      <fieldset className="mt-5 m-0 border-0 p-0">
+        <legend className="mb-2 px-0 text-[0.92rem] font-medium tracking-[0.01em] text-ink">
+          Linter
+        </legend>
+        <div className="flex flex-col gap-2">
+          {LINTERS.map((option) => (
+            <label
+              key={option.id}
+              className="flex cursor-pointer items-start gap-2.5"
+            >
+              <input
+                type="radio"
+                name="tanstack-toolchain"
+                checked={toolchain === option.id}
+                onChange={() => setToolchain(option.id)}
+                className="mt-1 accent-[var(--color-accent)]"
+              />
+              <span>
+                <span className="text-[0.95rem] text-ink">{option.name}</span>
+                <span className="mt-0.5 block text-[0.88rem] text-ink-muted">
+                  {option.blurb}
+                </span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <label className="mt-4 flex cursor-pointer items-start gap-2.5">
         <input

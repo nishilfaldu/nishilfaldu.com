@@ -1,3 +1,4 @@
+import type { NextLinter } from "@/components/scaffolds/next-prompt";
 import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
 import { addonsForCli } from "@/components/scaffolds/tanstack-addons";
 
@@ -6,6 +7,8 @@ export type TanstackPromptOptions = {
   selectedAddons: readonly string[];
   /** TanStack Intent skill mappings — default on. */
   intent: boolean;
+  /** Biome or ESLint, passed straight through to `--toolchain`. */
+  toolchain: NextLinter;
 };
 
 /** CLI create invocation from the current builder state. */
@@ -15,7 +18,7 @@ export function tanstackCreateCommand(opts: TanstackPromptOptions): string {
     "pnpm dlx @tanstack/cli@latest create <project-name> \\",
     "  --framework React \\",
     "  --package-manager pnpm \\",
-    "  --toolchain biome \\",
+    `  --toolchain ${opts.toolchain} \\`,
     "  --no-examples \\",
     opts.intent ? "  --intent \\" : "  --no-intent \\",
   ];
@@ -31,6 +34,7 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
   const command = tanstackCreateCommand(opts);
   const addons = addonsForCli(opts.selectedAddons);
   const hasConvex = addons.includes("convex");
+  const toolchainLabel = opts.toolchain === "biome" ? "Biome" : "ESLint";
 
   const parts: string[] = [
     `Scaffold a new TanStack Start app. If a project name isn't obvious from context, ask me for one. Prefer the official TanStack CLI over copying a template. Never hang forever on interactive prompts — if login or project creation needs me, pause and say what to do.`,
@@ -39,7 +43,7 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
     ``,
     command,
     ``,
-    `If a flag or add-on id has been renamed or removed, check \`pnpm dlx @tanstack/cli@latest create --help\` and \`--list-add-ons\`, then map to the same intent: React, pnpm, Biome toolchain, no demo examples, ${opts.intent ? "TanStack Intent on" : "TanStack Intent off"}${addons.length ? `, add-ons: ${addons.join(", ")}` : ", no extra add-ons"}.`,
+    `If a flag or add-on id has been renamed or removed, check \`pnpm dlx @tanstack/cli@latest create --help\` and \`--list-add-ons\`, then map to the same intent: React, pnpm, ${toolchainLabel} toolchain, no demo examples, ${opts.intent ? "TanStack Intent on" : "TanStack Intent off"}${addons.length ? `, add-ons: ${addons.join(", ")}` : ", no extra add-ons"}.`,
     ``,
     `2. cd into the project. Confirm the app starts (\`pnpm dev\` or the generated script). Fix only if the scaffold itself is broken.`,
   ];

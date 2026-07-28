@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 import {
   buildElectronPrompt,
   type ElectronBundler,
   electronCreateCommand,
 } from "@/components/scaffolds/electron-prompt";
+import { LINTERS } from "@/components/scaffolds/linter-options";
+import type { NextLinter } from "@/components/scaffolds/next-prompt";
+import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 
 const BUNDLERS: {
   id: ElectronBundler;
@@ -30,17 +32,18 @@ const BUNDLERS: {
  */
 export function ElectronBuilder() {
   const [bundler, setBundler] = useState<ElectronBundler>("vite");
+  const [linter, setLinter] = useState<NextLinter>("biome");
 
-  const prompt = buildElectronPrompt({ bundler });
-  const command = electronCreateCommand({ bundler });
+  const prompt = buildElectronPrompt({ bundler, linter });
+  const command = electronCreateCommand({ bundler, linter });
 
   return (
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
         Official Electron Forge via{" "}
         <code className="text-[0.88em]">create-electron-app</code> — pick a
-        TypeScript bundler template, then the prompt adds React and Biome. The
-        prompt updates.
+        TypeScript bundler template and a linter, then the prompt adds React on
+        top. The prompt updates.
       </p>
 
       <fieldset className="mt-5 m-0 border-0 p-0">
@@ -58,6 +61,34 @@ export function ElectronBuilder() {
                 name="electron-bundler"
                 checked={bundler === option.id}
                 onChange={() => setBundler(option.id)}
+                className="mt-1 accent-[var(--color-accent)]"
+              />
+              <span>
+                <span className="text-[0.95rem] text-ink">{option.name}</span>
+                <span className="mt-0.5 block text-[0.88rem] text-ink-muted">
+                  {option.blurb}
+                </span>
+              </span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset className="mt-5 m-0 border-0 p-0">
+        <legend className="mb-2 px-0 text-[0.92rem] font-medium tracking-[0.01em] text-ink">
+          Linter
+        </legend>
+        <div className="flex flex-col gap-2">
+          {LINTERS.map((option) => (
+            <label
+              key={option.id}
+              className="flex cursor-pointer items-start gap-2.5"
+            >
+              <input
+                type="radio"
+                name="electron-linter"
+                checked={linter === option.id}
+                onChange={() => setLinter(option.id)}
                 className="mt-1 accent-[var(--color-accent)]"
               />
               <span>

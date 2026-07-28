@@ -1,7 +1,9 @@
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import { ElectronBuilder } from "@/components/scaffolds/electron-builder";
+import { ExpoBuilder } from "@/components/scaffolds/expo-builder";
 import { NextBuilder } from "@/components/scaffolds/next-builder";
+import { NextConvexBuilder } from "@/components/scaffolds/next-convex-builder";
 import { SCAFFOLDS } from "@/components/scaffolds/recipes";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 import { TanstackBuilder } from "@/components/scaffolds/tanstack-builder";
@@ -48,6 +50,12 @@ export function ScaffoldList() {
             ) : null}
             {s.status === "builder" && s.slug === "next-app" ? (
               <NextBuilder />
+            ) : null}
+            {s.status === "builder" && s.slug === "next-convex" ? (
+              <NextConvexBuilder />
+            ) : null}
+            {s.status === "builder" && s.slug === "expo" ? (
+              <ExpoBuilder />
             ) : null}
             {s.status === "ready" && s.prompt ? (
               <>

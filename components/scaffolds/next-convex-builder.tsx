@@ -2,27 +2,28 @@
 
 import { useState } from "react";
 import { LINTERS } from "@/components/scaffolds/linter-options";
+import { buildNextConvexPrompt } from "@/components/scaffolds/next-convex-prompt";
 import {
-  buildNextPrompt,
   type NextLinter,
   nextCreateCommand,
 } from "@/components/scaffolds/next-prompt";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 
 /**
- * Interactive Next.js picker — Biome vs ESLint, then a Cursor prompt.
+ * Interactive Next.js + Convex picker — Biome vs ESLint, then a Cursor prompt.
  */
-export function NextBuilder() {
+export function NextConvexBuilder() {
   const [linter, setLinter] = useState<NextLinter>("biome");
 
-  const prompt = buildNextPrompt({ linter });
+  const prompt = buildNextConvexPrompt({ linter });
   const command = nextCreateCommand({ linter });
 
   return (
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
-        Official <code className="text-[0.88em]">create-next-app</code> — pick
-        Biome or ESLint and the prompt updates.
+        Same official <code className="text-[0.88em]">create-next-app</code>{" "}
+        base as the Next.js recipe, then Convex — pick Biome or ESLint and the
+        prompt updates.
       </p>
 
       <fieldset className="mt-5 m-0 border-0 p-0">
@@ -37,7 +38,7 @@ export function NextBuilder() {
             >
               <input
                 type="radio"
-                name="next-linter"
+                name="next-convex-linter"
                 checked={linter === option.id}
                 onChange={() => setLinter(option.id)}
                 className="mt-1 accent-[var(--color-accent)]"

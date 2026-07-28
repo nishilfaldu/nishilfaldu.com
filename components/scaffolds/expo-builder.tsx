@@ -1,28 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import { LINTERS } from "@/components/scaffolds/linter-options";
 import {
-  buildNextPrompt,
-  type NextLinter,
-  nextCreateCommand,
-} from "@/components/scaffolds/next-prompt";
+  buildExpoPrompt,
+  EXPO_CREATE_COMMAND,
+} from "@/components/scaffolds/expo-prompt";
+import { LINTERS } from "@/components/scaffolds/linter-options";
+import type { NextLinter } from "@/components/scaffolds/next-prompt";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 
 /**
- * Interactive Next.js picker — Biome vs ESLint, then a Cursor prompt.
+ * Interactive Expo picker — Biome vs ESLint, then a Cursor prompt.
  */
-export function NextBuilder() {
+export function ExpoBuilder() {
   const [linter, setLinter] = useState<NextLinter>("biome");
 
-  const prompt = buildNextPrompt({ linter });
-  const command = nextCreateCommand({ linter });
+  const prompt = buildExpoPrompt({ linter });
 
   return (
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
-        Official <code className="text-[0.88em]">create-next-app</code> — pick
-        Biome or ESLint and the prompt updates.
+        Official <code className="text-[0.88em]">create-expo-app</code> — pick
+        Biome or ESLint (the template's own default) and the prompt updates.
       </p>
 
       <fieldset className="mt-5 m-0 border-0 p-0">
@@ -37,7 +36,7 @@ export function NextBuilder() {
             >
               <input
                 type="radio"
-                name="next-linter"
+                name="expo-linter"
                 checked={linter === option.id}
                 onChange={() => setLinter(option.id)}
                 className="mt-1 accent-[var(--color-accent)]"
@@ -69,7 +68,7 @@ export function NextBuilder() {
           CLI command
         </summary>
         <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded-[10px] border border-rule bg-paper-raised p-4 font-mono text-[0.78rem] leading-relaxed text-ink">
-          {command}
+          {EXPO_CREATE_COMMAND}
         </pre>
       </details>
     </div>

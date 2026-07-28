@@ -1,4 +1,9 @@
+import type { NextLinter } from "@/components/scaffolds/next-prompt";
 import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
+
+export type ExpoPromptOptions = {
+  linter: NextLinter;
+};
 
 /** Fixed Expo create invocation — default template, SDK 57, pnpm. */
 export const EXPO_CREATE_COMMAND =
@@ -8,11 +13,25 @@ export const EXPO_CREATE_COMMAND =
 export const EXPO_SKILLS_COMMAND =
   "pnpm dlx skills add expo/skills --skill '*' --agent cursor -y";
 
-/**
- * Agent prompt for the Expo scaffold.
- * Keep AGENTS.md from create-expo-app; install Expo Skills project-scoped.
- */
-export const EXPO_APP_PROMPT = `Scaffold a new Expo app. If a project name isn't obvious from context, ask me for one. Prefer the official create-expo-app CLI over cloning a third-party boilerplate. Never hang forever on interactive prompts.
+/** Full agent prompt for Open in Cursor / copy. */
+export function buildExpoPrompt(opts: ExpoPromptOptions): string {
+  const linterLabel = opts.linter === "biome" ? "Biome" : "ESLint";
+
+  const linterStep =
+    opts.linter === "eslint"
+      ? [
+          `4. Confirm lint tooling. The default template's \`pnpm lint\` runs \`expo lint\`, which on first run offers to install and configure \`eslint-config-expo\`. Accept that and confirm \`pnpm lint\` runs clean afterward.`,
+        ].join("\n")
+      : [
+          `4. Swap the default \`expo lint\` setup for Biome. Prefer install + init commands over hand-writing config.`,
+          ``,
+          `\`pnpm add -D -E @biomejs/biome\``,
+          `\`pnpm exec biome init\``,
+          ``,
+          `If those commands have changed, follow the current Biome getting-started docs with pnpm. Point the \`lint\` script at Biome instead of \`expo lint\` (and add a \`format\`/\`check\` script if useful). Confirm \`pnpm lint\` runs. Don't let the template's lazy ESLint setup trigger — if \`expo lint\` was already run and installed \`eslint-config-expo\`, remove it so there's only one linter.`,
+        ].join("\n");
+
+  return `Scaffold a new Expo app with ${linterLabel}. If a project name isn't obvious from context, ask me for one. Prefer the official create-expo-app CLI over cloning a third-party boilerplate. Never hang forever on interactive prompts.
 
 1. Create the app with the current CLI (prefer \`pnpm create expo-app@latest\` so the template matches today):
 
@@ -32,6 +51,9 @@ If that CLI syntax has changed, check https://docs.expo.dev/skills/ and https://
 
 If I explicitly say I want skills only on this machine and not in the repo, use the same command with \`-g\` / \`--global\` instead — and do not commit skill files.
 
-4. Do not add EAS config, auth, UI kits, NativeWind, or extra packages beyond this. Keep the generated AGENTS.md — you'll add to it below, not overwrite it.
+${linterStep}
 
-${buildPracticesPhase(5)}`;
+5. Do not add EAS config, auth, UI kits, NativeWind, or extra packages beyond this. Keep the generated AGENTS.md — you'll add to it below, not overwrite it.
+
+${buildPracticesPhase(6)}`;
+}

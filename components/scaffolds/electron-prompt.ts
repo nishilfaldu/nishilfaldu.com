@@ -1,9 +1,11 @@
+import type { NextLinter } from "@/components/scaffolds/next-prompt";
 import { buildPracticesPhase } from "@/components/scaffolds/practices-prompt";
 
 export type ElectronBundler = "vite" | "webpack";
 
 export type ElectronPromptOptions = {
   bundler: ElectronBundler;
+  linter: NextLinter;
 };
 
 const TEMPLATES: Record<ElectronBundler, string> = {
@@ -41,8 +43,28 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
           `Then wire the renderer the way those docs say for this template so JSX/TSX compiles — only add the smallest documented loader/plugin change needed. Convert to a minimal React root. Keep it bare — no router, UI kit, or sample screens. Confirm \`pnpm start\` still works.`,
         ].join("\n");
 
+  const linterLabel = opts.linter === "biome" ? "Biome" : "ESLint";
+
+  const linterStep =
+    opts.linter === "biome"
+      ? [
+          `4. Add Biome for lint + format. Prefer install + init commands over hand-writing config.`,
+          ``,
+          `\`pnpm add -D -E @biomejs/biome\``,
+          `\`pnpm exec biome init\``,
+          ``,
+          `If those commands have changed, follow the current Biome getting-started docs with pnpm. Add \`lint\` / \`format\` (or \`check\`) scripts that run Biome. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped ESLint/Prettier, remove those in favor of Biome — don't leave two linters fighting.`,
+        ].join("\n")
+      : [
+          `4. Add ESLint for linting. Prefer the official init CLI over hand-writing config.`,
+          ``,
+          `\`pnpm create @eslint/config@latest\``,
+          ``,
+          `If that command has changed, follow the current ESLint getting-started docs with pnpm. Pick the options that match this project (TypeScript, no framework-specific preset unless one is offered for Electron/React). Add a \`lint\` script that runs ESLint. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped a different linter/formatter, remove it in favor of ESLint — don't leave two linters fighting.`,
+        ].join("\n");
+
   return [
-    `Scaffold a new Electron desktop app with Electron Forge + React + Biome. If a project name isn't obvious from context, ask me for one. Prefer official CLIs, \`pnpm\`, and package install commands over cloning third-party boilerplates or hand-rolling setup. Never hang forever on interactive prompts.`,
+    `Scaffold a new Electron desktop app with Electron Forge + React + ${linterLabel}. If a project name isn't obvious from context, ask me for one. Prefer official CLIs, \`pnpm\`, and package install commands over cloning third-party boilerplates or hand-rolling setup. Never hang forever on interactive prompts.`,
     ``,
     `1. Create the app with the current Forge CLI (prefer \`pnpm create electron-app@latest\` so the template and package manager match today):`,
     ``,
@@ -60,12 +82,7 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
     ``,
     reactStep,
     ``,
-    `4. Add Biome for lint + format. Prefer install + init commands over hand-writing config.`,
-    ``,
-    `\`pnpm add -D -E @biomejs/biome\``,
-    `\`pnpm exec biome init\``,
-    ``,
-    `If those commands have changed, follow the current Biome getting-started docs with pnpm. Add \`lint\` / \`format\` (or \`check\`) scripts that run Biome. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped ESLint/Prettier, remove those in favor of Biome — don't leave two linters fighting.`,
+    linterStep,
     ``,
     `5. Keep Electron security defaults. Do not turn off \`contextIsolation\` or \`sandbox\`, and do not enable \`nodeIntegration\` in renderer windows, unless I explicitly ask.`,
     ``,
