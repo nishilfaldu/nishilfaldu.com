@@ -1,5 +1,5 @@
+import { hasAgentGateCookie } from "@nishilfaldu/site-agent/gate";
 import { AgentLauncher } from "@/components/agent-launcher";
-import { hasAgentGateCookie } from "@/lib/agent/gate";
 
 /**
  * Renders the agent control only when the owner unlock cookie is present.
