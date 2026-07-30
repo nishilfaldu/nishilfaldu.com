@@ -5,7 +5,7 @@ import { ProseLink } from "@/components/prose-link";
  * two. Without this they’re islands you can only reach from the home footer.
  */
 const PAGES = [
-  { key: "people", href: "/people", label: "People" },
+  { key: "reading", href: "/reading", label: "Reading" },
   { key: "daily", href: "/daily", label: "Daily" },
   { key: "watching", href: "/watching", label: "Watching" },
 ] as const;

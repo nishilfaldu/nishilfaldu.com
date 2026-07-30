@@ -7,7 +7,7 @@ import type { Channel } from "@/components/radar/sources";
  * add a person, list every place they actually publish, keep the note to one
  * clause about why they’re here.
  *
- * The list is deliberately empty until Nishil hands over the names.
+ * One name so far. The rest are still owed.
  */
 export type Person = {
   slug: string;
@@ -18,4 +18,17 @@ export type Person = {
   channels: Channel[];
 };
 
-export const PEOPLE: Person[] = [];
+export const PEOPLE: Person[] = [
+  {
+    slug: "tim-ferriss",
+    name: "Tim Ferriss",
+    note: "Asks better questions than most interviewers ask in a career.",
+    channels: [
+      { kind: "site", href: "https://tim.blog/" },
+      { kind: "podcast", href: "https://tim.blog/podcast/" },
+      { kind: "youtube", href: "https://www.youtube.com/@TimFerriss" },
+      { kind: "x", href: "https://x.com/tferriss" },
+      { kind: "rss", href: "https://tim.blog/feed/" },
+    ],
+  },
+];

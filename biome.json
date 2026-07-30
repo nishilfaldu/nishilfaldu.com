@@ -15,6 +15,7 @@
       "!dist",
       "!build",
       "!**/theme.generated.css",
+      "!convex/_generated",
       "!components/tinkerletter/shoe-guide/init-shoe-guide.js",
       "!components/tinkerletter/shoe-guide/shoe-guide-body.ts",
       "!components/tinkerletter/shoe-guide/shoe-guide.css",

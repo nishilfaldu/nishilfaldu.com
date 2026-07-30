@@ -1,2 +1,2 @@
-/** App-facing gate check for RSC (no Cursor SDK). */
-export { hasAgentGateCookie } from "./gate";
+/** App-facing gate checks for RSC and route handlers (no Cursor SDK). */
+export { hasAgentGateCookie, requireGateCookie } from "./gate";

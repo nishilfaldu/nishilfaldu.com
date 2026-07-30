@@ -273,8 +273,8 @@ export default function Home() {
             Scaffolds
           </ProseLink>{" "}
           ·{" "}
-          <ProseLink nowrap href="/people">
-            People
+          <ProseLink nowrap href="/reading">
+            Reading
           </ProseLink>{" "}
           ·{" "}
           <ProseLink nowrap href="/daily">

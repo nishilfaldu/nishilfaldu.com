@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/projects/cedar",
     "/projects/cooking",
     "/ideas",
-    "/people",
+    "/reading",
     "/daily",
     "/watching",
     "/writings",
