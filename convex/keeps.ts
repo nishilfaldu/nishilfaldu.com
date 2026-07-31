@@ -104,6 +104,9 @@ export const remove = mutation({
   args: { secret: v.string(), id: v.id("links") },
   handler: async (ctx, { secret, id }) => {
     assertOwner(secret);
+    // Already gone is the outcome the caller asked for. A double-click or a
+    // stale tab shouldn't throw its way back to the browser as a 500.
+    if (!(await ctx.db.get(id))) return;
     await ctx.db.delete(id);
   },
 });

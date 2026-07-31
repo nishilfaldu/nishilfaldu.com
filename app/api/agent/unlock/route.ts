@@ -1,3 +1,3 @@
 import { siteAgent } from "@/lib/site-agent";
 
-export const { GET, runtime } = siteAgent.unlock;
+export const { GET, POST, runtime } = siteAgent.unlock;

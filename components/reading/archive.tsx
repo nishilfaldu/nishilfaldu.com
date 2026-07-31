@@ -21,7 +21,19 @@ import {
 type Props = {
   keeps: Keep[];
   canEdit: boolean;
+  /** The archive couldn't be read, as opposed to having nothing in it. */
+  unavailable?: boolean;
 };
+
+function emptyMessage(unavailable: boolean, nothingKept: boolean): string {
+  if (unavailable) {
+    return "The archive didn't load. Everything's still there — try again in a moment.";
+  }
+  if (nothingKept) {
+    return "Nothing here yet. The first thing worth keeping goes in above.";
+  }
+  return "Nothing matches that. Try one word instead of three.";
+}
 
 function matches(keep: Keep, terms: string[]): boolean {
   if (terms.length === 0) return true;
@@ -42,7 +54,7 @@ function groupByDay(keeps: Keep[]): Array<[string, Keep[]]> {
   return [...days.entries()].sort((a, b) => b[0].localeCompare(a[0]));
 }
 
-export function Archive({ keeps, canEdit }: Props) {
+export function Archive({ keeps, canEdit, unavailable = false }: Props) {
   const [query, setQuery] = useState("");
   // Removal is optimistic and lives here, not in the row, so that dropping the
   // last link of a day also drops the day heading and its count.
@@ -72,12 +84,17 @@ export function Archive({ keeps, canEdit }: Props) {
     () => query.toLowerCase().split(/\s+/).filter(Boolean),
     [query],
   );
+  // Everything still in the archive, before search narrows it. Kept separate so
+  // the empty state can tell "nothing kept" from "nothing found" — subtracting
+  // removed.size from keeps.length goes negative once a refresh has already
+  // dropped a removed row from the server list.
+  const present = useMemo(
+    () => keeps.filter((keep) => !removed.has(keep.id)),
+    [keeps, removed],
+  );
   const days = useMemo(
-    () =>
-      groupByDay(
-        keeps.filter((keep) => !removed.has(keep.id) && matches(keep, terms)),
-      ),
-    [keeps, terms, removed],
+    () => groupByDay(present.filter((keep) => matches(keep, terms))),
+    [present, terms],
   );
 
   const found = days.reduce((total, [, items]) => total + items.length, 0);
@@ -112,9 +129,7 @@ export function Archive({ keeps, canEdit }: Props) {
 
       {days.length === 0 ? (
         <p className="text-ink-muted">
-          {keeps.length - removed.size === 0
-            ? "Nothing here yet. The first thing worth keeping goes in above."
-            : "Nothing matches that. Try one word instead of three."}
+          {emptyMessage(unavailable, present.length === 0)}
         </p>
       ) : (
         days.map(([dayId, items]) => (
@@ -161,13 +176,19 @@ function KeepRow({
 
   async function remove() {
     onRemoved(keep.id, true);
-    const response = await fetch("/api/keeps", {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: keep.id }),
-    });
-    // Put it back if the server disagreed — the row was never really gone.
-    if (!response.ok) onRemoved(keep.id, false);
+    try {
+      const response = await fetch("/api/keeps", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: keep.id }),
+      });
+      // Put it back if the server disagreed — the row was never really gone.
+      if (!response.ok) onRemoved(keep.id, false);
+    } catch {
+      // And put it back if the request never landed at all. Offline, the fetch
+      // rejects rather than answering, and the row would stay hidden forever.
+      onRemoved(keep.id, false);
+    }
   }
 
   return (

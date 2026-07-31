@@ -32,7 +32,7 @@ export const { POST, runtime } = siteAgent.launch;
 
 // app/api/agent/unlock/route.ts
 import { siteAgent } from "@/lib/site-agent";
-export const { GET, runtime } = siteAgent.unlock;
+export const { GET, POST, runtime } = siteAgent.unlock;
 ```
 
 ```tsx
@@ -40,7 +40,9 @@ export const { GET, runtime } = siteAgent.unlock;
 import { hasAgentGateCookie } from "@nishilfaldu/site-agent/gate";
 ```
 
-3. Unlock once: `/api/agent/unlock?code=AGENT_ACCESS_SECRET`
+3. Unlock once: visit `/api/agent/unlock` and submit `AGENT_ACCESS_SECRET` in
+   the form. The code goes in a POST body, never in the URL — a query string
+   would end up in history, in `Referer`, and in every access log on the way.
 
 ## Exports
 

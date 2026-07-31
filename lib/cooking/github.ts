@@ -35,6 +35,17 @@ function githubHeaders(): HeadersInit {
   return headers;
 }
 
+/** Carries the status so callers can tell "no such thing" from "couldn't ask". */
+class GithubHttpError extends Error {
+  readonly status: number;
+
+  constructor(status: number, message: string) {
+    super(message);
+    this.name = "GithubHttpError";
+    this.status = status;
+  }
+}
+
 async function githubJson<T>(path: string): Promise<T> {
   const res = await fetch(`https://api.github.com${path}`, {
     headers: githubHeaders(),
@@ -42,7 +53,8 @@ async function githubJson<T>(path: string): Promise<T> {
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
-    throw new Error(
+    throw new GithubHttpError(
+      res.status,
       `GitHub ${path} → ${res.status}${text ? `: ${text.slice(0, 200)}` : ""}`,
     );
   }
@@ -52,6 +64,7 @@ async function githubJson<T>(path: string): Promise<T> {
 type GhRepo = {
   name: string;
   full_name: string;
+  private: boolean;
   fork: boolean;
   archived: boolean;
   pushed_at: string | null;
@@ -62,9 +75,13 @@ type GhRepo = {
 const MAX_IDLE_MS = 540 * 24 * 60 * 60 * 1000; // ~18 months
 
 /**
- * Repos the GITHUB_TOKEN can see. Fine-grained tokens return only the repos
- * they were granted — that grant list is the cooking allowlist.
- * Skips forks, archived repos, and long-idle ones.
+ * Repos the GITHUB_TOKEN can see, minus the ones that have no business on a
+ * public page. Skips private repos, forks, archived repos, and long-idle ones.
+ *
+ * Private is the load-bearing one: /api/cooking is unauthenticated, so repo
+ * names, PR titles and PR body text go to anyone who asks. The token's grant
+ * list is a convenience, not an allowlist — widen the token by one repo and it
+ * would publish without a deploy. This filter is the allowlist.
  */
 export async function listAccessibleRepos(): Promise<AccessibleRepo[]> {
   const out: AccessibleRepo[] = [];
@@ -76,7 +93,7 @@ export async function listAccessibleRepos(): Promise<AccessibleRepo[]> {
       `/user/repos?per_page=100&page=${page}&affiliation=owner,collaborator&sort=pushed`,
     );
     for (const r of batch) {
-      if (r.fork || r.archived) continue;
+      if (r.private || r.fork || r.archived) continue;
       if (r.pushed_at) {
         const pushed = Date.parse(r.pushed_at);
         if (!Number.isNaN(pushed) && now - pushed > MAX_IDLE_MS) continue;
@@ -200,8 +217,12 @@ type GhRelease = {
 };
 
 /**
- * Latest published release for a native app. Falls back to the releases index
- * when the API has no "latest" (empty repo).
+ * Latest published release for a native app.
+ *
+ * A 404 is real knowledge — the repo exists and has published nothing yet — so
+ * the releases index is a fair link. A rate limit or a network failure is not
+ * knowledge, and inventing a link for it hands out a dead end dressed as a
+ * download. Those return null and the card simply has no try-link.
  */
 export async function latestRelease(
   owner: string,
@@ -215,11 +236,14 @@ export async function latestRelease(
       url: release.html_url,
       updatedAt: release.published_at,
     };
-  } catch {
-    return {
-      url: `https://github.com/${owner}/${repo}/releases`,
-      updatedAt: null,
-    };
+  } catch (error) {
+    if (error instanceof GithubHttpError && error.status === 404) {
+      return {
+        url: `https://github.com/${owner}/${repo}/releases`,
+        updatedAt: null,
+      };
+    }
+    return null;
   }
 }
 

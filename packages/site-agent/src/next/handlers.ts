@@ -9,6 +9,7 @@ import {
 } from "../constants";
 import { createCloudAgent, cursorApiKey } from "../cursor";
 import { requireGateCookie, unlockWithCode } from "../gate";
+import { unlockFormHtml } from "./unlock-form";
 
 type ParsedBody = {
   prompt: string;
@@ -33,6 +34,16 @@ function jsonError(error: string, status: number) {
   return NextResponse.json(body, { status });
 }
 
+function html(body: string, status: number) {
+  return new NextResponse(body, {
+    status,
+    headers: {
+      "Content-Type": "text/html; charset=utf-8",
+      "Cache-Control": "no-store",
+    },
+  });
+}
+
 /**
  * Next.js App Router handlers for launch + unlock.
  *
@@ -41,14 +52,22 @@ function jsonError(error: string, status: number) {
  * // app/api/agent/route.ts
  * export const { POST, runtime } = agent.launch;
  * // app/api/agent/unlock/route.ts
- * export const { GET, runtime } = agent.unlock;
+ * export const { GET, POST, runtime } = agent.unlock;
  * ```
  */
 export function createSiteAgent(config: SiteAgentConfig) {
   const { repoUrl, startingRef } = resolveRepo(config);
   const runtime = "nodejs" as const;
 
-  async function POST(request: Request) {
+  async function launchPost(request: Request) {
+    // The gate answers first, before anything else can. Checking CURSOR_API_KEY
+    // ahead of it let a stranger tell a misconfigured deployment from a working
+    // one, and a 400 on a malformed body told them the route was real.
+    const gate = await requireGateCookie();
+    if (!gate.ok) {
+      return jsonError(gate.error, gate.status);
+    }
+
     const apiKey = cursorApiKey();
     if (!apiKey) {
       return jsonError("CURSOR_API_KEY is not configured.", 503);
@@ -64,11 +83,6 @@ export function createSiteAgent(config: SiteAgentConfig) {
     const parsed = parseBody(json);
     if (!parsed) {
       return jsonError("Invalid JSON body.", 400);
-    }
-
-    const gate = await requireGateCookie();
-    if (!gate.ok) {
-      return jsonError(gate.error, gate.status);
     }
 
     if (!parsed.prompt) {
@@ -104,23 +118,39 @@ export function createSiteAgent(config: SiteAgentConfig) {
     }
   }
 
-  async function GET(request: Request) {
-    const code = new URL(request.url).searchParams.get("code") ?? "";
-    const gate = await unlockWithCode(code);
-    if (!gate.ok) {
-      return new NextResponse(gate.error, {
-        status: gate.status,
-        headers: { "Cache-Control": "no-store" },
-      });
-    }
-
+  function home(request: Request) {
+    // 303, not the default 307: a 307 replays the POST at "/", and the browser
+    // would ask to resubmit the code on every back-button press.
     return NextResponse.redirect(new URL("/", request.url), {
+      status: 303,
       headers: { "Cache-Control": "no-store" },
     });
   }
 
+  /**
+   * The code arrives in a form body, never in the query string. A `?code=`
+   * lands in browser history, in the Referer of the next request, and in every
+   * access log between here and the edge — which is a long life for the one
+   * secret that unlocks the site.
+   */
+  async function unlockGet(request: Request) {
+    if ((await requireGateCookie()).ok) return home(request);
+    return html(unlockFormHtml(), 200);
+  }
+
+  async function unlockPost(request: Request) {
+    const form = await request.formData().catch(() => null);
+    const code = form?.get("code");
+    const gate = await unlockWithCode(typeof code === "string" ? code : "");
+    if (!gate.ok) {
+      return html(unlockFormHtml(gate.error), gate.status);
+    }
+
+    return home(request);
+  }
+
   return {
-    launch: { POST, runtime },
-    unlock: { GET, runtime },
+    launch: { POST: launchPost, runtime },
+    unlock: { GET: unlockGet, POST: unlockPost, runtime },
   };
 }

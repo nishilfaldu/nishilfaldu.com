@@ -45,6 +45,39 @@ async function authorize(): Promise<Guarded | NextResponse> {
   return { convex, secret };
 }
 
+/**
+ * The day a link belongs to is the browser's local date, sent with the request.
+ * Calling todayId() here would use this server's clock, and Vercel runs in UTC —
+ * so anything kept after ~8pm would file under tomorrow, which is the exact
+ * failure convex/schema.ts is written to avoid. The fallback only covers a
+ * caller that sends nothing at all.
+ */
+function dayIdFrom(value: unknown): string {
+  const looksLikeADay =
+    typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value);
+  return looksLikeADay ? value : todayId();
+}
+
+/**
+ * Convex throws on a secret mismatch. That's a misconfiguration, not a crash:
+ * a thrown route returns an HTML 500 that the form can't read, so catch it and
+ * answer in the JSON shape the client already handles.
+ */
+async function mutate<T>(run: () => Promise<T>): Promise<T | NextResponse> {
+  try {
+    return await run();
+  } catch (error) {
+    console.error(
+      "keeps: mutation failed:",
+      error instanceof Error ? error.message : error,
+    );
+    return NextResponse.json(
+      { error: "The reading list refused that." },
+      { status: 502 },
+    );
+  }
+}
+
 export async function POST(request: Request) {
   const guard = await authorize();
   if (guard instanceof NextResponse) return guard;
@@ -63,12 +96,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Not a URL." }, { status: 400 });
   }
 
-  const result = await guard.convex.mutation(api.keeps.add, {
-    secret: guard.secret,
-    url: parsed.toString(),
-    dayId: typeof body?.dayId === "string" ? body.dayId : todayId(),
-    note: note || null,
-  });
+  const result = await mutate(() =>
+    guard.convex.mutation(api.keeps.add, {
+      secret: guard.secret,
+      url: parsed.toString(),
+      dayId: dayIdFrom(body?.dayId),
+      note: note || null,
+    }),
+  );
+  if (result instanceof NextResponse) return result;
 
   return NextResponse.json(result);
 }
@@ -82,10 +118,13 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Missing id." }, { status: 400 });
   }
 
-  await guard.convex.mutation(api.keeps.remove, {
-    secret: guard.secret,
-    id: body.id as Id<"links">,
-  });
+  const result = await mutate(() =>
+    guard.convex.mutation(api.keeps.remove, {
+      secret: guard.secret,
+      id: body.id as Id<"links">,
+    }),
+  );
+  if (result instanceof NextResponse) return result;
 
   return NextResponse.json({ status: "removed" });
 }

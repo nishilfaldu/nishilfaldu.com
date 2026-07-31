@@ -2,6 +2,17 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { todayId } from "@/components/reading/presentation";
+
+/**
+ * A route that answered normally sends `{ error }`; a route that crashed sends
+ * an HTML page. Parsing before checking `ok` would throw on the second and lose
+ * the first, so read the body only once we know which we're holding.
+ */
+async function errorFrom(response: Response): Promise<string> {
+  const body = await response.json().catch(() => null);
+  return typeof body?.error === "string" ? body.error : "Didn't save.";
+}
 
 /**
  * Owner-only capture, on the page itself.
@@ -29,15 +40,20 @@ export function AddLink() {
       const response = await fetch("/api/keeps", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url: url.trim(), note: note.trim() || null }),
+        body: JSON.stringify({
+          url: url.trim(),
+          note: note.trim() || null,
+          // My date, not the server's — Vercel keeps its clock in UTC.
+          dayId: todayId(),
+        }),
       });
-      const body = await response.json();
 
       if (!response.ok) {
         setState("error");
-        setMessage(body.error ?? "Didn't save.");
+        setMessage(await errorFrom(response));
         return;
       }
+      const body = await response.json();
 
       setUrl("");
       setNote("");

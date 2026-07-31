@@ -15,7 +15,7 @@ import { PeopleSection } from "@/components/reading/people-section";
  * reading a log than a bookmark folder.
  */
 export async function ReadingPage() {
-  const [keeps, isOwner] = await Promise.all([
+  const [archive, isOwner] = await Promise.all([
     fetchKeeps(),
     hasAgentGateCookie(),
   ]);
@@ -35,7 +35,11 @@ export async function ReadingPage() {
 
       {isOwner ? <AddLink /> : null}
 
-      <Archive keeps={keeps} canEdit={isOwner} />
+      <Archive
+        keeps={archive.keeps}
+        canEdit={isOwner}
+        unavailable={!archive.ok}
+      />
 
       <PeopleSection />
 
