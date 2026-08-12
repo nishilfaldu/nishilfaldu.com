@@ -44,4 +44,12 @@ export const DAILY: DailySite[] = [
       },
     ],
   },
+  {
+    slug: "digg",
+    name: "Digg",
+    href: "https://digg.com/",
+    note: "The same tech day that Hacker News has, clustered by story instead of by thread.",
+    // No feed to list: the relaunched Digg publishes no RSS, so this one only
+    // ever gets checked by hand.
+  },
 ];
