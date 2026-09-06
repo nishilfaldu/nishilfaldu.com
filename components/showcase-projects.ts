@@ -16,7 +16,7 @@ export type ShowcaseProject = {
   name: string;
   /** One human sentence. */
   tagline: string;
-  /** Internal page, e.g. /projects/sediment. */
+  /** Internal page, e.g. /projects/cedar. */
   path?: string;
   /** Live deployment. */
   url?: string;
@@ -30,60 +30,11 @@ export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
 
 export const SHOWCASE: ShowcaseProject[] = [
   {
-    slug: "agent",
-    name: "Agent",
-    tagline:
-      "Notice something on this site, type a prompt, and a Cursor cloud agent goes off on the repo.",
-    path: "/projects/agent",
-  },
-  {
-    slug: "phone-tap",
-    name: "Phone Tap",
-    tagline:
-      "Tap two phones and hand over a job packet — resume, LinkedIn, the professional stuff — into a place that keeps it on purpose.",
-    path: "/projects/phone-tap",
-    status: "building",
-  },
-  {
-    slug: "native-harbor",
-    name: "Native Harbor",
-    tagline:
-      "A native Mac app I’m still building — watched from Cooking when PRs are open.",
-    status: "building",
-  },
-  {
-    slug: "volt",
-    name: "Volt",
-    tagline:
-      "A new project in flight — Cooking picks it up from the GitHub token, no allowlist edit.",
-    status: "building",
-  },
-  {
-    slug: "sediment",
-    name: "Sediment",
-    tagline: "An inspiration dashboard for the pieces you already know matter.",
-    path: "/projects/sediment",
-  },
-  {
-    slug: "atlas",
-    name: "Atlas",
-    tagline:
-      "A verification engine for AI-written code — and the honest write-up of why catching breaks wasn’t enough.",
-    path: "/projects/atlas",
-  },
-  {
     slug: "cedar-lang",
     name: "Cedar",
     tagline:
       "A statically-typed language with a compiler written from scratch in Go, down to native executables.",
     path: "/projects/cedar",
-  },
-  {
-    slug: "cooking",
-    name: "Cooking",
-    tagline:
-      "A quiet corner of this site that shows open PRs, previews, and releases across whatever repos the GitHub token can read.",
-    path: "/projects/cooking",
   },
 ];
 

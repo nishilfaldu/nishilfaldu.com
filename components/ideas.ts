@@ -112,7 +112,7 @@ export const IDEAS: Idea[] = [
       "When I’m deep with AI agents I hop — two agents, four projects, five threads — shipping without absorbing anything. I’m not really learning. I’m not enjoying it. I forget to breathe. Not the automatic kind; the kind where you notice you’re here.",
       "After a break the overwhelm shows up. It would be nice to have something tiny for that — not a productivity suite. A corner of the computer. A cute dog that peeks in after half an hour of constant work and says it’s time to breathe. Or some other gentle interrupt that isn’t another dashboard.",
       "The point isn’t mindfulness theater. It’s a reminder that the pace of agents isn’t a pace a person can hold without gaps.",
-      "On this site it lives in the bottom-left toolbar — breathe, next to report.",
+      "On this site it lives in the bottom-left toolbar — breathe.",
     ],
     status: "building",
     refs: [
@@ -125,23 +125,6 @@ export const IDEAS: Idea[] = [
         href: "https://www.uwb.edu/business/faculty/sophie-leroy/attention-residue",
         label: "Sophie Leroy — attention residue",
         note: "why hopping leaves you half elsewhere",
-      },
-    ],
-  },
-  {
-    slug: "cooking-status",
-    title: "What’s cooking across my repos",
-    body: [
-      "I work on a few things at once — this site, Sediment, whatever’s next — and the interesting bits live on branches. Visitors only ever see main. I’d like a tiny window on the site that shows what’s actually in flight: open PRs, a preview when there’s a web deploy, a release when it’s a native app, the repos I’m watching.",
-      "Not a status page with charts. Something quiet in the corner. Click through to the PR, the preview, the GitHub release. Close the PR and it disappears. Point the GitHub token at a repo and it starts showing up — no hand-edited allowlist.",
-      "The point is letting people peek at work while it’s still warm — without me hand-editing a list every time I open a branch.",
-    ],
-    status: "shipped",
-    refs: [
-      {
-        href: "/projects/cooking",
-        label: "Cooking",
-        note: "the write-up on /projects",
       },
     ],
   },
@@ -232,11 +215,6 @@ export const IDEAS: Idea[] = [
     ],
     status: "building",
     refs: [
-      {
-        href: "/projects/phone-tap",
-        label: "Phone Tap",
-        note: "the write-up on /projects — in progress",
-      },
       {
         href: "https://support.apple.com/guide/iphone/share-your-contact-information-iph1b6c664b7/ios",
         label: "Apple NameDrop",
