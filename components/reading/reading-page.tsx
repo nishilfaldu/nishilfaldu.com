@@ -45,9 +45,11 @@ export async function ReadingPage() {
 
       <p className="mt-14 text-ink-muted">
         This used to be an app called{" "}
-        <ProseLink href="/projects/sediment">Sediment</ProseLink>, which is
-        still yours to use. I moved my own copy here because the links were the
-        part I wanted in public.
+        <ProseLink href="https://github.com/nishilfaldu/sediment">
+          Sediment
+        </ProseLink>
+        , which is still yours to use. I moved my own copy here because the
+        links were the part I wanted in public.
       </p>
 
       <RadarNav current="reading" />
