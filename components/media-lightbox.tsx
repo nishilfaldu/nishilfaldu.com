@@ -76,6 +76,7 @@ export function MediaLightbox({
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 sm:p-8"
           onClick={close}
         >
+          {/* biome-ignore lint/a11y/useKeyWithClickEvents: click only stops propagation so the backdrop close does not fire; esc and the close button cover keyboard */}
           <div
             role="dialog"
             aria-modal="true"
@@ -102,20 +103,7 @@ export function MediaLightbox({
                 />
               </div>
             ) : media.kind === "rotate" ? (
-              <div className="max-h-[85vh] overflow-y-auto overscroll-contain rounded-lg">
-                <div className="flex flex-col items-center gap-6 py-2">
-                  {media.images.map((src) => (
-                    // biome-ignore lint/performance/noImgElement: full-size gallery stills
-                    <img
-                      key={src}
-                      src={src}
-                      alt=""
-                      loading="lazy"
-                      className="h-auto w-[min(420px,82vw)] rounded-lg"
-                    />
-                  ))}
-                </div>
-              </div>
+              <ScreenshotGallery images={media.images} />
             ) : (
               // biome-ignore lint/performance/noImgElement: enlarged still
               <img
@@ -128,5 +116,114 @@ export function MediaLightbox({
         </div>
       ) : null}
     </>
+  );
+}
+
+/**
+ * One screenshot at a time, swipe / drag / arrows through the set.
+ * Native snap-scroll does the touch work; chevrons and dots stay quiet.
+ */
+function ScreenshotGallery({ images }: { images: string[] }) {
+  const trackRef = useRef<HTMLElement>(null);
+  const [index, setIndex] = useState(0);
+
+  const go = useCallback((dir: -1 | 1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const slide = el.querySelector<HTMLElement>("[data-slide]");
+    const step = slide ? slide.offsetWidth : el.clientWidth;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") go(-1);
+      if (e.key === "ArrowRight") go(1);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [go]);
+
+  const mark = (e: React.UIEvent<HTMLElement>) => {
+    const el = e.currentTarget;
+    const slide = el.querySelector<HTMLElement>("[data-slide]");
+    const step = slide ? slide.offsetWidth : 1;
+    setIndex(Math.round(el.scrollLeft / step));
+  };
+
+  const chevron =
+    "flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-lg text-white/80 transition-colors hover:bg-white/25 hover:text-white";
+
+  return (
+    <div>
+      <div className="relative">
+        <section
+          ref={trackRef}
+          aria-label="7West screenshots, swipe or use the arrows"
+          onScroll={mark}
+          className="flex w-[min(420px,92vw)] snap-x snap-mandatory overflow-x-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
+          {images.map((src) => (
+            <div
+              key={src}
+              data-slide
+              className="flex w-full flex-none snap-center items-center justify-center"
+            >
+              {/* biome-ignore lint/performance/noImgElement: full-size gallery stills */}
+              <img
+                src={src}
+                alt=""
+                loading="lazy"
+                className="h-[76vh] w-auto max-w-full rounded-lg object-contain"
+              />
+            </div>
+          ))}
+        </section>
+
+        {index > 0 ? (
+          <button
+            type="button"
+            onClick={() => go(-1)}
+            aria-label="Previous screenshot"
+            className={`${chevron} absolute top-1/2 left-3 -translate-y-1/2`}
+          >
+            ‹
+          </button>
+        ) : null}
+        {index < images.length - 1 ? (
+          <button
+            type="button"
+            onClick={() => go(1)}
+            aria-label="Next screenshot"
+            className={`${chevron} absolute top-1/2 right-3 -translate-y-1/2`}
+          >
+            ›
+          </button>
+        ) : null}
+      </div>
+
+      <div className="mt-4 flex justify-center gap-2">
+        {images.map((src, i) => (
+          <button
+            key={src}
+            type="button"
+            aria-label={`Go to screenshot ${i + 1}`}
+            onClick={() => {
+              const el = trackRef.current;
+              const slide = el?.querySelector<HTMLElement>("[data-slide]");
+              if (el && slide) {
+                el.scrollTo({
+                  left: i * slide.offsetWidth,
+                  behavior: "smooth",
+                });
+              }
+            }}
+            className={`h-1.5 w-1.5 rounded-full transition-colors ${
+              i === index ? "bg-white" : "bg-white/30 hover:bg-white/60"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
