@@ -1,3 +1,4 @@
+import { LoopVideo } from "@/components/loop-video";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
 import {
@@ -8,8 +9,8 @@ import {
 } from "@/components/showcase-projects";
 
 /**
- * The home page: a quiet list of the work Nishil is proud of.
- * No carousel, no dock, no preview cards — name, one sentence, a link.
+ * The home page: the work Nishil is proud of, one card each —
+ * the visual first, then name, one sentence, a link.
  */
 export function ProjectList() {
   return (
@@ -25,12 +26,31 @@ export function ProjectList() {
         {SHOWCASE.map((p) => (
           <li
             key={p.slug}
-            className="border-t border-rule py-6 first:border-t-0 first:pt-0"
+            className="border-t border-rule py-10 first:border-t-0 first:pt-0"
           >
             <a
               href={projectHref(p)}
               className="group block no-underline text-ink"
             >
+              {p.media ? (
+                <span className="mb-5 block overflow-hidden rounded-lg border border-rule">
+                  {p.media.kind === "video" ? (
+                    <LoopVideo
+                      src={p.media.src}
+                      poster={p.media.poster}
+                      ratio={p.media.ratio}
+                    />
+                  ) : (
+                    // biome-ignore lint/performance/noImgElement: small static showcase stills, aspect-ratio kept in style
+                    <img
+                      src={p.media.src}
+                      alt={p.media.alt}
+                      style={{ aspectRatio: p.media.ratio }}
+                      className="block h-auto w-full object-cover"
+                    />
+                  )}
+                </span>
+              ) : null}
               <span className="flex items-baseline justify-between gap-4">
                 <span className="min-w-0">
                   <span className="font-medium tracking-[0.01em] group-hover:text-accent transition-colors">
