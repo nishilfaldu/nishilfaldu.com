@@ -1,7 +1,6 @@
-import { LoopVideo } from "@/components/loop-video";
 import { Mark } from "@/components/mark";
+import { MediaLightbox } from "@/components/media-lightbox";
 import { ProseLink } from "@/components/prose-link";
-import { RotateImage } from "@/components/rotate-image";
 import {
   projectHref,
   projectLinkLabel,
@@ -29,35 +28,7 @@ export function ProjectList() {
           return (
             <li key={p.slug} className="min-w-0">
               <div className="group block">
-                {media ? (
-                  <a
-                    href={projectHref(p)}
-                    className="mb-5 block overflow-hidden rounded-lg border border-rule no-underline"
-                  >
-                    {media.kind === "video" ? (
-                      <LoopVideo
-                        src={media.src}
-                        poster={media.poster}
-                        ratio={media.ratio}
-                      />
-                    ) : media.kind === "rotate" ? (
-                      <span
-                        className="block"
-                        style={{ aspectRatio: media.ratio }}
-                      >
-                        <RotateImage images={media.images} alt={media.alt} />
-                      </span>
-                    ) : (
-                      // biome-ignore lint/performance/noImgElement: small static showcase stills, aspect-ratio kept in style
-                      <img
-                        src={media.src}
-                        alt={media.alt}
-                        style={{ aspectRatio: media.ratio }}
-                        className="block h-auto w-full object-cover"
-                      />
-                    )}
-                  </a>
-                ) : null}
+                {media ? <MediaLightbox media={media} name={p.name} /> : null}
                 <span className="flex items-baseline justify-between gap-4">
                   <span className="min-w-0">
                     <a
