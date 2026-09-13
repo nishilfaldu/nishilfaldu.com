@@ -209,11 +209,9 @@
 }
 
 /* Dark: muted labels need more punch on black than the site body uses. */
-@media (prefers-color-scheme: dark) {
-  .lab-mount.shoe-guide,
-  .tinker-figure.shoe-guide {
-    --color-ink-muted: #c4c4c4;
-  }
+:root:not([data-theme="light"]) .lab-mount.shoe-guide,
+:root:not([data-theme="light"]) .tinker-figure.shoe-guide {
+  --color-ink-muted: #c4c4c4;
 }
 
 .lab-mount .wrap {

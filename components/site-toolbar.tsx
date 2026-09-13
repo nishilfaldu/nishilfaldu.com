@@ -19,6 +19,28 @@ export function SiteToolbar() {
   const breatheId = useId();
   const [tool, setTool] = useState<Tool | null>(null);
   const [reducedMotion, setReducedMotion] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+
+  useEffect(() => {
+    // The inline script in the layout already applied any stored choice.
+    if (document.documentElement.dataset.theme === "light") setTheme("light");
+  }, []);
+
+  function toggleTheme() {
+    const next = theme === "dark" ? "light" : "dark";
+    setTheme(next);
+    if (next === "light") {
+      document.documentElement.dataset.theme = "light";
+    } else {
+      delete document.documentElement.dataset.theme;
+    }
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute("content", next === "light" ? "#ffffff" : "#000000");
+    try {
+      localStorage.setItem("theme", next);
+    } catch {}
+  }
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -99,6 +121,16 @@ export function SiteToolbar() {
             />
           ) : null}
           breathe
+        </button>
+
+        <button
+          type="button"
+          onClick={toggleTheme}
+          aria-pressed={theme === "light"}
+          aria-label={`Switch to the ${theme === "dark" ? "light" : "dark"} theme`}
+          className="cursor-pointer rounded-[9px] border-0 bg-transparent px-3 py-1.5 font-sans text-[0.82rem] tracking-[0.01em] text-ink-muted transition-colors hover:text-accent"
+        >
+          {theme === "dark" ? "light" : "dark"}
         </button>
       </nav>
     </div>
