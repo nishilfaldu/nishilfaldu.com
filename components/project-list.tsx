@@ -53,7 +53,49 @@ export function ProjectList() {
       </ul>
 
       <p className="mt-14">
-        <ProseLink href="/story">story</ProseLink>
+        <ProseLink nowrap href="/">
+          Projects
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/story">
+          Story
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/writings">
+          Writings
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/tinkerletter">
+          Tinkerletter
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/scaffolds">
+          Scaffolds
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/reading">
+          Reading
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/daily">
+          Daily
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="/watching">
+          Watching
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="https://x.com/FalduNishil">
+          <span className="line-through decoration-1">Twitter</span> X
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="https://github.com/nishilfaldu">
+          GitHub
+        </ProseLink>{" "}
+        ·{" "}
+        <ProseLink nowrap href="https://www.linkedin.com/in/nishilfaldu">
+          LinkedIn
+        </ProseLink>
       </p>
     </main>
   );
