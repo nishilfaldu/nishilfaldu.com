@@ -43,7 +43,7 @@ export function AddLink() {
         body: JSON.stringify({
           url: url.trim(),
           note: note.trim() || null,
-          // My date, not the server's — Vercel keeps its clock in UTC.
+          // My date, not the server's - Vercel keeps its clock in UTC.
           dayId: todayId(),
         }),
       });
@@ -92,7 +92,7 @@ export function AddLink() {
         type="text"
         value={note}
         onChange={(event) => setNote(event.target.value)}
-        placeholder="Why you kept it — shown on the page"
+        placeholder="Why you kept it - shown on the page"
         aria-label="Note, shown publicly"
         className="mb-3 w-full border-0 border-b border-rule bg-transparent pb-2 text-ink outline-none placeholder:text-ink-muted focus:border-accent"
       />

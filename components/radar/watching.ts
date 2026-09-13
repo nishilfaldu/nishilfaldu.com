@@ -1,7 +1,7 @@
 /**
  * Things I don’t want to find out about late.
  *
- * Not ideas — those live in ideas.ts and are things I might build. These are
+ * Not ideas - those live in ideas.ts and are things I might build. These are
  * events I’m waiting on, where the whole value is hearing about it early.
  * `watchingFor` is the specific thing that would count as it happening, and
  * `where` is where I’d expect to see it first.

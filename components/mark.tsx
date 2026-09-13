@@ -6,7 +6,7 @@
  * a yellow interface.
  *
  * The dot sits on the baseline, tight to the `f`, close enough to read as part
- * of the word — like a full stop.
+ * of the word - like a full stop.
  */
 export function Mark({
   size = 20,

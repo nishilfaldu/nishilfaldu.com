@@ -17,7 +17,7 @@ export function PeopleSection() {
       </p>
 
       {PEOPLE.length === 0 ? (
-        <p className="text-ink-muted">Empty for now — the names are coming.</p>
+        <p className="text-ink-muted">Empty for now - the names are coming.</p>
       ) : (
         <ul className="m-0 list-none p-0">
           {PEOPLE.map((person) => (

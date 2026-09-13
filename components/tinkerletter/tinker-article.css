@@ -1,5 +1,5 @@
 /**
- * Tinkerletter reading surface — Vercel blog rhythm.
+ * Tinkerletter reading surface - Vercel blog rhythm.
  * Interactives open in modals; this file styles the prose column.
  * Type inherits site Geist from the root layout.
  */
@@ -130,7 +130,7 @@
   letter-spacing: -0.01em;
 }
 
-/* Modal shell — wide enough for side-by-side labs; no visible scrollbar. */
+/* Modal shell - wide enough for side-by-side labs; no visible scrollbar. */
 .lab-modal {
   position: fixed;
   inset: 0;

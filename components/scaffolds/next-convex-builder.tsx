@@ -10,7 +10,7 @@ import {
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 
 /**
- * Interactive Next.js + Convex picker — Biome vs ESLint, then a Cursor prompt.
+ * Interactive Next.js + Convex picker - Biome vs ESLint, then a Cursor prompt.
  */
 export function NextConvexBuilder() {
   const [linter, setLinter] = useState<NextLinter>("biome");
@@ -22,7 +22,7 @@ export function NextConvexBuilder() {
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
         Same official <code className="text-[0.88em]">create-next-app</code>{" "}
-        base as the Next.js recipe, then Convex — pick Biome or ESLint and the
+        base as the Next.js recipe, then Convex - pick Biome or ESLint and the
         prompt updates.
       </p>
 

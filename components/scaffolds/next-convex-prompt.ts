@@ -14,7 +14,7 @@ export function buildNextConvexPrompt(opts: NextConvexPromptOptions): string {
   const linterLabel = opts.linter === "biome" ? "Biome" : "ESLint";
   const intent = `TypeScript, ${linterLabel}, React Compiler, Tailwind, App Router, no src/, @/* imports, pnpm, keep AGENTS.md`;
 
-  return `Scaffold a new Next.js app with Convex. If a project name isn't obvious from context, ask me for one. Prefer official CLIs over copying templates. Never hang forever on interactive prompts — if login or project creation needs me, pause and say what to do.
+  return `Scaffold a new Next.js app with Convex. If a project name isn't obvious from context, ask me for one. Prefer official CLIs over copying templates. Never hang forever on interactive prompts - if login or project creation needs me, pause and say what to do.
 
 ## A. Next.js (same base as my Next-only recipe)
 
@@ -40,7 +40,7 @@ On first run this may ask me to log in and pick/create a project. Pause for that
 
 ## C. Cursor (so the agent knows Convex)
 
-6. After scaffolding, tell me to install the official Convex plugin in Cursor if I don't already have it — once is enough for all projects:
+6. After scaffolding, tell me to install the official Convex plugin in Cursor if I don't already have it - once is enough for all projects:
    - In Agent chat: \`/add-plugin convex\`
    - Or: Customize → search “Convex” → Add
 

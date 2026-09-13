@@ -11,7 +11,7 @@ import {
 import { ProseLink } from "@/components/prose-link";
 
 /**
- * Just the sighs — orb, phase, a thin provenance line. No notes, no essay.
+ * Just the sighs - orb, phase, a thin provenance line. No notes, no essay.
  */
 export function BreatheSession({ onClose }: { onClose: () => void }) {
   const [phase, setPhase] = useState<SighPhase>("ready");
@@ -149,7 +149,7 @@ export function BreatheSession({ onClose }: { onClose: () => void }) {
       </div>
 
       <p className="mt-12 mb-0 max-w-[22rem] text-[0.82rem] leading-snug text-ink-muted">
-        Cyclic sigh — two nose inhales, one long mouth exhale. From{" "}
+        Cyclic sigh - two nose inhales, one long mouth exhale. From{" "}
         <ProseLink href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/">
           Balban, Huberman & Spiegel (Stanford)
         </ProseLink>

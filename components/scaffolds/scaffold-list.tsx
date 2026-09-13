@@ -9,7 +9,7 @@ import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 import { TanstackBuilder } from "@/components/scaffolds/tanstack-builder";
 
 /**
- * /scaffolds — recipes that open in Cursor with the prompt prefilled.
+ * /scaffolds - recipes that open in Cursor with the prompt prefilled.
  */
 export function ScaffoldList() {
   return (
@@ -20,7 +20,7 @@ export function ScaffoldList() {
 
       <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Scaffolds</h1>
       <p className="mb-12 text-ink-muted">
-        Prompts that run the current official CLIs the way I always want them —
+        Prompts that run the current official CLIs the way I always want them -
         not a template repo to go stale. Open one in Cursor, press enter, get a
         project. <ProseLink href="/story">Back to the story</ProseLink>.
       </p>

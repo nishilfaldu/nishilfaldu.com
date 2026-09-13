@@ -1,5 +1,5 @@
 /**
- * Curated projects for the home page — only the work Nishil is proud of, in display order.
+ * Curated projects for the home page - only the work Nishil is proud of, in display order.
  *
  * Editing this file is the whole workflow: add, remove, reorder. The essay's full
  * index lives in projects.ts; this list is deliberately shorter and separate.

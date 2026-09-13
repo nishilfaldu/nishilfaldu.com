@@ -5,7 +5,7 @@ export const SITE_NAME = "Nishil Faldu";
 export const SITE_DESCRIPTION =
   "The story of how I got here, and the small things I build to take a mess and make it sit still.";
 
-/** Social profiles linked from the footer — used for Person JSON-LD. */
+/** Social profiles linked from the footer - used for Person JSON-LD. */
 export const SITE_SAME_AS = [
   "https://x.com/FalduNishil",
   "https://github.com/nishilfaldu",
@@ -13,7 +13,7 @@ export const SITE_SAME_AS = [
 ] as const;
 
 type PageMetaInput = {
-  /** Short title; root layout template appends " — Nishil Faldu". */
+  /** Short title; root layout template appends " · Nishil Faldu". */
   title: string;
   description: string;
   path: "/" | `/${string}`;
@@ -22,7 +22,7 @@ type PageMetaInput = {
 
 /**
  * Per-page SEO: title, description, canonical, Open Graph, Twitter.
- * Each route has its own opengraph-image (light paper — scrapers don’t
+ * Each route has its own opengraph-image (light paper - scrapers don’t
  * follow dark mode).
  */
 export function pageMetadata({
@@ -31,7 +31,7 @@ export function pageMetadata({
   path,
   ogType = "website",
 }: PageMetaInput): Metadata {
-  const fullTitle = `${title} — ${SITE_NAME}`;
+  const fullTitle = `${title} · ${SITE_NAME}`;
   return {
     title,
     description,

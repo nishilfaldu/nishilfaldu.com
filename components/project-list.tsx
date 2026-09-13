@@ -9,7 +9,7 @@ import {
 } from "@/components/showcase-projects";
 
 /**
- * The home page: the work Nishil is proud of, one card each —
+ * The home page: the work Nishil is proud of, one card each -
  * the visual first, then name, one sentence, a link.
  */
 export function ProjectList() {

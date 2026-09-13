@@ -11,7 +11,7 @@ export type TanstackAddon = {
   /** Short line under the name. */
   blurb: string;
   group: AddonGroupId;
-  /** CLI exclusive buckets — only one addon from each bucket may be selected. */
+  /** CLI exclusive buckets - only one addon from each bucket may be selected. */
   exclusive?: string[];
 };
 
@@ -210,7 +210,7 @@ export function isAddonDisabled(
   for (const bucket of addon.exclusive ?? []) {
     if (claimed.has(bucket)) return true;
   }
-  // Convex claims orm — disable all orm addons when convex is selected
+  // Convex claims orm - disable all orm addons when convex is selected
   if (addon.group === "orm" && others.includes("convex")) return true;
   return false;
 }

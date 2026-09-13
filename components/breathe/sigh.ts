@@ -1,6 +1,6 @@
 /**
  * Timing for one physiological / cyclic sigh cycle.
- * Double inhale + long exhale — exhale-focused, per Balban, Huberman, Spiegel
+ * Double inhale + long exhale - exhale-focused, per Balban, Huberman, Spiegel
  * (Cell Reports Medicine, 2023): brief structured sighing improved mood and
  * lowered respiratory rate vs mindfulness in their trial.
  */
@@ -22,7 +22,7 @@ export type SighPhase =
 
 export type ActivePhase = Exclude<SighPhase, "ready" | "done">;
 
-/** Drive the timer and orb from one table — no phase if-ladders in the UI. */
+/** Drive the timer and orb from one table - no phase if-ladders in the UI. */
 export const PHASE: Record<
   ActivePhase,
   {
@@ -74,7 +74,7 @@ export function phaseLabel(phase: SighPhase): string {
     case "inhale1":
       return "Inhale through the nose";
     case "inhale2":
-      return "Top it up — second sip of air";
+      return "Top it up - second sip of air";
     case "exhale":
       return "Long, slow exhale through the mouth";
     case "rest":

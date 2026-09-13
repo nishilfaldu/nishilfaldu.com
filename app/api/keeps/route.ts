@@ -11,7 +11,7 @@ import type { Id } from "@/convex/_generated/dataModel";
  * Two independent locks, because either one alone is thin. The cookie proves
  * it's me at this browser; the shared secret proves the call came from this
  * server. The secret never leaves the server, so a stranger holding the public
- * Convex URL still can't write — and a stolen cookie can only reach this route,
+ * Convex URL still can't write - and a stolen cookie can only reach this route,
  * which is rate-limited by being one person's laptop.
  */
 
@@ -47,7 +47,7 @@ async function authorize(): Promise<Guarded | NextResponse> {
 
 /**
  * The day a link belongs to is the browser's local date, sent with the request.
- * Calling todayId() here would use this server's clock, and Vercel runs in UTC —
+ * Calling todayId() here would use this server's clock, and Vercel runs in UTC -
  * so anything kept after ~8pm would file under tomorrow, which is the exact
  * failure convex/schema.ts is written to avoid. The fallback only covers a
  * caller that sends nothing at all.

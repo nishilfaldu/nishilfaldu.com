@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 
 /**
  * Share cards stay on light paper on purpose. iMessage, Slack, X, etc. fetch a
- * static PNG — they don’t follow prefers-color-scheme — and a light card reads
+ * static PNG - they don’t follow prefers-color-scheme - and a light card reads
  * cleanly in both light and dark chats. A dark thumbnail often looks like a
  * black rectangle in Messages.
  */
@@ -67,7 +67,7 @@ export type OgCardInput = {
   mark?: boolean;
 };
 
-/** One composition for every share card — light paper, Geist, amber address. */
+/** One composition for every share card - light paper, Geist, amber address. */
 export async function renderOgCard({
   title,
   description,
@@ -93,7 +93,7 @@ export async function renderOgCard({
       {mark ? (
         <div style={{ display: "flex", alignItems: "flex-start", gap: 5 }}>
           <span style={{ fontSize: 30, fontWeight: 500 }}>Nishil Faldu</span>
-          {/* Satori has no baseline alignment — nudge the dot by hand. */}
+          {/* Satori has no baseline alignment - nudge the dot by hand. */}
           <span
             style={{
               width: 8,

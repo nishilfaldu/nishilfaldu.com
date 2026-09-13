@@ -50,7 +50,7 @@ export function ScaffoldActions({ prompt }: { prompt: string }) {
         id="project-description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
-        placeholder="A couple sentences is enough — the agent scaffolds and wires practices first either way, then builds this."
+        placeholder="A couple sentences is enough - the agent scaffolds and wires practices first either way, then builds this."
         rows={3}
         className="w-full resize-y rounded-[10px] border border-rule bg-paper-raised p-3 font-sans text-[0.92rem] text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none"
       />

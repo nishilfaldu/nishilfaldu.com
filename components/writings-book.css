@@ -1,4 +1,4 @@
-/* Motion + leaf shadows for WritingsBook — not a global primitive. */
+/* Motion + leaf shadows for WritingsBook - not a global primitive. */
 @keyframes book-spread-in {
   from {
     opacity: 0;

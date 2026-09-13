@@ -28,19 +28,19 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
   const reactStep =
     opts.bundler === "vite"
       ? [
-          `3. Add React to the renderer. Forge's templates are vanilla — React is not included. Prefer \`pnpm add\` and the current Vite React docs over hand-editing \`package.json\` or inventing config.`,
+          `3. Add React to the renderer. Forge's templates are vanilla - React is not included. Prefer \`pnpm add\` and the current Vite React docs over hand-editing \`package.json\` or inventing config.`,
           ``,
           `\`pnpm add react react-dom\``,
           `\`pnpm add -D @vitejs/plugin-react\``,
           ``,
-          `Then wire the renderer the way the current Vite + React docs say (\`@vitejs/plugin-react\` in the renderer Vite config, a minimal React root). Keep it bare — no router, UI kit, or sample screens. Confirm \`pnpm start\` still works.`,
+          `Then wire the renderer the way the current Vite + React docs say (\`@vitejs/plugin-react\` in the renderer Vite config, a minimal React root). Keep it bare - no router, UI kit, or sample screens. Confirm \`pnpm start\` still works.`,
         ].join("\n")
       : [
-          `3. Add React to the renderer. Forge's templates are vanilla — React is not included. Prefer \`pnpm add\` and the current React + Webpack docs (or Forge's own Webpack guidance) over hand-editing \`package.json\` or inventing a loader stack.`,
+          `3. Add React to the renderer. Forge's templates are vanilla - React is not included. Prefer \`pnpm add\` and the current React + Webpack docs (or Forge's own Webpack guidance) over hand-editing \`package.json\` or inventing a loader stack.`,
           ``,
           `\`pnpm add react react-dom\``,
           ``,
-          `Then wire the renderer the way those docs say for this template so JSX/TSX compiles — only add the smallest documented loader/plugin change needed. Convert to a minimal React root. Keep it bare — no router, UI kit, or sample screens. Confirm \`pnpm start\` still works.`,
+          `Then wire the renderer the way those docs say for this template so JSX/TSX compiles - only add the smallest documented loader/plugin change needed. Convert to a minimal React root. Keep it bare - no router, UI kit, or sample screens. Confirm \`pnpm start\` still works.`,
         ].join("\n");
 
   const linterLabel = opts.linter === "biome" ? "Biome" : "ESLint";
@@ -53,14 +53,14 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
           `\`pnpm add -D -E @biomejs/biome\``,
           `\`pnpm exec biome init\``,
           ``,
-          `If those commands have changed, follow the current Biome getting-started docs with pnpm. Add \`lint\` / \`format\` (or \`check\`) scripts that run Biome. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped ESLint/Prettier, remove those in favor of Biome — don't leave two linters fighting.`,
+          `If those commands have changed, follow the current Biome getting-started docs with pnpm. Add \`lint\` / \`format\` (or \`check\`) scripts that run Biome. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped ESLint/Prettier, remove those in favor of Biome - don't leave two linters fighting.`,
         ].join("\n")
       : [
           `4. Add ESLint for linting. Prefer the official init CLI over hand-writing config.`,
           ``,
           `\`pnpm create @eslint/config@latest\``,
           ``,
-          `If that command has changed, follow the current ESLint getting-started docs with pnpm. Pick the options that match this project (TypeScript, no framework-specific preset unless one is offered for Electron/React). Add a \`lint\` script that runs ESLint. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped a different linter/formatter, remove it in favor of ESLint — don't leave two linters fighting.`,
+          `If that command has changed, follow the current ESLint getting-started docs with pnpm. Pick the options that match this project (TypeScript, no framework-specific preset unless one is offered for Electron/React). Add a \`lint\` script that runs ESLint. Confirm \`pnpm lint\` (or the script you added) runs. If the Forge template shipped a different linter/formatter, remove it in favor of ESLint - don't leave two linters fighting.`,
         ].join("\n");
 
   return [
@@ -73,8 +73,8 @@ export function buildElectronPrompt(opts: ElectronPromptOptions): string {
     `If the template name has been renamed or removed, check \`pnpm create electron-app@latest --help\` and the live Electron Forge docs, then map to the same intent: TypeScript + ${bundlerLabel} (\`${template}\`), pnpm.`,
     ``,
     `Notes on the two TypeScript templates:`,
-    `- \`vite-typescript\` — modern default; Forge's Vite plugin is still marked experimental.`,
-    `- \`webpack-typescript\` — more battle-tested Forge path.`,
+    `- \`vite-typescript\` - modern default; Forge's Vite plugin is still marked experimental.`,
+    `- \`webpack-typescript\` - more battle-tested Forge path.`,
     ``,
     `Forge + pnpm: set \`node-linker=hoisted\` in the project's \`.npmrc\` (Forge's documented requirement).`,
     ``,

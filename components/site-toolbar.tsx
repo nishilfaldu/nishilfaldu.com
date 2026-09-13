@@ -5,7 +5,7 @@ import { BreatheRoom } from "@/components/breathe/breathe-room";
 import "./site-toolbar.css";
 
 /**
- * Site tools — one quiet bar, bottom-left. Breathe, and room for more.
+ * Site tools - one quiet bar, bottom-left. Breathe, and room for more.
  * Shell only: tool state + dismiss. Panels own their own UI.
  */
 

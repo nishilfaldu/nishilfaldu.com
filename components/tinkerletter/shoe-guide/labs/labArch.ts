@@ -1,7 +1,7 @@
 export const labArchHtml = `<div class="archlab">
     <figure class="plate archlab-print">
       <svg id="lab-print" viewBox="0 0 120 260" role="img" aria-label="Interactive wet footprint whose arch band changes with the slider"></svg>
-      <figcaption class="plate-label">the print — drag the slider</figcaption>
+      <figcaption class="plate-label">the print - drag the slider</figcaption>
     </figure>
     <div class="archlab-controls">
       <div class="arch-reading" id="arch-reading" aria-live="polite"></div>

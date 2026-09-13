@@ -9,7 +9,7 @@ import { DailyList } from "@/components/radar/daily-list";
 export const metadata: Metadata = pageMetadata({
   title: "Daily",
   description:
-    "The short list of sites that earn a check every day — a long list is one nobody opens.",
+    "The short list of sites that earn a check every day. A long list is one nobody opens.",
   path: "/daily",
 });
 

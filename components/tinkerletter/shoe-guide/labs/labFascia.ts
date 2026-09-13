@@ -15,15 +15,15 @@ export const labFasciaHtml = `<div class="fascia">
         <text x="240" y="30" text-anchor="middle" fill="var(--color-ink)">BODY WEIGHT, EVERY STEP</text>
         <text x="108" y="160" text-anchor="middle" fill="var(--color-ink)">HEEL BONE</text>
         <text x="108" y="173" text-anchor="middle" fill="var(--color-ink-muted)" font-size="9">(where it hurts)</text>
-        <text x="270" y="150" text-anchor="middle" fill="var(--color-ink)">THE ARCH — THE BOW</text>
-        <text x="282" y="250" text-anchor="middle" fill="var(--color-accent)">PLANTAR FASCIA — THE BOWSTRING</text>
+        <text x="270" y="150" text-anchor="middle" fill="var(--color-ink)">THE ARCH - THE BOW</text>
+        <text x="282" y="250" text-anchor="middle" fill="var(--color-accent)">PLANTAR FASCIA - THE BOWSTRING</text>
         <text x="440" y="190" text-anchor="middle" fill="var(--color-ink)">BALL</text>
       </g>
     </svg>
     <div class="fascia-facts">
       <div class="ffact"><b>The morning tell</b>Sharp heel pain on first steps after waking, easing as you move.</div>
       <div class="ffact"><b>Who it hunts</b>Arch extremes, worn-out shoes, high-impact sports, all-day standing.</div>
-      <div class="ffact"><b>The lever you control</b>Shoes matched to your foot and sport — replaced before the foam dies.</div>
+      <div class="ffact"><b>The lever you control</b>Shoes matched to your foot and sport - replaced before the foam dies.</div>
     </div>
   </div>
 

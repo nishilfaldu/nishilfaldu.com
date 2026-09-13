@@ -11,7 +11,7 @@ import { pageMetadata } from "@/components/page-metadata";
 export const metadata: Metadata = pageMetadata({
   title: "Ideas",
   description:
-    "Open loops I’m willing to put on the site — a public tray instead of a notes dump.",
+    "Open loops I’m willing to put on the site, as a public tray instead of a notes dump.",
   path: "/ideas",
 });
 

@@ -19,12 +19,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   // The repo is named .com; the site ships to .site. Only one of those is a
-  // registered domain — pointing canonical at the other tells crawlers the real
+  // registered domain - pointing canonical at the other tells crawlers the real
   // page lives at an address that doesn't resolve.
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
-    template: `%s — ${SITE_NAME}`,
+    template: `%s · ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -96,7 +96,7 @@ export default function RootLayout({
       <body>
         <script
           type="application/ld+json"
-          // Person schema for the whole site — one identity, every page.
+          // Person schema for the whole site - one identity, every page.
           dangerouslySetInnerHTML={{ __html: personJsonLd() }}
         />
         {children}

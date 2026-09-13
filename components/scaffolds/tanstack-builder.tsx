@@ -16,7 +16,7 @@ import {
 } from "@/components/scaffolds/tanstack-prompt";
 
 /**
- * Interactive TanStack Start picker — selections build the Cursor prompt.
+ * Interactive TanStack Start picker - selections build the Cursor prompt.
  */
 export function TanstackBuilder() {
   const [selected, setSelected] = useState<string[]>([
@@ -73,7 +73,7 @@ export function TanstackBuilder() {
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
         Locked base: React, pnpm, Start (not router-only), no demo examples.
-        Pick a toolchain and add-ons — the prompt updates.
+        Pick a toolchain and add-ons - the prompt updates.
       </p>
 
       <fieldset className="mt-5 m-0 border-0 p-0">

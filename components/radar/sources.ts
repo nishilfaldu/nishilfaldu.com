@@ -1,5 +1,5 @@
 /**
- * Shared vocabulary for the three “keep an eye on it” pages — /people, /daily,
+ * Shared vocabulary for the three “keep an eye on it” pages - /people, /daily,
  * /watching. A source is a person or a site; a channel is one place that source
  * actually publishes.
  *
@@ -20,7 +20,7 @@ export type ChannelKind =
 export type Channel = {
   kind: ChannelKind;
   href: string;
-  /** Overrides the default label — e.g. “essays” instead of “rss”. */
+  /** Overrides the default label - e.g. “essays” instead of “rss”. */
   label?: string;
 };
 
