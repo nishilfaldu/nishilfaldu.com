@@ -23,53 +23,81 @@ export function ProjectList() {
       <p className="mb-12 text-ink-muted">The work I’m proud of.</p>
 
       <ul className="list-none p-0">
-        {SHOWCASE.map((p) => (
-          <li
-            key={p.slug}
-            className="border-t border-rule py-10 first:border-t-0 first:pt-0"
-          >
-            <a
-              href={projectHref(p)}
-              className="group block no-underline text-ink"
+        {SHOWCASE.map((p) => {
+          const media = p.media;
+          return (
+            <li
+              key={p.slug}
+              className="border-t border-rule py-10 first:border-t-0 first:pt-0"
             >
-              {p.media ? (
-                <span className="mb-5 block overflow-hidden rounded-lg border border-rule">
-                  {p.media.kind === "video" ? (
-                    <LoopVideo
-                      src={p.media.src}
-                      poster={p.media.poster}
-                      ratio={p.media.ratio}
-                    />
-                  ) : (
-                    // biome-ignore lint/performance/noImgElement: small static showcase stills, aspect-ratio kept in style
-                    <img
-                      src={p.media.src}
-                      alt={p.media.alt}
-                      style={{ aspectRatio: p.media.ratio }}
-                      className="block h-auto w-full object-cover"
-                    />
-                  )}
-                </span>
-              ) : null}
-              <span className="flex items-baseline justify-between gap-4">
-                <span className="min-w-0">
-                  <span className="font-medium tracking-[0.01em] group-hover:text-accent transition-colors">
-                    {p.name}
+              <a
+                href={projectHref(p)}
+                className="group block no-underline text-ink"
+              >
+                {media ? (
+                  <span className="mb-5 block overflow-hidden rounded-lg border border-rule">
+                    {media.kind === "video" ? (
+                      <LoopVideo
+                        src={media.src}
+                        poster={media.poster}
+                        ratio={media.ratio}
+                      />
+                    ) : media.kind === "strip" ? (
+                      <span
+                        className="showcase-strip"
+                        style={{ aspectRatio: media.ratio }}
+                      >
+                        <span className="showcase-strip-track">
+                          {[0, 1].map((copy) => (
+                            <span
+                              key={copy}
+                              className="showcase-strip-group"
+                              aria-hidden={copy === 1}
+                            >
+                              {media.images.map((src, i) => (
+                                // biome-ignore lint/performance/noImgElement: small static showcase stills
+                                <img
+                                  key={src}
+                                  src={src}
+                                  alt={copy === 0 && i === 0 ? media.alt : ""}
+                                  loading="lazy"
+                                />
+                              ))}
+                            </span>
+                          ))}
+                        </span>
+                      </span>
+                    ) : (
+                      // biome-ignore lint/performance/noImgElement: small static showcase stills, aspect-ratio kept in style
+                      <img
+                        src={media.src}
+                        alt={media.alt}
+                        style={{ aspectRatio: media.ratio }}
+                        className="block h-auto w-full object-cover"
+                      />
+                    )}
                   </span>
-                  {p.status ? (
-                    <span className="ml-2 text-[0.88rem] tracking-[0.02em] text-ink-muted">
-                      {SHOWCASE_STATUS_LABEL[p.status]}
+                ) : null}
+                <span className="flex items-baseline justify-between gap-4">
+                  <span className="min-w-0">
+                    <span className="font-medium tracking-[0.01em] group-hover:text-accent transition-colors">
+                      {p.name}
                     </span>
-                  ) : null}
+                    {p.status ? (
+                      <span className="ml-2 text-[0.88rem] tracking-[0.02em] text-ink-muted">
+                        {SHOWCASE_STATUS_LABEL[p.status]}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="shrink-0 text-[0.92rem] text-accent">
+                    {projectLinkLabel(p)} ↗
+                  </span>
                 </span>
-                <span className="shrink-0 text-[0.92rem] text-accent">
-                  {projectLinkLabel(p)} ↗
-                </span>
-              </span>
-              <span className="mt-2 block text-ink-muted">{p.tagline}</span>
-            </a>
-          </li>
-        ))}
+                <span className="mt-2 block text-ink-muted">{p.tagline}</span>
+              </a>
+            </li>
+          );
+        })}
       </ul>
 
       <p className="mt-14">

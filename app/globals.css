@@ -130,3 +130,59 @@
     animation-duration: 0.01ms !important;
   }
 }
+
+/* Showcase strip (home page): a slow, quiet loop through every screenshot.
+   Duplicated track translates -50%; the seam is invisible because the two
+   groups are identical. Pauses on hover, stops for reduced motion. */
+.showcase-strip {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+}
+
+.showcase-strip-track {
+  display: flex;
+  height: 100%;
+  width: max-content;
+  animation: showcase-strip-scroll 56s linear infinite;
+}
+
+.showcase-strip:hover .showcase-strip-track {
+  animation-play-state: paused;
+}
+
+.showcase-strip-group {
+  display: flex;
+  gap: 14px;
+  padding-right: 14px;
+  height: 100%;
+}
+
+.showcase-strip-group img {
+  display: block;
+  height: 100%;
+  width: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase-strip-track {
+    animation: none;
+  }
+}
+
+@keyframes showcase-strip-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}

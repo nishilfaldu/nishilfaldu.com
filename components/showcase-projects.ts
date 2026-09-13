@@ -13,7 +13,8 @@ export type ShowcaseStatus = "building";
 
 export type ShowcaseMedia =
   | { kind: "video"; src: string; poster: string; ratio: string }
-  | { kind: "image"; src: string; alt: string; ratio: string };
+  | { kind: "image"; src: string; alt: string; ratio: string }
+  | { kind: "strip"; images: string[]; alt: string; ratio: string };
 
 export type ShowcaseProject = {
   slug: string;
@@ -66,9 +67,18 @@ export const SHOWCASE: ShowcaseProject[] = [
     url: "https://play.google.com/store/apps/details?id=space.sevenwest.wall",
     linkLabel: "play store",
     media: {
-      kind: "image",
-      src: "/showcase/7west-fan.webp",
-      alt: "Three 7West Play Store screenshots: the discussion feed, the university leaderboard, and an event page.",
+      kind: "strip",
+      images: [
+        "/showcase/7west/01.webp",
+        "/showcase/7west/02.webp",
+        "/showcase/7west/03.webp",
+        "/showcase/7west/04.webp",
+        "/showcase/7west/05.webp",
+        "/showcase/7west/06.webp",
+        "/showcase/7west/07.webp",
+        "/showcase/7west/08.webp",
+      ],
+      alt: "All eight 7West Play Store screenshots in a slowly scrolling strip.",
       ratio: "16 / 10",
     },
   },
