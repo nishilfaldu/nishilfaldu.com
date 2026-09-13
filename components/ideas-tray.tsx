@@ -85,7 +85,7 @@ export function IdeasTray() {
         <p className="mb-10 text-ink-muted">
           Open loops I’m willing to put on the site — not a notes dump. Draw
           one, sit with it, or jump the list.{" "}
-          <ProseLink href="/">Back to the story</ProseLink>.
+          <ProseLink href="/story">Back to the story</ProseLink>.
         </p>
       </div>
 

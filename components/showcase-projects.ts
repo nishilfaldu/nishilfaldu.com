@@ -1,5 +1,5 @@
 /**
- * Curated projects for /projects — only the work Nishil is proud of, in display order.
+ * Curated projects for the home page — only the work Nishil is proud of, in display order.
  *
  * Editing this file is the whole workflow: add, remove, reorder. The essay's full
  * index lives in projects.ts; this list is deliberately shorter and separate.
@@ -29,6 +29,12 @@ export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
 };
 
 export const SHOWCASE: ShowcaseProject[] = [
+  {
+    slug: "chat-rendering",
+    name: "Chat rendering",
+    tagline: "How to render chat better than just virtualization alone.",
+    url: "https://chat-rendering.nishilfaldu.site/",
+  },
   {
     slug: "cedar-lang",
     name: "Cedar",

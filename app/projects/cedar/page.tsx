@@ -18,16 +18,12 @@ export const metadata: Metadata = pageMetadata({
 export default function CedarPage() {
   return (
     <main className="mx-auto max-w-measure px-6 pt-22 pb-28 sm:px-8 sm:pt-32 sm:pb-36 [&_p]:mb-[1.6rem]">
-      <a
-        href="/projects"
-        aria-label="Projects"
-        className="inline-block no-underline"
-      >
+      <a href="/" aria-label="Projects" className="inline-block no-underline">
         <Mark className="mb-10" />
       </a>
 
       <p className="mb-3 text-[0.92rem] text-ink-muted">
-        <ProseLink href="/projects">Projects</ProseLink>
+        <ProseLink href="/">Projects</ProseLink>
         {" · "}
         Cedar
       </p>
@@ -53,8 +49,8 @@ export default function CedarPage() {
 
       <p>
         That’s why it stuck. Not because Cedar is a language anyone should
-        adopt, but because I didn’t know if I could do it, and then I did —
-        from source text to a binary I could run.
+        adopt, but because I didn’t know if I could do it, and then I did — from
+        source text to a binary I could run.
       </p>
 
       <p>

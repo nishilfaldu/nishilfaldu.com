@@ -22,7 +22,7 @@ export function ScaffoldList() {
       <p className="mb-12 text-ink-muted">
         Prompts that run the current official CLIs the way I always want them —
         not a template repo to go stale. Open one in Cursor, press enter, get a
-        project. <ProseLink href="/">Back to the story</ProseLink>.
+        project. <ProseLink href="/story">Back to the story</ProseLink>.
       </p>
 
       <ul className="list-none p-0">

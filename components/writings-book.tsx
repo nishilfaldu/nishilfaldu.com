@@ -98,7 +98,7 @@ export function WritingsBook() {
           {BOOK.title}
         </h1>
         <p className="mb-10 text-ink-muted">
-          {BOOK.blurb} <ProseLink href="/">Back to the story</ProseLink>.
+          {BOOK.blurb} <ProseLink href="/story">Back to the story</ProseLink>.
         </p>
       </div>
 

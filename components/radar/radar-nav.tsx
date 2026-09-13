@@ -25,7 +25,7 @@ export function RadarNav({ current }: { current: RadarPage }) {
           </ProseLink>
         </span>
       ))}{" "}
-      · <ProseLink href="/">Back to the story</ProseLink>
+      · <ProseLink href="/story">Back to the story</ProseLink>
     </p>
   );
 }

@@ -18,7 +18,7 @@ export function TinkerletterList() {
       <p className="mb-12 text-ink-muted">
         Ideas you can touch. Each issue is one technical or physical idea, one
         interaction, one reveal — instead of reading about a thing, you run it.{" "}
-        <ProseLink href="/">Back to the story</ProseLink>.
+        <ProseLink href="/story">Back to the story</ProseLink>.
       </p>
 
       <ul className="list-none p-0">

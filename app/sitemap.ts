@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const paths = [
     "/",
-    "/projects",
+    "/story",
     "/projects/cedar",
     "/ideas",
     "/reading",

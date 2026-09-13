@@ -8,7 +8,7 @@ import {
 } from "@/components/showcase-projects";
 
 /**
- * /projects: a quiet list of the work Nishil is proud of.
+ * The home page: a quiet list of the work Nishil is proud of.
  * No carousel, no dock, no preview cards — name, one sentence, a link.
  */
 export function ProjectList() {
@@ -19,11 +19,7 @@ export function ProjectList() {
       </a>
 
       <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Projects</h1>
-      <p className="mb-12 text-ink-muted">
-        The work I’m proud of.{" "}
-        <ProseLink href="/">The story behind it</ProseLink> is on the front
-        page.
-      </p>
+      <p className="mb-12 text-ink-muted">The work I’m proud of.</p>
 
       <ul className="list-none p-0">
         {SHOWCASE.map((p) => (
@@ -55,6 +51,10 @@ export function ProjectList() {
           </li>
         ))}
       </ul>
+
+      <p className="mt-14">
+        <ProseLink href="/story">story</ProseLink>
+      </p>
     </main>
   );
 }
