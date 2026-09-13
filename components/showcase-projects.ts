@@ -53,7 +53,7 @@ export const SHOWCASE: ShowcaseProject[] = [
     slug: "cedar-lang",
     name: "Cedar",
     tagline:
-      "A statically-typed language with a compiler written from scratch in Go, down to native executables.",
+      "A statically-typed language with a compiler written from scratch in Go.",
     media: {
       kind: "image",
       src: "/showcase/cedar-terminal.png",
