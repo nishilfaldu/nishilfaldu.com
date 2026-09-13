@@ -30,12 +30,12 @@ export function ProjectList() {
               key={p.slug}
               className="border-t border-rule py-10 first:border-t-0 first:pt-0"
             >
-              <a
-                href={projectHref(p)}
-                className="group block no-underline text-ink"
-              >
+              <div className="group block">
                 {media ? (
-                  <span className="mb-5 block overflow-hidden rounded-lg border border-rule">
+                  <a
+                    href={projectHref(p)}
+                    className="mb-5 block overflow-hidden rounded-lg border border-rule no-underline"
+                  >
                     {media.kind === "video" ? (
                       <LoopVideo
                         src={media.src}
@@ -76,25 +76,44 @@ export function ProjectList() {
                         className="block h-auto w-full object-cover"
                       />
                     )}
-                  </span>
+                  </a>
                 ) : null}
                 <span className="flex items-baseline justify-between gap-4">
                   <span className="min-w-0">
-                    <span className="font-medium tracking-[0.01em] group-hover:text-accent transition-colors">
+                    <a
+                      href={projectHref(p)}
+                      className="font-medium tracking-[0.01em] text-ink no-underline group-hover:text-accent transition-colors"
+                    >
                       {p.name}
-                    </span>
+                    </a>
                     {p.status ? (
                       <span className="ml-2 text-[0.88rem] tracking-[0.02em] text-ink-muted">
                         {SHOWCASE_STATUS_LABEL[p.status]}
                       </span>
                     ) : null}
                   </span>
-                  <span className="shrink-0 text-[0.92rem] text-accent">
-                    {projectLinkLabel(p)} ↗
+                  <span className="shrink-0 text-[0.92rem]">
+                    {(p.extraLinks ?? []).map((l) => (
+                      <span key={l.url}>
+                        <a
+                          href={l.url}
+                          className="text-accent no-underline hover:underline"
+                        >
+                          {l.label} ↗
+                        </a>
+                        <span className="text-ink-muted"> · </span>
+                      </span>
+                    ))}
+                    <a
+                      href={projectHref(p)}
+                      className="text-accent no-underline hover:underline"
+                    >
+                      {projectLinkLabel(p)} ↗
+                    </a>
                   </span>
                 </span>
                 <span className="mt-2 block text-ink-muted">{p.tagline}</span>
-              </a>
+              </div>
             </li>
           );
         })}
