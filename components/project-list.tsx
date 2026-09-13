@@ -1,6 +1,7 @@
 import { LoopVideo } from "@/components/loop-video";
 import { Mark } from "@/components/mark";
 import { ProseLink } from "@/components/prose-link";
+import { RotateImage } from "@/components/rotate-image";
 import {
   projectHref,
   projectLinkLabel,
@@ -14,7 +15,7 @@ import {
  */
 export function ProjectList() {
   return (
-    <main className="mx-auto max-w-measure px-6 pt-22 pb-28 sm:px-8 sm:pt-32 sm:pb-36">
+    <main className="mx-auto max-w-6xl px-6 pt-22 pb-28 sm:px-8 sm:pt-32 sm:pb-36">
       <a href="/" aria-label="Home" className="inline-block no-underline">
         <Mark className="mb-10" />
       </a>
@@ -22,14 +23,11 @@ export function ProjectList() {
       <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Projects</h1>
       <p className="mb-12 text-ink-muted">The work I’m proud of.</p>
 
-      <ul className="list-none p-0">
+      <ul className="grid list-none grid-cols-1 gap-x-10 gap-y-16 p-0 sm:grid-cols-2">
         {SHOWCASE.map((p) => {
           const media = p.media;
           return (
-            <li
-              key={p.slug}
-              className="border-t border-rule py-10 first:border-t-0 first:pt-0"
-            >
+            <li key={p.slug} className="min-w-0">
               <div className="group block">
                 {media ? (
                   <a
@@ -42,30 +40,12 @@ export function ProjectList() {
                         poster={media.poster}
                         ratio={media.ratio}
                       />
-                    ) : media.kind === "strip" ? (
+                    ) : media.kind === "rotate" ? (
                       <span
-                        className="showcase-strip"
+                        className="block"
                         style={{ aspectRatio: media.ratio }}
                       >
-                        <span className="showcase-strip-track">
-                          {[0, 1].map((copy) => (
-                            <span
-                              key={copy}
-                              className="showcase-strip-group"
-                              aria-hidden={copy === 1}
-                            >
-                              {media.images.map((src, i) => (
-                                // biome-ignore lint/performance/noImgElement: small static showcase stills
-                                <img
-                                  key={src}
-                                  src={src}
-                                  alt={copy === 0 && i === 0 ? media.alt : ""}
-                                  loading="lazy"
-                                />
-                              ))}
-                            </span>
-                          ))}
-                        </span>
+                        <RotateImage images={media.images} alt={media.alt} />
                       </span>
                     ) : (
                       // biome-ignore lint/performance/noImgElement: small static showcase stills, aspect-ratio kept in style

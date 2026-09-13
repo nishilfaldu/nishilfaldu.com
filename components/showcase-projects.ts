@@ -7,14 +7,14 @@
  * `url` → live deployment.
  * Neither → GitHub repo under nishilfaldu/<slug>.
  * `status` → optional label when the work isn't finished yet.
- * `media` → the card's visual: a loop video or a still, in display aspect.
+ * `media` → the tile's visual: a loop video, a still, or a rotating set.
  */
 export type ShowcaseStatus = "building";
 
 export type ShowcaseMedia =
   | { kind: "video"; src: string; poster: string; ratio: string }
   | { kind: "image"; src: string; alt: string; ratio: string }
-  | { kind: "strip"; images: string[]; alt: string; ratio: string };
+  | { kind: "rotate"; images: string[]; alt: string; ratio: string };
 
 export type ShowcaseProject = {
   slug: string;
@@ -58,7 +58,7 @@ export const SHOWCASE: ShowcaseProject[] = [
       kind: "image",
       src: "/showcase/cedar-terminal.png",
       alt: "A terminal showing a Cedar Fibonacci program, the build to a native executable, and the program printing 610.",
-      ratio: "4 / 3",
+      ratio: "16 / 10",
     },
   },
   {
@@ -75,7 +75,7 @@ export const SHOWCASE: ShowcaseProject[] = [
       },
     ],
     media: {
-      kind: "strip",
+      kind: "rotate",
       images: [
         "/showcase/7west/01.webp",
         "/showcase/7west/02.webp",
@@ -86,7 +86,7 @@ export const SHOWCASE: ShowcaseProject[] = [
         "/showcase/7west/07.webp",
         "/showcase/7west/08.webp",
       ],
-      alt: "All eight 7West Play Store screenshots in a slowly scrolling strip.",
+      alt: "The 7West Play Store screenshots, cycling one at a time.",
       ratio: "16 / 10",
     },
   },
