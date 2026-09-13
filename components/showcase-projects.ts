@@ -65,15 +65,9 @@ export const SHOWCASE: ShowcaseProject[] = [
     slug: "7west",
     name: "7West",
     tagline:
-      "A community app for your university - posts, discussions, groups, and events, on iOS and Android.",
+      "A community app for your university - posts, discussions, groups, and events, on Android.",
     url: "https://play.google.com/store/apps/details?id=space.sevenwest.wall",
     linkLabel: "play store",
-    extraLinks: [
-      {
-        label: "app store",
-        url: "https://apps.apple.com/us/app/7west/id6746081102",
-      },
-    ],
     media: {
       kind: "rotate",
       images: [
