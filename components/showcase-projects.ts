@@ -68,7 +68,7 @@ export const SHOWCASE: ShowcaseProject[] = [
     media: {
       kind: "image",
       src: "/showcase/7west-fan.webp",
-      alt: "Three 7West screens: the discussion feed, the university leaderboard, and an event page.",
+      alt: "Three 7West Play Store screenshots: the discussion feed, the university leaderboard, and an event page.",
       ratio: "16 / 10",
     },
   },
