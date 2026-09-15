@@ -8,7 +8,7 @@ import type { Project } from "@/components/projects";
  *
  * Linger on a link and a small card floats up: the repo's social-card image,
  * the short name, one line on why it exists, all of it a link to the repo. The
- * essay stays the way in — this is a look before you leave, not a grid.
+ * essay stays the way in - this is a look before you leave, not a grid.
  *
  * Mouse-only by design. Touch has no hover, so a tap keeps doing what it
  * always did and follows the link; nothing here ever intercepts a click. The
@@ -64,7 +64,7 @@ export function ProjectPreview({
 
   /*
    * Fixed positioning, measured after render. A prose link can wrap across
-   * two lines, so its bounding box is the wrong anchor — the first line box
+   * two lines, so its bounding box is the wrong anchor - the first line box
    * (getClientRects) is where the reader's cursor actually is.
    */
   // biome-ignore lint/correctness/useExhaustiveDependencies(imgFailed): dropping the image changes the card's height, so the position must be re-measured

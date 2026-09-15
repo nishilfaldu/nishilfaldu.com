@@ -1,4 +1,4 @@
-/* Motion for SiteToolbar / breathe overlay only — not a global primitive. */
+/* Motion for SiteToolbar / breathe overlay only - not a global primitive. */
 @keyframes breathe-room-in {
   from {
     opacity: 0;

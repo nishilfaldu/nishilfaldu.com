@@ -5,7 +5,7 @@ import { addonsForCli } from "@/components/scaffolds/tanstack-addons";
 export type TanstackPromptOptions = {
   /** Selected TanStack CLI add-on ids. */
   selectedAddons: readonly string[];
-  /** TanStack Intent skill mappings — default on. */
+  /** TanStack Intent skill mappings - default on. */
   intent: boolean;
   /** Biome or ESLint, passed straight through to `--toolchain`. */
   toolchain: NextLinter;
@@ -37,7 +37,7 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
   const toolchainLabel = opts.toolchain === "biome" ? "Biome" : "ESLint";
 
   const parts: string[] = [
-    `Scaffold a new TanStack Start app. If a project name isn't obvious from context, ask me for one. Prefer the official TanStack CLI over copying a template. Never hang forever on interactive prompts — if login or project creation needs me, pause and say what to do.`,
+    `Scaffold a new TanStack Start app. If a project name isn't obvious from context, ask me for one. Prefer the official TanStack CLI over copying a template. Never hang forever on interactive prompts - if login or project creation needs me, pause and say what to do.`,
     ``,
     `1. Create the app with the current CLI (prefer \`pnpm dlx @tanstack/cli@latest\` so flags match today; always \`--package-manager pnpm\`):`,
     ``,
@@ -61,7 +61,7 @@ export function buildTanstackPrompt(opts: TanstackPromptOptions): string {
   if (hasConvex) {
     parts.push(
       ``,
-      `${step}. Convex was selected. Complete any Convex login / project linking the CLI asks for. After scaffolding, tell me to install the official Convex plugin in Cursor if I don't already have it — once is enough for all projects:`,
+      `${step}. Convex was selected. Complete any Convex login / project linking the CLI asks for. After scaffolding, tell me to install the official Convex plugin in Cursor if I don't already have it - once is enough for all projects:`,
       `   - In Agent chat: \`/add-plugin convex\``,
       `   - Or: Customize → search “Convex” → Add`,
       `Don't try to install the plugin from the terminal.`,

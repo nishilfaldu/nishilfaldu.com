@@ -5,7 +5,7 @@
  * ids and labels to build the dash stack, <ProjectPreview /> reads repos and
  * blurbs to build the hover cards. Order is reading order, not importance.
  *
- * Blurbs are lifted from the essay's own sentences — they're Nishil's phrasing,
+ * Blurbs are lifted from the essay's own sentences - they're Nishil's phrasing,
  * shortened, not new copy.
  */
 export type Project = {
@@ -24,7 +24,7 @@ export const PROJECTS: Project[] = [
     id: "p-save-the-roadster",
     label: "C++ game",
     repo: "save-the-roadster",
-    blurb: "A game in C++ — the first thing I actually wanted to build.",
+    blurb: "A game in C++, the first thing I actually wanted to build.",
   },
   {
     id: "p-ml-deep-learning-courses",
@@ -36,7 +36,7 @@ export const PROJECTS: Project[] = [
     id: "p-bert-sentiment-pytorch",
     label: "First model",
     repo: "bert-sentiment-pytorch",
-    blurb: "My first real model — it learned to read the mood of a review.",
+    blurb: "My first real model. It learned to read the mood of a review.",
   },
   {
     id: "p-insite-factcheck",
@@ -62,7 +62,7 @@ export const PROJECTS: Project[] = [
     label: "Event app",
     repo: "eventure",
     blurb:
-      "An app for planning events — my senior project, built over video calls.",
+      "An app for planning events. My senior project, built over video calls.",
   },
   {
     id: "p-alterna-canvas",

@@ -9,7 +9,7 @@ import { WritingsBook } from "@/components/writings-book";
 export const metadata: Metadata = pageMetadata({
   title: "A small book",
   description:
-    "A place for lines that shouldn’t live in Notes — pages you can turn.",
+    "A place for lines that shouldn’t live in Notes, as pages you can turn.",
   path: "/writings",
 });
 

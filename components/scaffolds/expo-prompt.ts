@@ -5,7 +5,7 @@ export type ExpoPromptOptions = {
   linter: NextLinter;
 };
 
-/** Fixed Expo create invocation — default template, SDK 57, pnpm. */
+/** Fixed Expo create invocation - default template, SDK 57, pnpm. */
 export const EXPO_CREATE_COMMAND =
   "pnpm create expo-app@latest <project-name> --template default@sdk-57 -y";
 
@@ -28,7 +28,7 @@ export function buildExpoPrompt(opts: ExpoPromptOptions): string {
           `\`pnpm add -D -E @biomejs/biome\``,
           `\`pnpm exec biome init\``,
           ``,
-          `If those commands have changed, follow the current Biome getting-started docs with pnpm. Point the \`lint\` script at Biome instead of \`expo lint\` (and add a \`format\`/\`check\` script if useful). Confirm \`pnpm lint\` runs. Don't let the template's lazy ESLint setup trigger — if \`expo lint\` was already run and installed \`eslint-config-expo\`, remove it so there's only one linter.`,
+          `If those commands have changed, follow the current Biome getting-started docs with pnpm. Point the \`lint\` script at Biome instead of \`expo lint\` (and add a \`format\`/\`check\` script if useful). Confirm \`pnpm lint\` runs. Don't let the template's lazy ESLint setup trigger - if \`expo lint\` was already run and installed \`eslint-config-expo\`, remove it so there's only one linter.`,
         ].join("\n");
 
   return `Scaffold a new Expo app with ${linterLabel}. If a project name isn't obvious from context, ask me for one. Prefer the official create-expo-app CLI over cloning a third-party boilerplate. Never hang forever on interactive prompts.
@@ -39,21 +39,21 @@ ${EXPO_CREATE_COMMAND}
 
 If the template tag or flag has been renamed or removed, check \`pnpm create expo-app@latest --help\` and the live Expo docs, then map to the same intent: official \`default\` template on the current SDK (SDK 57 or whatever \`default@sdk-*\` the docs recommend now), TypeScript, Expo Router, keep the generated AGENTS.md / agent files (do **not** pass \`--no-agents-md\`).
 
-The default template ships Expo Router with native tabs (\`expo-router/unstable-native-tabs\` on native). That is expected — do not swap them for the older JS \`Tabs\` layout unless I ask.
+The default template ships Expo Router with native tabs (\`expo-router/unstable-native-tabs\` on native). That is expected - do not swap them for the older JS \`Tabs\` layout unless I ask.
 
 2. cd into the project. Confirm it starts (\`pnpm start\` / \`pnpm exec expo start\`). Prefer a **development build** / simulator or \`pnpm exec expo run:ios\` / \`pnpm exec expo run:android\` over Expo Go. Fix only if the scaffold itself is broken.
 
-3. Install official Expo Skills into **this project** (not globally) so Cursor cloud agents that clone the repo get them. There is no Expo plugin on the Cursor Marketplace — skills via the official CLI are the supported path:
+3. Install official Expo Skills into **this project** (not globally) so Cursor cloud agents that clone the repo get them. There is no Expo plugin on the Cursor Marketplace - skills via the official CLI are the supported path:
 
 ${EXPO_SKILLS_COMMAND}
 
 If that CLI syntax has changed, check https://docs.expo.dev/skills/ and https://github.com/expo/skills, then install the official \`expo/skills\` set for Cursor into the project. Commit the generated skill files (and any skills lockfile) with the app.
 
-If I explicitly say I want skills only on this machine and not in the repo, use the same command with \`-g\` / \`--global\` instead — and do not commit skill files.
+If I explicitly say I want skills only on this machine and not in the repo, use the same command with \`-g\` / \`--global\` instead - and do not commit skill files.
 
 ${linterStep}
 
-5. Do not add EAS config, auth, UI kits, NativeWind, or extra packages beyond this. Keep the generated AGENTS.md — you'll add to it below, not overwrite it.
+5. Do not add EAS config, auth, UI kits, NativeWind, or extra packages beyond this. Keep the generated AGENTS.md - you'll add to it below, not overwrite it.
 
 ${buildPracticesPhase(6)}`;
 }

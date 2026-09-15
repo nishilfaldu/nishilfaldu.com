@@ -1,5 +1,5 @@
 /**
- * Tinkerletter issues. Editing this file is the whole listing workflow —
+ * Tinkerletter issues. Editing this file is the whole listing workflow -
  * same idea as showcase-projects.ts.
  */
 export type TinkerIssue = {

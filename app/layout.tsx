@@ -19,12 +19,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   // The repo is named .com; the site ships to .site. Only one of those is a
-  // registered domain — pointing canonical at the other tells crawlers the real
+  // registered domain - pointing canonical at the other tells crawlers the real
   // page lives at an address that doesn't resolve.
   metadataBase: new URL(SITE_URL),
   title: {
     default: SITE_NAME,
-    template: `%s — ${SITE_NAME}`,
+    template: `%s · ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
@@ -62,13 +62,22 @@ export const metadata: Metadata = {
   },
 };
 
-/** Matches --color-paper in both themes, so the browser chrome joins the page. */
+/** Matches --color-paper, so the browser chrome joins the page. Dark is the default; the toolbar toggle rewrites the meta for light. */
 export const viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
-  ],
+  colorScheme: "dark light",
+  themeColor: [{ color: "#000000" }],
 };
+
+/*
+ * Dark by default. The only way into light is the toolbar toggle, which stores
+ * "light" in localStorage; this script reads it before first paint so a
+ * returning light reader never sees a dark flash.
+ */
+const themeInit = `try {
+  if (localStorage.getItem("theme") === "light") {
+    document.documentElement.dataset.theme = "light";
+  }
+} catch {}`;
 
 export default function RootLayout({
   children,
@@ -76,12 +85,18 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${GeistSans.variable} ${GeistMono.variable} ${GeistSans.className} antialiased`}
     >
+      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static first-paint theme script, no user data */}
+      <head>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: static first-paint theme script, no user data */}
+        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+      </head>
       <body>
         <script
           type="application/ld+json"
-          // Person schema for the whole site — one identity, every page.
+          // Person schema for the whole site - one identity, every page.
           dangerouslySetInnerHTML={{ __html: personJsonLd() }}
         />
         {children}

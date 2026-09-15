@@ -3,7 +3,7 @@ import { ProseLink } from "@/components/prose-link";
 import { TINKER_ISSUES } from "@/components/tinkerletter/issues";
 
 /**
- * /tinkerletter — interactive issues you can touch, not just read.
+ * /tinkerletter - interactive issues you can touch, not just read.
  */
 export function TinkerletterList() {
   return (
@@ -17,7 +17,7 @@ export function TinkerletterList() {
       </h1>
       <p className="mb-12 text-ink-muted">
         Ideas you can touch. Each issue is one technical or physical idea, one
-        interaction, one reveal — instead of reading about a thing, you run it.{" "}
+        interaction, one reveal - instead of reading about a thing, you run it.{" "}
         <ProseLink href="/story">Back to the story</ProseLink>.
       </p>
 

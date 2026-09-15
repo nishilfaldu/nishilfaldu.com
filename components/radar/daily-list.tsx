@@ -4,7 +4,7 @@ import { RadarNav } from "@/components/radar/radar-nav";
 import { ChannelRow } from "@/components/radar/source-link";
 
 /**
- * /daily — the short list of sites worth opening every day.
+ * /daily - the short list of sites worth opening every day.
  */
 export function DailyList() {
   return (
@@ -15,7 +15,7 @@ export function DailyList() {
 
       <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Daily</h1>
       <p className="mb-12 text-ink-muted">
-        Sites that earn a check every day. Short on purpose — a long list is one
+        Sites that earn a check every day. Short on purpose - a long list is one
         nobody opens.
       </p>
 

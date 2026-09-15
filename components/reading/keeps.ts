@@ -6,7 +6,7 @@ import { api } from "@/convex/_generated/api";
  *
  * Server-side over HTTP rather than convex/react: the page is static-first and
  * has no reason to hold a websocket open for a list that changes when I paste
- * something. Revalidation is the page's job — see components/reading/reading-page.
+ * something. Revalidation is the page's job - see components/reading/reading-page.
  */
 
 export type Keep = {
@@ -44,7 +44,7 @@ export async function fetchKeeps(): Promise<KeepsResult> {
     return { keeps, ok: true };
   } catch (error) {
     // A reading list is not worth a 500. The page says it couldn't load and the
-    // rest of the site carries on — but it says so out loud, in both places.
+    // rest of the site carries on - but it says so out loud, in both places.
     console.error(
       "reading: archive query failed:",
       error instanceof Error ? error.message : error,

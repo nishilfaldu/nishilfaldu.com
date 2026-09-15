@@ -4,7 +4,7 @@ import { PROJECTS } from "@/components/projects";
 /**
  * Every link on the site.
  *
- * The colour is `accent` — Geist's amber-900, which is the *text* step and
+ * The colour is `accent` - Geist's amber-900, which is the *text* step and
  * reads as rust. Not amber-700, the amber everyone pictures: that one is
  * #ffae00 and sits at 1.86:1 on white, so it can't carry a link, an underline,
  * or anything else that has to be legible against paper. The real amber gets
@@ -23,7 +23,7 @@ export function ProseLink({
   /** Anchor target for <Toc /> and deep links. Projects have one; socials don't. */
   id?: string;
   href: string;
-  /** Keeps short link text on one line. Never on prose links — a long phrase
+  /** Keeps short link text on one line. Never on prose links - a long phrase
       that refuses to wrap blows past the measure. */
   nowrap?: boolean;
   children: React.ReactNode;

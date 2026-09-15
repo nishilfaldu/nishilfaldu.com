@@ -151,7 +151,7 @@ export function AgentLauncher() {
       if (error instanceof DOMException && error.name === "AbortError") return;
       setState({
         status: "error",
-        message: "Network error — try again.",
+        message: "Network error. Try again.",
       });
     } finally {
       if (abortRef.current === controller) {

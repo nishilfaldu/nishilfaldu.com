@@ -28,7 +28,7 @@ const BUNDLERS: {
 ];
 
 /**
- * Interactive Electron Forge picker — Vite vs Webpack, then a Cursor prompt.
+ * Interactive Electron Forge picker - Vite vs Webpack, then a Cursor prompt.
  */
 export function ElectronBuilder() {
   const [bundler, setBundler] = useState<ElectronBundler>("vite");
@@ -41,7 +41,7 @@ export function ElectronBuilder() {
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
         Official Electron Forge via{" "}
-        <code className="text-[0.88em]">create-electron-app</code> — pick a
+        <code className="text-[0.88em]">create-electron-app</code> - pick a
         TypeScript bundler template and a linter, then the prompt adds React on
         top. The prompt updates.
       </p>

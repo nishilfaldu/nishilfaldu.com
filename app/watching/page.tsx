@@ -9,7 +9,7 @@ import { WatchList } from "@/components/radar/watch-list";
 export const metadata: Metadata = pageMetadata({
   title: "Watching",
   description:
-    "Not ideas I want to build — things I don’t want to find out about late, and where I’d see them first.",
+    "Not ideas I want to build, but things I don’t want to find out about late, and where I’d see them first.",
   path: "/watching",
 });
 

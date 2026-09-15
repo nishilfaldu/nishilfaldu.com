@@ -10,7 +10,7 @@ import {
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 
 /**
- * Interactive Next.js picker — Biome vs ESLint, then a Cursor prompt.
+ * Interactive Next.js picker - Biome vs ESLint, then a Cursor prompt.
  */
 export function NextBuilder() {
   const [linter, setLinter] = useState<NextLinter>("biome");
@@ -21,7 +21,7 @@ export function NextBuilder() {
   return (
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
-        Official <code className="text-[0.88em]">create-next-app</code> — pick
+        Official <code className="text-[0.88em]">create-next-app</code> - pick
         Biome or ESLint and the prompt updates.
       </p>
 

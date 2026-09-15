@@ -1,4 +1,4 @@
-/* Restyled Shoe Buyer’s Field Guide — site B&W tokens */
+/* Restyled Shoe Buyer’s Field Guide - site B&W tokens */
 
   .shoe-guide{
     --porcelain:var(--color-paper);
@@ -15,7 +15,7 @@
     --body:var(--font-sans);
     --mono:var(--font-mono);
   }
-  /* Keep resets inside the lab — a bare `*` was zeroing padding on the site chrome. */
+  /* Keep resets inside the lab - a bare `*` was zeroing padding on the site chrome. */
   .shoe-guide,
   .shoe-guide * {
     box-sizing: border-box;
@@ -359,7 +359,7 @@
   .stepstrip svg .foot-body{transition:stroke .2s, stroke-width .2s}
 
 /*
- * Blog-flow pass — Vercel-like rhythm on this site’s face.
+ * Blog-flow pass - Vercel-like rhythm on this site’s face.
  * One family, size hierarchy only. Diagrams/interactives as figures in the prose.
  */
 .shoe-guide {

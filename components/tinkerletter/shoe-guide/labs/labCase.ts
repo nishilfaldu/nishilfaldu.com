@@ -26,5 +26,5 @@ export const labCaseHtml = `<figure class="exhibit case-panel">
       <text x="280" y="208" text-anchor="middle" font-family="var(--font-geist-mono), ui-monospace, Menlo, monospace" font-size="8" fill="var(--color-ink)">HEEL</text>
       <text x="280" y="224" text-anchor="middle" font-family="var(--font-geist-mono), ui-monospace, Menlo, monospace" font-size="8" fill="var(--color-ink-muted)">even, neutral</text>
     </svg>
-    <figcaption><b>Wrong shoe for the sport.</b> Heavy damage up front from lunges and stops. Edges and heel stay clean — a neutral stride in a shoe built for straight-ahead miles.</figcaption>
+    <figcaption><b>Wrong shoe for the sport.</b> Heavy damage up front from lunges and stops. Edges and heel stay clean - a neutral stride in a shoe built for straight-ahead miles.</figcaption>
   </figure>`;

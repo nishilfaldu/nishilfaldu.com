@@ -16,7 +16,7 @@ import "@/components/tinkerletter/tinker-article.css";
 
 type LabId = "step" | "arch" | "wear" | "pron" | null;
 
-/** Pieces I read before writing this — not exhaustive, just the trail. */
+/** Pieces I read before writing this - not exhaustive, just the trail. */
 const REFERENCES: { href: string; title: string; source: string }[] = [
   {
     href: "https://marathonhandbook.com/tennis-shoes-vs-running-shoes/",
@@ -116,7 +116,7 @@ export function ShoeBuyersFieldGuide() {
         <p>
           Wet your foot, step on a paper bag with your full weight. Where the
           foot pressed down, the paper is wet. The dry patch on the inside is
-          your arch — the part that stayed lifted.
+          your arch - the part that stayed lifted.
         </p>
         <p>
           Arch height changes how much cushioning versus structure you need.
@@ -138,7 +138,7 @@ export function ShoeBuyersFieldGuide() {
         <h2>Your old soles</h2>
         <p>
           Rubber only disappears where your foot pressed. A common pattern: a
-          lightweight running shoe worn for court sports — heavy damage up front
+          lightweight running shoe worn for court sports - heavy damage up front
           from lunges and stops, clean edges and heel. Neutral stride, wrong
           shoe for the sport.
         </p>
@@ -163,10 +163,10 @@ export function ShoeBuyersFieldGuide() {
         <h2>The inward roll</h2>
         <p>
           That little inward roll after landing has a name:{" "}
-          <strong>pronation</strong>. It’s supposed to happen — it’s your arch
+          <strong>pronation</strong>. It’s supposed to happen - it’s your arch
           absorbing the landing. Rolls too far → <strong>overpronation</strong>.
           Barely rolls → <strong>supination</strong>. The corrective-shoe aisle
-          is built around those two words — and your soles already hint which,
+          is built around those two words - and your soles already hint which,
           if either, applies to you.
         </p>
         <p>
@@ -184,7 +184,7 @@ export function ShoeBuyersFieldGuide() {
         <h2>There’s a cable under your foot</h2>
         <p>
           Cross one ankle over the other knee, pull your toes back toward your
-          shin, and press the sole just in front of the heel — that tight band
+          shin, and press the sole just in front of the heel - that tight band
           is the plantar fascia, holding the arch up like a bowstring holds a
           bow. Every step stretches it.
         </p>
@@ -194,8 +194,8 @@ export function ShoeBuyersFieldGuide() {
           dangerouslySetInnerHTML={{ __html: labFasciaHtml }}
         />
         <p>
-          When that bowstring gets overworked — arch extremes, dead foam, the
-          wrong shoe for the job — it complains loudest on your first steps out
+          When that bowstring gets overworked - arch extremes, dead foam, the
+          wrong shoe for the job - it complains loudest on your first steps out
           of bed. That injury has a name you’ve probably heard:{" "}
           <strong>plantar fasciitis</strong>. Fresh, well-matched shoes and a
           break from impact are the first-line fix; if sharp morning heel pain
@@ -207,7 +207,7 @@ export function ShoeBuyersFieldGuide() {
         <h2>One shoe, two jobs</h2>
         <p>
           Here’s the part that actually decided my buy. Court sports ask a shoe
-          to survive sideways force — cuts, stops, lunges. Running asks it to
+          to survive sideways force - cuts, stops, lunges. Running asks it to
           survive straight-down force, thousands of times in a row. Those briefs
           fight each other. Soft and tall for miles tips over on a hard cut. Low
           and braced for the court is stiff and heavy on a run.
@@ -216,7 +216,7 @@ export function ShoeBuyersFieldGuide() {
           So everyday sneakers aren’t court shoes. A running shoe isn’t a squash
           or tennis shoe. Standing all day is closer to the running problem than
           the court problem. And a “do-everything” pair usually isn’t a
-          compromise — it’s mediocre at both.
+          compromise - it’s mediocre at both.
         </p>
         <p>
           That was the whole rabbit hole: match the shoe to your foot{" "}
@@ -227,14 +227,14 @@ export function ShoeBuyersFieldGuide() {
       <section className="tinker-refs">
         <h2>References</h2>
         <p>
-          A few of the pieces I read while going down this rabbit hole — not
+          A few of the pieces I read while going down this rabbit hole - not
           exhaustive, just the trail.
         </p>
         <ol>
           {REFERENCES.map((ref) => (
             <li key={ref.href}>
               <ProseLink href={ref.href}>{ref.title}</ProseLink>
-              <span className="tinker-ref-source"> — {ref.source}</span>
+              <span className="tinker-ref-source"> - {ref.source}</span>
             </li>
           ))}
         </ol>

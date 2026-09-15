@@ -1,4 +1,4 @@
-/* Motion for IdeasTray only — not a global primitive. */
+/* Motion for IdeasTray only - not a global primitive. */
 @keyframes ideas-focus-in {
   from {
     opacity: 0;

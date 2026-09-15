@@ -1,6 +1,6 @@
 /**
  * Everything a card shows beyond what's stored, derived from the URL at render
- * time. Nothing here is written to the database — the day I decide a Substack
+ * time. Nothing here is written to the database - the day I decide a Substack
  * post should read "essay" instead of "post", that's an edit here, not a
  * migration.
  */
@@ -82,7 +82,7 @@ export function dayLabel(dayId: string): string {
   return `${WEEKDAYS[date.getDay()]} ${day} ${MONTHS[month - 1]} ${year}`;
 }
 
-/** Local calendar date, not UTC — a link saved at 11pm belongs to today. */
+/** Local calendar date, not UTC - a link saved at 11pm belongs to today. */
 export function todayId(): string {
   const now = new Date();
   const month = String(now.getMonth() + 1).padStart(2, "0");

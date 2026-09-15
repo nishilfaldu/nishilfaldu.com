@@ -10,7 +10,7 @@ import type { NextLinter } from "@/components/scaffolds/next-prompt";
 import { ScaffoldActions } from "@/components/scaffolds/scaffold-actions";
 
 /**
- * Interactive Expo picker — Biome vs ESLint, then a Cursor prompt.
+ * Interactive Expo picker - Biome vs ESLint, then a Cursor prompt.
  */
 export function ExpoBuilder() {
   const [linter, setLinter] = useState<NextLinter>("biome");
@@ -20,7 +20,7 @@ export function ExpoBuilder() {
   return (
     <div className="mt-4">
       <p className="m-0 text-[0.92rem] text-ink-muted">
-        Official <code className="text-[0.88em]">create-expo-app</code> — pick
+        Official <code className="text-[0.88em]">create-expo-app</code> - pick
         Biome or ESLint (the template's own default) and the prompt updates.
       </p>
 

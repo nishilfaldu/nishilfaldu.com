@@ -13,24 +13,22 @@
  * tree-shaken out of light mode and compute to nothing.
  */
 @theme static {
-  /* Geist background-100 / background-200. Actually white, actually black. */
-  --color-paper: #ffffff;
-  --color-paper-raised: #fafafa;
+  /* Geist dark background-100 / background-200. Actually black, nearly. */
+  --color-paper: #000000;
+  --color-paper-raised: #0a0a0a;
 
-  /* Geist gray-1000 / gray-900 / gray-400: body text, secondary text, borders. */
-  --color-ink: #171717;
-  --color-ink-muted: #4d4d4d;
-  --color-rule: #eaeaea;
+  /* Geist dark grays: body text, secondary text, borders. */
+  --color-ink: #ededed;
+  --color-ink-muted: #a0a0a0;
+  --color-rule: #2e2e2e;
 
   /*
-   * Geist amber-900 — the *text* step, not the brand step. amber-700 (#ffae00)
-   * is the amber everyone pictures, and it is 1.86:1 on white: it cannot carry a
-   * link, an underline, or anything else that has to be seen against paper.
-   * The step that can is #aa4d00, which is rust. The old hand-built site picked
-   * #9c463a by eye for exactly this job, which is the same colour from the
-   * other direction.
+   * Geist amber-900 dark - the *text* step, not the brand step, bright enough
+   * to carry a link on black. The light override below drops to #aa4d00,
+   * which is rust: amber-700 (#ffae00) is the amber everyone pictures, and at
+   * 1.86:1 on white it cannot carry anything that has to be seen.
    */
-  --color-accent: #aa4d00;
+  --color-accent: #ff9300;
 
   /*
    * Geist amber-700, and the only place the real amber appears. Identical in
@@ -47,7 +45,7 @@
   /*
    * The measure: a comfortable line for Geist Sans. Not `--container-prose`.
    * That key collides with Tailwind's built-in .max-w-prose (65ch), which wins
-   * silently — the token reads 38rem and the page renders at something else.
+   * silently - the token reads 38rem and the page renders at something else.
    * Renaming is the only fix; @utility doesn't rescue it. "Measure" is the
    * right typographic word anyway.
    */
@@ -55,20 +53,23 @@
 }
 
 /*
- * Dark is the same roles pointing at Geist's dark values. Name the role, never
- * the colour: `accent` flips #aa4d00 → #ff9300 across these two blocks, so
- * anything that hardcoded the hex would render the wrong one in one theme.
+ * Dark is the default: the site is a dark room unless the reader flips the
+ * toolbar toggle, which stores the choice and sets data-theme="light". No
+ * system preference is consulted - a dark-system reader and a light-system
+ * reader both land in the dark, and light is one deliberate tap away. Name
+ * the role, never the colour: `accent` flips #ff9300 → #aa4d00 across these
+ * two blocks, so anything that hardcoded the hex would render the wrong one
+ * in one theme.
  */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: #000000;
-    --color-paper-raised: #0a0a0a;
-    --color-ink: #ededed;
-    --color-ink-muted: #a0a0a0;
-    --color-rule: #2e2e2e;
-    /* Geist amber-900 dark. Brighter, because it's carrying text on black. */
-    --color-accent: #ff9300;
-  }
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-paper: #ffffff;
+  --color-paper-raised: #fafafa;
+  --color-ink: #171717;
+  --color-ink-muted: #4d4d4d;
+  --color-rule: #eaeaea;
+  /* Geist amber-900 light. Darker, because it's carrying text on white. */
+  --color-accent: #aa4d00;
 }
 
 /*
@@ -78,6 +79,7 @@
  */
 @layer base {
   html {
+    color-scheme: dark;
     scroll-behavior: smooth;
   }
 

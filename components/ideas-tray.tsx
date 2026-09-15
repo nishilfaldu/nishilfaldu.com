@@ -14,7 +14,7 @@ import "./ideas-tray.css";
 
 /**
  * One idea in focus, a short index to jump, and a “draw another” shuffle.
- * Deep link with `?idea=<slug>` — selection stays in the URL.
+ * Deep link with `?idea=<slug>` - selection stays in the URL.
  */
 export function IdeasTray() {
   const router = useRouter();
@@ -83,7 +83,7 @@ export function IdeasTray() {
 
         <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Ideas</h1>
         <p className="mb-10 text-ink-muted">
-          Open loops I’m willing to put on the site — not a notes dump. Draw
+          Open loops I’m willing to put on the site - not a notes dump. Draw
           one, sit with it, or jump the list.{" "}
           <ProseLink href="/story">Back to the story</ProseLink>.
         </p>
@@ -197,7 +197,7 @@ function IdeaFocus({ idea, animate }: { idea: Idea; animate: boolean }) {
                 {ref.note ? (
                   <span className="text-[0.95rem] text-ink-muted">
                     {" "}
-                    — {ref.note}
+                    - {ref.note}
                   </span>
                 ) : null}
               </li>

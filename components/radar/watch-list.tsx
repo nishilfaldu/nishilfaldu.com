@@ -5,7 +5,7 @@ import { SourceLink } from "@/components/radar/source-link";
 import { WATCHING } from "@/components/radar/watching";
 
 /**
- * /watching — events I’m waiting on, where hearing about it late is the loss.
+ * /watching - events I’m waiting on, where hearing about it late is the loss.
  */
 export function WatchList() {
   return (
@@ -16,7 +16,7 @@ export function WatchList() {
 
       <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Watching</h1>
       <p className="mb-12 text-ink-muted">
-        Not things I want to build — those are on{" "}
+        Not things I want to build - those are on{" "}
         <ProseLink href="/ideas">ideas</ProseLink>. These are things I don’t
         want to find out about late. Each one says what would count as it
         actually happening, and where I’d expect to see it first.
@@ -58,7 +58,7 @@ export function WatchList() {
                       {place.note ? (
                         <span className="text-[0.92rem] text-ink-muted">
                           {" "}
-                          — {place.note}
+                          - {place.note}
                         </span>
                       ) : null}
                     </li>

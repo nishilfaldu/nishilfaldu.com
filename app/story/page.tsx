@@ -12,7 +12,7 @@ import { Toc } from "@/components/toc";
  * means anything in the order it happened.
  *
  * Ported from the hand-written index.html. The prose is Nishil's and unchanged
- * — every id below is a real anchor that <Toc /> and old deep links point at.
+ * - every id below is a real anchor that <Toc /> and old deep links point at.
  */
 
 export const metadata: Metadata = pageMetadata({

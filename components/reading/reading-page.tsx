@@ -8,7 +8,7 @@ import { fetchKeeps } from "@/components/reading/keeps";
 import { PeopleSection } from "@/components/reading/people-section";
 
 /**
- * /reading — everything I read and kept, filed under the day I found it.
+ * /reading - everything I read and kept, filed under the day I found it.
  *
  * The day grouping is the whole idea: a day is a workspace, and what's on it is
  * whatever I was chasing that day. Reading the archive backwards is closer to
@@ -29,7 +29,7 @@ export async function ReadingPage() {
       <h1 className="mb-[1.2rem] font-medium tracking-[0.01em]">Reading</h1>
       <p className="mb-12 text-ink-muted">
         Things I read and kept, filed under the day I found them. Nothing here
-        is a to-read pile — anything I didn't want gets deleted, so what's left
+        is a to-read pile - anything I didn't want gets deleted, so what's left
         is the whole answer to what I was thinking about that week.
       </p>
 

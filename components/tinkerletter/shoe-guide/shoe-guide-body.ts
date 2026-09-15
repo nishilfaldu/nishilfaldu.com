@@ -70,14 +70,14 @@ export const shoeGuideBodyHtml = `<!-- shared defs: wet-paper filters -->
   <h2 class="section-title">Your arch</h2>
 
   <div class="moment">
-    <p>Wet your foot, step on a paper bag with your full weight. Where the foot pressed down, the paper is wet. The dry patch on the inside is your arch — the part that stayed lifted.</p>
-    <p>Drag the slider — then try it on real paper if you want.</p>
+    <p>Wet your foot, step on a paper bag with your full weight. Where the foot pressed down, the paper is wet. The dry patch on the inside is your arch - the part that stayed lifted.</p>
+    <p>Drag the slider - then try it on real paper if you want.</p>
   </div>
 
   <div class="archlab">
     <figure class="plate archlab-print">
       <svg id="lab-print" viewBox="0 0 120 260" role="img" aria-label="Interactive wet footprint whose arch band changes with the slider"></svg>
-      <figcaption class="plate-label">the print — drag the slider</figcaption>
+      <figcaption class="plate-label">the print - drag the slider</figcaption>
     </figure>
     <div>
       <div class="arch-reading" id="arch-reading" aria-live="polite"></div>
@@ -139,7 +139,7 @@ export const shoeGuideBodyHtml = `<!-- shared defs: wet-paper filters -->
       <text x="280" y="204" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="8" fill="#4d4d4d">HEEL</text>
       <text x="280" y="216" text-anchor="middle" font-family="ui-monospace,Menlo,monospace" font-size="8" fill="#4d4d4d">even, neutral</text>
     </svg>
-    <figcaption><b>Wrong shoe for the sport.</b> Heavy damage up front from lunges and stops. Edges and heel stay clean — a neutral stride in a shoe built for straight-ahead miles.</figcaption>
+    <figcaption><b>Wrong shoe for the sport.</b> Heavy damage up front from lunges and stops. Edges and heel stay clean - a neutral stride in a shoe built for straight-ahead miles.</figcaption>
   </figure>
 
   <p style="margin-top:26px">Now read yours: inner edge worn at toe and heel → inward roll. Outer edge, front to back → outer-edge loading. Even forefoot, balanced heel → neutral. Front wrecked but edges clean → your gait is probably fine; the sport ate the shoe.</p>
@@ -174,7 +174,7 @@ export const shoeGuideBodyHtml = `<!-- shared defs: wet-paper filters -->
   </div>
 
   <div class="moment">
-    <p>That little inward roll after landing has a name: <strong>pronation</strong>. It's supposed to happen — it's your arch absorbing the landing. Rolls too far → <strong>overpronation</strong>. Barely rolls → <strong>supination</strong>. The entire corrective-shoe aisle is built around those two words — and you can now tell from your own soles whether either one applies to you.</p>
+    <p>That little inward roll after landing has a name: <strong>pronation</strong>. It's supposed to happen - it's your arch absorbing the landing. Rolls too far → <strong>overpronation</strong>. Barely rolls → <strong>supination</strong>. The entire corrective-shoe aisle is built around those two words - and you can now tell from your own soles whether either one applies to you.</p>
   </div>
 
   </section>
@@ -184,7 +184,7 @@ export const shoeGuideBodyHtml = `<!-- shared defs: wet-paper filters -->
   <h2 class="section-title">There's a cable under your foot</h2>
 
   <div class="moment">
-    <p>Cross one ankle over the other knee, pull your toes back toward your shin, and press the sole just in front of the heel — that tight band is the plantar fascia, holding the arch up like a bowstring holds a bow.</p>
+    <p>Cross one ankle over the other knee, pull your toes back toward your shin, and press the sole just in front of the heel - that tight band is the plantar fascia, holding the arch up like a bowstring holds a bow.</p>
   </div>
 
   <div class="moment">
@@ -208,20 +208,20 @@ export const shoeGuideBodyHtml = `<!-- shared defs: wet-paper filters -->
         <text x="240" y="30" text-anchor="middle" fill="#171717">BODY WEIGHT, EVERY STEP</text>
         <text x="108" y="160" text-anchor="middle" fill="#171717">HEEL BONE</text>
         <text x="108" y="173" text-anchor="middle" fill="#4d4d4d" font-size="9">(where it hurts)</text>
-        <text x="270" y="150" text-anchor="middle" fill="#171717">THE ARCH — THE BOW</text>
-        <text x="282" y="250" text-anchor="middle" fill="#aa4d00">PLANTAR FASCIA — THE BOWSTRING</text>
+        <text x="270" y="150" text-anchor="middle" fill="#171717">THE ARCH - THE BOW</text>
+        <text x="282" y="250" text-anchor="middle" fill="#aa4d00">PLANTAR FASCIA - THE BOWSTRING</text>
         <text x="440" y="190" text-anchor="middle" fill="#171717">BALL</text>
       </g>
     </svg>
     <div class="fascia-facts">
       <div class="ffact"><b>The morning tell</b>Sharp heel pain on first steps after waking, easing as you move.</div>
       <div class="ffact"><b>Who it hunts</b>Arch extremes, worn-out shoes, high-impact sports, all-day standing.</div>
-      <div class="ffact"><b>The lever you control</b>Shoes matched to your foot and sport — replaced before the foam dies.</div>
+      <div class="ffact"><b>The lever you control</b>Shoes matched to your foot and sport - replaced before the foam dies.</div>
     </div>
   </div>
 
   <div class="moment">
-    <p>When that bowstring gets overworked — arch extremes, dead foam, the wrong shoe for the job — it complains loudest on your first steps out of bed. That injury has a name you've probably heard: <strong>plantar fasciitis</strong>. Fresh, well-matched shoes and a break from impact are the first-line fix; if sharp morning heel pain persists for weeks, that's a podiatrist visit, not a shoe purchase.</p>
+    <p>When that bowstring gets overworked - arch extremes, dead foam, the wrong shoe for the job - it complains loudest on your first steps out of bed. That injury has a name you've probably heard: <strong>plantar fasciitis</strong>. Fresh, well-matched shoes and a break from impact are the first-line fix; if sharp morning heel pain persists for weeks, that's a podiatrist visit, not a shoe purchase.</p>
   </div>
 
   </section>
@@ -231,8 +231,8 @@ export const shoeGuideBodyHtml = `<!-- shared defs: wet-paper filters -->
   <h2 class="section-title">One shoe, two jobs</h2>
 
   <div class="moment">
-    <p>Here’s the part that actually decided my buy. Court sports ask a shoe to survive sideways force — cuts, stops, lunges. Running asks it to survive straight-down force, thousands of times in a row. Those briefs fight each other. Soft and tall for miles tips over on a hard cut. Low and braced for the court is stiff and heavy on a run.</p>
-    <p>So everyday sneakers aren’t court shoes. A running shoe isn’t a squash or tennis shoe. Standing all day is closer to the running problem than the court problem. And a “do-everything” pair usually isn’t a compromise — it’s mediocre at both.</p>
+    <p>Here’s the part that actually decided my buy. Court sports ask a shoe to survive sideways force - cuts, stops, lunges. Running asks it to survive straight-down force, thousands of times in a row. Those briefs fight each other. Soft and tall for miles tips over on a hard cut. Low and braced for the court is stiff and heavy on a run.</p>
+    <p>So everyday sneakers aren’t court shoes. A running shoe isn’t a squash or tennis shoe. Standing all day is closer to the running problem than the court problem. And a “do-everything” pair usually isn’t a compromise - it’s mediocre at both.</p>
     <p>That was the whole rabbit hole: match the shoe to your foot <em>and</em> to your week. Not the wall of boxes.</p>
   </div>
 </section>

@@ -13,7 +13,7 @@ import {
  * The archive: one board per day, newest day first.
  *
  * Search filters in the browser over the whole list rather than round-tripping
- * to Convex. That's the right trade while the archive fits in a page payload —
+ * to Convex. That's the right trade while the archive fits in a page payload -
  * no latency, no debounce, and results narrow as you type. The search index
  * exists on the table for the day that stops being true.
  */
@@ -27,7 +27,7 @@ type Props = {
 
 function emptyMessage(unavailable: boolean, nothingKept: boolean): string {
   if (unavailable) {
-    return "The archive didn't load. Everything's still there — try again in a moment.";
+    return "The archive didn't load. Everything's still there - try again in a moment.";
   }
   if (nothingKept) {
     return "Nothing here yet. The first thing worth keeping goes in above.";
@@ -85,7 +85,7 @@ export function Archive({ keeps, canEdit, unavailable = false }: Props) {
     [query],
   );
   // Everything still in the archive, before search narrows it. Kept separate so
-  // the empty state can tell "nothing kept" from "nothing found" — subtracting
+  // the empty state can tell "nothing kept" from "nothing found" - subtracting
   // removed.size from keeps.length goes negative once a refresh has already
   // dropped a removed row from the server list.
   const present = useMemo(
@@ -182,7 +182,7 @@ function KeepRow({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: keep.id }),
       });
-      // Put it back if the server disagreed — the row was never really gone.
+      // Put it back if the server disagreed - the row was never really gone.
       if (!response.ok) onRemoved(keep.id, false);
     } catch {
       // And put it back if the request never landed at all. Offline, the fetch

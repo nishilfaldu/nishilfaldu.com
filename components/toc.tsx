@@ -7,7 +7,7 @@ import { PROJECTS } from "@/components/projects";
  * A quiet stack of dashes, one per project, pinned to the right edge.
  *
  * The essay hides twenty-one projects inside its sentences, which is the point
- * — but it means there's no list to scan. This is the list, without breaking
+ * - but it means there's no list to scan. This is the list, without breaking
  * the prose into cards. The list itself lives in projects.ts, shared with the
  * hover cards; order matches reading order, not importance.
  */
@@ -117,7 +117,7 @@ export function Toc() {
   return (
     <>
       {/* Below 64rem the stack has nowhere to sit, so it collapses into a
-          button — which is itself three dashes, shrunk. */}
+          button - which is itself three dashes, shrunk. */}
       <button
         data-toc
         type="button"
