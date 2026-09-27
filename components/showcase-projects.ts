@@ -38,6 +38,12 @@ export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
 
 export const SHOWCASE: ShowcaseProject[] = [
   {
+    slug: "scope",
+    name: "Scope",
+    tagline: "Approve which accounts AI agents can access, and for how long.",
+    url: "https://scope.nishilfaldu.site/",
+  },
+  {
     slug: "chat-rendering",
     name: "Chat rendering",
     tagline: "How to render chat better than just virtualization alone.",
