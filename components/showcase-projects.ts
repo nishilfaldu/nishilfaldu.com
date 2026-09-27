@@ -42,6 +42,12 @@ export const SHOWCASE: ShowcaseProject[] = [
     name: "Scope",
     tagline: "Approve which accounts AI agents can access, and for how long.",
     url: "https://scope.nishilfaldu.site/",
+    media: {
+      kind: "image",
+      src: "/showcase/1-scope-project-shot.png",
+      alt: "Scope homepage showing an agent access request with account, permissions, duration, and approval controls.",
+      ratio: "16 / 10",
+    },
   },
   {
     slug: "chat-rendering",
