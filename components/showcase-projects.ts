@@ -40,12 +40,26 @@ export const SHOWCASE: ShowcaseProject[] = [
   {
     slug: "scope",
     name: "Scope",
-    tagline: "Approve which accounts AI agents can access, and for how long.",
+    tagline:
+      "One MCP server for your AI apps, with rules for what each app can do.",
     url: "https://scope.nishilfaldu.site/",
     media: {
       kind: "image",
-      src: "/showcase/1-scope-project-shot.png",
-      alt: "Scope homepage showing an agent access request with account, permissions, duration, and approval controls.",
+      src: "/showcase/1-scope-mcp-project-shot.png",
+      alt: "Scope homepage showing one MCP server for AI apps and a Cursor request to send a Slack message.",
+      ratio: "16 / 10",
+    },
+  },
+  {
+    slug: "pro-tour",
+    name: "pro-tour",
+    tagline:
+      "Coding agents attach a video and checklist to each PR, so you can review by watching.",
+    url: "https://pro-tour.nishilfaldu.site/",
+    media: {
+      kind: "video",
+      src: "/showcase/2-pro-tour-loop.mp4",
+      poster: "/showcase/3-pro-tour-poster.jpg",
       ratio: "16 / 10",
     },
   },
