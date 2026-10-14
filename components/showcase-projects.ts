@@ -68,6 +68,8 @@ export const SHOWCASE: ShowcaseProject[] = [
     name: "Chat rendering",
     tagline: "How to render chat better than just virtualization alone.",
     url: "https://chat-rendering.nishilfaldu.site/",
+    extraLinks: [{ label: "demo", url: "https://drive.google.com/file/d/16C9j7E6CyxIoraDXoQoSoJDq9QaLRUVp/view?usp=sharing" }],
+
     media: {
       kind: "video",
       src: "/showcase/chat-rendering-loop.mp4",
