@@ -43,6 +43,9 @@ export const SHOWCASE: ShowcaseProject[] = [
     tagline:
       "Two pull requests to Streamdown: a link fix and a streaming speed-up.",
     url: "https://driftmark.nishilfaldu.site/",
+    extraLinks: [
+      { label: "github", url: "https://github.com/nishilfaldu/driftmark" },
+    ],
     media: {
       kind: "image",
       src: "/showcase/1-driftmark.png",
@@ -69,6 +72,9 @@ export const SHOWCASE: ShowcaseProject[] = [
     tagline:
       "Coding agents attach a video and checklist to each PR, so you can review by watching.",
     url: "https://pro-tour.nishilfaldu.site/",
+    extraLinks: [
+      { label: "github", url: "https://github.com/nishilfaldu/pro-tour" },
+    ],
     media: {
       kind: "video",
       src: "/showcase/2-pro-tour-loop.mp4",
@@ -81,7 +87,13 @@ export const SHOWCASE: ShowcaseProject[] = [
     name: "Chat rendering",
     tagline: "How to render chat better than just virtualization alone.",
     url: "https://chat-rendering.nishilfaldu.site/",
-    extraLinks: [{ label: "demo", url: "https://drive.google.com/file/d/16C9j7E6CyxIoraDXoQoSoJDq9QaLRUVp/view?usp=sharing" }],
+    extraLinks: [
+      {
+        label: "demo",
+        url: "https://drive.google.com/file/d/16C9j7E6CyxIoraDXoQoSoJDq9QaLRUVp/view?usp=sharing",
+      },
+      { label: "github", url: "https://github.com/nishilfaldu/chat-rendering" },
+    ],
 
     media: {
       kind: "video",
@@ -137,3 +149,4 @@ export function projectLinkLabel(p: ShowcaseProject): string {
   if (p.url) return "visit";
   return "github";
 }
+
