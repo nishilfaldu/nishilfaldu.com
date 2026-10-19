@@ -38,6 +38,19 @@ export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
 
 export const SHOWCASE: ShowcaseProject[] = [
   {
+    slug: "driftmark",
+    name: "Driftmark",
+    tagline:
+      "Two pull requests to Streamdown: a link fix and a streaming speed-up.",
+    url: "https://driftmark.nishilfaldu.site/",
+    media: {
+      kind: "image",
+      src: "/showcase/1-driftmark.png",
+      alt: "Driftmark homepage showing the Streamdown link fix pull request with a before and after comparison.",
+      ratio: "16 / 10",
+    },
+  },
+  {
     slug: "scope",
     name: "Scope",
     tagline:
