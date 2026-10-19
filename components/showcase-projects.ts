@@ -59,6 +59,9 @@ export const SHOWCASE: ShowcaseProject[] = [
     tagline:
       "One MCP server for your AI apps, with rules for what each app can do.",
     url: "https://scope.nishilfaldu.site/",
+    extraLinks: [
+      { label: "github", url: "https://github.com/nishilfaldu/scope" },
+    ],
     media: {
       kind: "image",
       src: "/showcase/1-scope-mcp-project-shot.png",
