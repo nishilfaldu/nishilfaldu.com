@@ -45,7 +45,7 @@ export const SHOWCASE: ShowcaseProject[] = [
     url: "https://driftmark.nishilfaldu.site/",
     media: {
       kind: "image",
-      src: "/showcase/driftmark.png",
+      src: "/showcase/1-driftmark.png",
       alt: "Driftmark homepage showing the Streamdown link fix pull request with a before and after comparison.",
       ratio: "16 / 10",
     },
