@@ -38,6 +38,19 @@ export const SHOWCASE_STATUS_LABEL: Record<ShowcaseStatus, string> = {
 
 export const SHOWCASE: ShowcaseProject[] = [
   {
+    slug: "glance",
+    name: "Glance",
+    tagline:
+      "A map of a pull request: where the changes sit and how they connect.",
+    url: "https://glance.nishilfaldu.site/",
+    media: {
+      kind: "image",
+      src: "/showcase/3-glance.png",
+      alt: "Glance homepage showing a pull request's repo map with the changed files and the functions they call.",
+      ratio: "16 / 10",
+    },
+  },
+  {
     slug: "driftmark",
     name: "Driftmark",
     tagline:
@@ -152,4 +165,3 @@ export function projectLinkLabel(p: ShowcaseProject): string {
   if (p.url) return "visit";
   return "github";
 }
-
