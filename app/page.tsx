@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMetadata({
     "The projects I’m proud of, with short notes and where they live.",
   path: "/",
   ogVideo: {
-    url: "https://nishilfaldu.site/showcase/homepage-loop.mp4",
+    path: "/showcase/homepage-loop.mp4",
     width: 1200,
     height: 630,
   },
