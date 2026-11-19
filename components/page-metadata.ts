@@ -18,7 +18,17 @@ type PageMetaInput = {
   description: string;
   path: "/" | `/${string}`;
   ogType?: "website" | "article";
+  /** Direct mp4 for inline video link previews (Messages autoplays og:video, muted and looping, and it replaces the image preview). Keep the file small: icon + image + video share a 10MB budget before the link renders. */
+  ogVideo?: { path: `/${string}`; width: number; height: number };
 };
+
+/** Canonical domain, except Vercel previews resolve to their own host so assets work before merge. */
+function baseUrl(): string {
+  if (process.env.VERCEL_ENV === "preview" && process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return SITE_URL;
+}
 
 /**
  * Per-page SEO: title, description, canonical, Open Graph, Twitter.
@@ -30,6 +40,7 @@ export function pageMetadata({
   description,
   path,
   ogType = "website",
+  ogVideo,
 }: PageMetaInput): Metadata {
   const fullTitle = `${title} · ${SITE_NAME}`;
   return {
@@ -42,6 +53,17 @@ export function pageMetadata({
       siteName: SITE_NAME,
       title: fullTitle,
       description,
+      ...(ogVideo && {
+        videos: [
+          {
+            url: `${baseUrl()}${ogVideo.path}`,
+            secureUrl: `${baseUrl()}${ogVideo.path}`,
+            type: "video/mp4",
+            width: ogVideo.width,
+            height: ogVideo.height,
+          },
+        ],
+      }),
     },
     twitter: {
       card: "summary_large_image",
@@ -55,7 +77,7 @@ export function personJsonLd(): string {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Person",
-    name: SITE_NAME,
+    name: "Nishil Faldu",
     url: SITE_URL,
     sameAs: [...SITE_SAME_AS],
   });

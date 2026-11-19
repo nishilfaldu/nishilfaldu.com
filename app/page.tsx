@@ -7,6 +7,11 @@ export const metadata: Metadata = pageMetadata({
   description:
     "The projects I’m proud of, with short notes and where they live.",
   path: "/",
+  ogVideo: {
+    path: "/showcase/homepage-loop.mp4",
+    width: 1200,
+    height: 630,
+  },
 });
 
 export default function Home() {
