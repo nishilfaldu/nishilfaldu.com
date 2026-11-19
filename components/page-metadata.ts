@@ -18,6 +18,8 @@ type PageMetaInput = {
   description: string;
   path: "/" | `/${string}`;
   ogType?: "website" | "article";
+  /** Direct mp4 for inline video link previews (Messages autoplays og:video, muted and looping, and it replaces the image preview). Keep the file small: icon + image + video share a 10MB budget before the link renders. */
+  ogVideo?: { url: string; width: number; height: number };
 };
 
 /**
@@ -30,6 +32,7 @@ export function pageMetadata({
   description,
   path,
   ogType = "website",
+  ogVideo,
 }: PageMetaInput): Metadata {
   const fullTitle = `${title} · ${SITE_NAME}`;
   return {
@@ -42,6 +45,17 @@ export function pageMetadata({
       siteName: SITE_NAME,
       title: fullTitle,
       description,
+      ...(ogVideo && {
+        videos: [
+          {
+            url: ogVideo.url,
+            secureUrl: ogVideo.url,
+            type: "video/mp4",
+            width: ogVideo.width,
+            height: ogVideo.height,
+          },
+        ],
+      }),
     },
     twitter: {
       card: "summary_large_image",
@@ -55,7 +69,7 @@ export function personJsonLd(): string {
   return JSON.stringify({
     "@context": "https://schema.org",
     "@type": "Person",
-    name: SITE_NAME,
+    name: "Nishil Faldu",
     url: SITE_URL,
     sameAs: [...SITE_SAME_AS],
   });
