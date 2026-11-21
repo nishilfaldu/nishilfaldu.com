@@ -52,7 +52,7 @@ export const SHOWCASE: ShowcaseProject[] = [
   },
   {
     slug: "driftmark",
-    name: "Driftmark",
+    name: "OSS",
     tagline:
       "Two pull requests to Streamdown: a link fix and a streaming speed-up.",
     url: "https://driftmark.nishilfaldu.site/",
