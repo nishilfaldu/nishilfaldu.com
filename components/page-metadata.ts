@@ -7,7 +7,7 @@ export const SITE_DESCRIPTION =
 
 /** Social profiles linked from the footer - used for Person JSON-LD. */
 export const SITE_SAME_AS = [
-  "https://x.com/FalduNishil",
+  "https://x.com/nishilfaldu",
   "https://github.com/nishilfaldu",
   "https://www.linkedin.com/in/nishilfaldu",
 ] as const;
