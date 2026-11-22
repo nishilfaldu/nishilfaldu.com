@@ -103,7 +103,7 @@ export function ProjectList() {
           Watching
         </ProseLink>{" "}
         ·{" "}
-        <ProseLink nowrap href="https://x.com/FalduNishil">
+        <ProseLink nowrap href="https://x.com/nishilfaldu">
           <span className="line-through decoration-1">Twitter</span> X
         </ProseLink>{" "}
         ·{" "}
